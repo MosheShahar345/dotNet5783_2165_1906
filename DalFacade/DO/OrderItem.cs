@@ -8,4 +8,8 @@ namespace DO;
 
 public struct OrderItem
 {
+    public int ProductID;
+    public int OrderID;
+    public double Price;
+    public int Amount;
 }
