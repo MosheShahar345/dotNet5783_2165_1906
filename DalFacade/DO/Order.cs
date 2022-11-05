@@ -8,4 +8,11 @@ namespace DO;
 
 public struct Order
 {
+    public int ID;
+    public string CustomerName;
+    public string CustomerEmail;
+    public string CustomerAdress;
+    public DateTime OrderDate;
+    public DateTime ShipDate;
+    public DateTime DeliveryDate;
 }
