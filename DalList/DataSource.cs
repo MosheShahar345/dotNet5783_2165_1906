@@ -16,6 +16,11 @@ internal static class DataSource
         internal static int SizeOfProduct = 0;
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
+        private static int MinNum = 100000;
+        private static int MaxNum = 999999;
+        Random Date = new Random(DateTime.Now.Millisecond);
+        static Random Rand = new Random();
+        int Num = Rand.Next(MinNum, MaxNum);
     }
 
     static readonly Random Rand = new Random();
@@ -40,6 +45,22 @@ internal static class DataSource
 
     private static void s_Initialize()
     {
+        Product product = new Product()
+        {
 
+        };
+        AddProduct(product);
+
+        Order order = new Order()
+        {
+
+        };
+        AddOrder(order);
+
+        OrderItem orderItem = new OrderItem()
+        {
+
+        };
+        AddOrderItem(orderItem);
     }
 }
