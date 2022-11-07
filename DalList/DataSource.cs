@@ -20,7 +20,7 @@ internal static class DataSource
         private static int MaxNum = 999999;
         Random Date = new Random(DateTime.Now.Millisecond);
         static Random Rand = new Random();
-        int Num = Rand.Next(MinNum, MaxNum);
+        internal static int Num = Rand.Next(MinNum, MaxNum);
     }
 
     static readonly Random Rand = new Random();
@@ -30,12 +30,19 @@ internal static class DataSource
 
     private static void AddProduct(Product product)
     {
+        product.ID = Config.Num;
+        
         MyProduct[Config.SizeOfProduct++] = product;
     }
 
     private static void AddOrder(Order order)
     {
-        MyOrder[Config.SizeOfOrder++] = order;
+        for (int i = 0; i < 10; i++)
+        {
+            order.ID = Config.Num;
+
+            MyOrder[Config.SizeOfOrder++] = order;
+        }
     }
 
     private static void AddOrderItem(OrderItem orderItem)
