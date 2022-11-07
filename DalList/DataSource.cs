@@ -74,9 +74,11 @@ internal static class DataSource
             "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
         };
 
-        };
+        DateTime[] OrderDate = { };
 
     }
+
+    
     private static void s_Initialize()
     {
         Product product = new Product()
@@ -115,5 +117,20 @@ internal static class DataSource
         double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };
 
         int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
+
+        for(int i = 0; i < 10; i++)
+        {
+            Product product = new Product();
+            product.ID = Config.MinNum + i;
+            product.Name = Names[i];
+            product.Category = Categories[i];
+            product.Price = Price[i];
+            product.InStock = InStock[i];
+            AddProduct(product);
+        }
+
+  
+    
+        
     }
 }
