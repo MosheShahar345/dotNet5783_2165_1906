@@ -8,4 +8,8 @@ namespace DO;
 
 public struct Enums
 {
+    public class Category
+    {
+        
+    }
 }
