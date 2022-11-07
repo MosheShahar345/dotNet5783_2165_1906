@@ -81,7 +81,7 @@ internal static class DataSource
     {
         Product product = new Product()
         {
-
+            
         };
         AddProduct(product);
 
