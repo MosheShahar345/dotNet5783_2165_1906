@@ -85,7 +85,14 @@ internal static class DataSource
 
     private static void CreateOrderItems()
     {
-
+        for (int i = 0; i < 40; i++)
+        {
+            OrderItem orderItem = new OrderItem();
+            orderItem.OrderID = Config.MinNum + i;
+            orderItem.ProductID = MyProduct[i].ID;
+            orderItem.Price = MyProduct[i].Price;
+            orderItem.Amount = MyProduct[i].InStock;
+        }
     }
     private static void CreateProducts()
     {
@@ -110,7 +117,7 @@ internal static class DataSource
         for(int i = 0; i < 10; i++)
         {
             Product product = new Product();
-            product.ID = Config.MinNum + i;
+            product.ID = Config.Num;
             product.Name = Names[i];
             product.Category = Categories[i];
             product.Price = Price[i];
