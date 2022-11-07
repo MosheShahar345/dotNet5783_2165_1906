@@ -11,40 +11,28 @@ namespace Dal;
 
 internal static class DataSource
 {
-   // static DataSource() {s_Initialize();}
+    static DataSource()
+    {
+        s_Initialize();
+    }
     internal class Config
     {
         internal static int SizeOfProduct = 0;
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
-        internal static int MinNum = 100000;
+        internal static int MinNum = 100000; // id of order 
         internal static int MaxNum = 999999;
-        Random Date = new Random(DateTime.Now.Millisecond);
-        static Random Rand = new Random();
+
+        static Random Rand = new Random(DateTime.Now.Millisecond);
         internal static int Num = Rand.Next(MinNum, MaxNum);
     }
 
     static readonly Random Rand = new Random();
-    internal static Product[] MyProduct = new Product[50];
-    internal static Order[] MyOrder = new Order[100];
-    internal static OrderItem[] MyOrderItem = new OrderItem[200];
+    internal static Product[] Products = new Product[50];
+    internal static Order[] Orders = new Order[100];
+    internal static OrderItem[] OrderItems = new OrderItem[200];
 
-    private static void AddProduct(Product product)
-    {
-        MyProduct[Config.SizeOfProduct++] = product;
-    }
-
-    private static void AddOrder(Order order)
-    {
-        MyOrder[Config.SizeOfOrder++] = order;
-    }
-
-    private static void AddOrderItem(OrderItem orderItem)
-    {
-        MyOrderItem[Config.SizeOfOrderItem++] = orderItem;
-    }
-
-    private static void CreateOrders()
+   private static void CreateOrders()
     {
         string[] Names =
         {
@@ -88,13 +76,8 @@ internal static class DataSource
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 3), 0, 0, 0);
             }
 
-            int k = 0;
-            for (int j = Rand.Next(1, 4); j > 0; j--)
-            {
-                order.Item[k++] = MyProduct[k++];
-            }
+            Orders[Config.SizeOfOrder++] = order;
 
-            AddOrder(order);
         }
     }
 
@@ -102,12 +85,18 @@ internal static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            OrderItem orderItem = new OrderItem();
-            orderItem.OrderID = MyOrder[i].ID;
-            orderItem.ProductID = MyProduct[i].ID;
-            orderItem.Price = MyProduct[i].Price;
-            orderItem.Amount = MyProduct[i].InStock;
-            AddOrderItem(orderItem);
+            int ordindex = Rand.Next(Config.MinNum, Orders.Length + Config.MinNum);
+            int prodindex = Rand.Next(Config.SizeOfProduct);
+
+            OrderItem orderItem = new OrderItem
+            {
+                OrderID = Orders[ordindex].ID,
+                ProductID = Products[prodindex].ID,
+                Price = Products[prodindex].Price,
+                Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)
+            };
+            Products[prodindex].InStock -= orderItem.Amount;
+            OrderItems[Config.SizeOfOrderItem++] = orderItem;
         }
     }
     private static void CreateProducts()
@@ -132,14 +121,15 @@ internal static class DataSource
 
         for(int i = 0; i < 10; i++)
         {
-            Product product = new Product();
-            product.ID = Config.Num;
-            product.Name = Names[i];
-            product.Category = Categories[i];
-            product.Price = Price[i];
-            if(i < 8)
-                product.InStock = InStock[i];
-            AddProduct(product);
+            Product product = new Product
+            {
+                ID = Config.Num++,
+                Name = Names[i],
+                Category = Categories[i],
+                Price = Price[i],
+                InStock= (i<9)? InStock[i]:0
+            };
+            Products[Config.SizeOfProduct++] = product;
         }
     }
     private static void s_Initialize()
