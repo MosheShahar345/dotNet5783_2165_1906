@@ -77,10 +77,21 @@ internal static class DataSource
         for(int i = 0; i < 20; i++)
         {
             Order order = new Order();
-           
+            order.ID = Config.MinNum + i;
+            order.CustomerEmail = Names[i];
+            order.CustomerAdress = Adresses[i];
+            order.OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0);
 
+            if(i < 16)
+            {
+                order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(5, 10), 0, 0, 0);
+            }
+
+            if(i < 10)
+            {
+                order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 3), 0, 0, 0);
+            }
         }
-
     }
 
     private static void CreateOrderItems()
@@ -126,7 +137,6 @@ internal static class DataSource
             AddProduct(product);
         }
     }
-
     private static void s_Initialize()
     {
         CreateProducts();
