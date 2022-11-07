@@ -10,6 +10,10 @@ public struct Enums
 {
     public class Category
     {
-        
+        Suit
+        shoes
+        Shirts
+        ties
+        cufflinks
     }
 }
