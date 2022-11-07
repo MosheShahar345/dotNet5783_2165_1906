@@ -49,7 +49,7 @@ internal static class DataSource
         MyOrderItem[Config.SizeOfOrderItem++] = orderItem;
     }
 
-    private static void CreatOrder(Order order)
+    private static void CreateOrder()
     {
         string[] Names =
         {
@@ -74,28 +74,11 @@ internal static class DataSource
             "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
         };
 
-        };
-
     }
-    private static void s_Initialize()
+
+    private static void CreateOrderItem()
     {
-        Product product = new Product()
-        {
-            
-        };
-        AddProduct(product);
 
-        Order order = new Order()
-        {
-
-        };
-        AddOrder(order);
-
-        OrderItem orderItem = new OrderItem()
-        {
-
-        };
-        AddOrderItem(orderItem);
     }
     private static void CreateProducts()
     {
@@ -112,8 +95,16 @@ internal static class DataSource
             Enums.Category.Pants,Enums.Category.Shirts,Enums.Category.Shirts,
             Enums.Category.Ties,Enums.Category.Ties,Enums.Category.Cufflinks,Enums.Category.Cufflinks
         };
+
         double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };
 
         int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
+    }
+
+    private static void s_Initialize()
+    {
+        CreateProducts();
+        CreateOrder();
+        CreateOrderItem();
     }
 }
