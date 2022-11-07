@@ -49,7 +49,7 @@ internal static class DataSource
         MyOrderItem[Config.SizeOfOrderItem++] = orderItem;
     }
 
-    private static void CreateOrder()
+    private static void CreateOrders()
     {
         string[] Names =
         {
@@ -76,7 +76,7 @@ internal static class DataSource
 
     }
 
-    private static void CreateOrderItem()
+    private static void CreateOrderItems()
     {
 
     }
@@ -110,16 +110,12 @@ internal static class DataSource
             product.InStock = InStock[i];
             AddProduct(product);
         }
-
-  
-    
-        
     }
 
     private static void s_Initialize()
     {
         CreateProducts();
-        CreateOrder();
-        CreateOrderItem();
+        CreateOrders();
+        CreateOrderItems();
     }
 }
