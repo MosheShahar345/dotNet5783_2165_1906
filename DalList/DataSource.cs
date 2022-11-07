@@ -68,6 +68,11 @@ internal static class DataSource
 
         string[] Adresses =
         {
+            "86th St Bridge", "145th St Bridge", "Abingdon Square", "Abraham Kazan St",
+            "Abraham PI", "Absecon Rd", "Beach St", "Bear Rd", "Beaver St", "Beekman PI",
+            "Bennett Ave", "Bond St", "Broad St", "Canal St", "Cannon St",
+            "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
+        };
 
         };
 
