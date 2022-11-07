@@ -68,8 +68,11 @@ internal static class DataSource
 
         string[] Adresses =
         {
-
-        }
+            "86th St Bridge", "145th St Bridge", "Abingdon Square", "Abraham Kazan St",
+            "Abraham PI", "Absecon Rd", "Beach St", "Bear Rd", "Beaver St", "Beekman PI",
+            "Bennett Ave", "Bond St", "Broad St", "Canal St", "Cannon St",
+            "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
+        };
 
     }
     private static void s_Initialize()
@@ -96,8 +99,8 @@ internal static class DataSource
    {
        string[] names =
        {
-           "Silk suit", "kids suit", "Cotton pants", "Leather pants",
-           "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
+           "Silk suit", "Kids suit", "Cotton pants", "Leather pants",
+           "Shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
            "Silver cufflinks", "Diamond cunfflinks"
        };
 
