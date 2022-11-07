@@ -93,10 +93,14 @@ internal static class DataSource
         AddOrderItem(orderItem);
     }
    private static void CreateProducts()
-    {
-        string[] names = {"Silk suit","kids suit","Cotton pants","Leather pants",
-            "shirts with cuffs","Long shirts","Silk tie","Floral tie","Silver cufflinks","Diamond cunfflinks"};
+   {
+       string[] names =
+       {
+           "Silk suit", "kids suit", "Cotton pants", "Leather pants",
+           "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
+           "Silver cufflinks", "Diamond cunfflinks"
+       };
 
-        Enums.Category[] = {Enums.Category.};
+        Enums.Category[] dd = {Enums.Category};
     
 }
