@@ -11,6 +11,7 @@ namespace Dal;
 
 internal static class DataSource
 {
+   // static DataSource() {s_Initialize();}
     internal class Config
     {
         internal static int SizeOfProduct = 0;
@@ -30,18 +31,12 @@ internal static class DataSource
 
     private static void AddProduct(Product product)
     {
-
         MyProduct[Config.SizeOfProduct++] = product;
     }
 
     private static void AddOrder(Order order)
     {
-        for (int i = 0; i < 10; i++)
-        {
-            order.ID = Config.Num;
-
-            MyOrder[Config.SizeOfOrder++] = order;
-        }
+        MyOrder[Config.SizeOfOrder++] = order;
     }
 
     private static void AddOrderItem(OrderItem orderItem)
@@ -78,7 +73,8 @@ internal static class DataSource
         {
             Order order = new Order();
             order.ID = Config.MinNum + i;
-            order.CustomerEmail = Names[i];
+            order.CustomerEmail = Emails[i];
+            order.CustomerName = Names[i];
             order.CustomerAdress = Adresses[i];
             order.OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0);
 
@@ -91,6 +87,14 @@ internal static class DataSource
             {
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 3), 0, 0, 0);
             }
+
+            int k = 0;
+            for (int j = Rand.Next(1, 4); j > 0; j--)
+            {
+                order.Item[k++] = MyProduct[k++];
+            }
+
+            AddOrder(order);
         }
     }
 
@@ -99,10 +103,11 @@ internal static class DataSource
         for (int i = 0; i < 40; i++)
         {
             OrderItem orderItem = new OrderItem();
-            orderItem.OrderID = Config.MinNum + i;
+            orderItem.OrderID = MyOrder[i].ID;
             orderItem.ProductID = MyProduct[i].ID;
             orderItem.Price = MyProduct[i].Price;
             orderItem.Amount = MyProduct[i].InStock;
+            AddOrderItem(orderItem);
         }
     }
     private static void CreateProducts()
@@ -116,9 +121,9 @@ internal static class DataSource
 
         Enums.Category[] Categories =
         {
-            Enums.Category.Suit,Enums.Category.Suit,Enums.Category.Pants,
-            Enums.Category.Pants,Enums.Category.Shirts,Enums.Category.Shirts,
-            Enums.Category.Ties,Enums.Category.Ties,Enums.Category.Cufflinks,Enums.Category.Cufflinks
+            Enums.Category.Suit, Enums.Category.Suit, Enums.Category.Pants,
+            Enums.Category.Pants, Enums.Category.Shirts, Enums.Category.Shirts,
+            Enums.Category.Ties, Enums.Category.Ties, Enums.Category.Cufflinks, Enums.Category.Cufflinks
         };
 
         double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };

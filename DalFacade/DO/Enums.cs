@@ -10,11 +10,11 @@ public struct Enums
 {
     public enum Category
     {
-        Suit;
-        shoes;
-        Shirts;
-        ties;
-        cufflinks;
-
+        Suit,
+        Pants,
+        Shoes,
+        Shirts,
+        Ties,
+        Cufflinks
     }
 }
