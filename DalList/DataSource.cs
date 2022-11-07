@@ -127,8 +127,10 @@ internal static class DataSource
 
         for(int i = 0; i < 10; i++)
         {
+            int Check = 0;
             Product product = new Product();
             product.ID = Config.Num;
+            Check = product.ID;
             product.Name = Names[i];
             product.Category = Categories[i];
             product.Price = Price[i];
