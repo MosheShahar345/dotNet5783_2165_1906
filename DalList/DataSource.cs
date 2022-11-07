@@ -30,7 +30,7 @@ internal static class DataSource
 
     private static void AddProduct(Product product)
     {
-       
+
         MyProduct[Config.SizeOfProduct++] = product;
     }
 
@@ -69,7 +69,7 @@ internal static class DataSource
         string[] Adresses =
         {
 
-        }
+        };
 
     }
     private static void s_Initialize()
@@ -88,19 +88,27 @@ internal static class DataSource
 
         OrderItem orderItem = new OrderItem()
         {
-            
+
         };
         AddOrderItem(orderItem);
     }
-   private static void CreateProducts()
-   {
-       string[] names =
-       {
-           "Silk suit", "kids suit", "Cotton pants", "Leather pants",
-           "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
-           "Silver cufflinks", "Diamond cunfflinks"
-       };
+    private static void CreateProducts()
+    {
+        string[] Names =
+        {
+            "Silk suit", "kids suit", "Cotton pants", "Leather pants",
+            "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
+            "Silver cufflinks", "Diamond cunfflinks"
+        };
 
-        Enums.Category[] dd = {Enums.Category};
-    
+        Enums.Category[] Categories =
+        {
+            Enums.Category.Suit,Enums.Category.Suit,Enums.Category.Pants,
+            Enums.Category.Pants,Enums.Category.Shirts,Enums.Category.Shirts,
+            Enums.Category.Ties,Enums.Category.Ties,Enums.Category.Cufflinks,Enums.Category.Cufflinks
+        };
+        double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };
+
+        int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
+    }
 }

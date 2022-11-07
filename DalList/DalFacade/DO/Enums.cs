@@ -8,12 +8,13 @@ namespace DO;
 
 public struct Enums
 {
-    public class Category
+    public enum Category
     {
-        Suit
-        shoes
-        Shirts
-        ties
-        cufflinks
+        Suit,
+        Pants,
+        Shoes,
+        Shirts,
+        Ties,
+        Cufflinks
     }
 }
