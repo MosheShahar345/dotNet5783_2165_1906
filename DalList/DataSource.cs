@@ -16,8 +16,8 @@ internal static class DataSource
         internal static int SizeOfProduct = 0;
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
-        private static int MinNum = 100000;
-        private static int MaxNum = 999999;
+        internal static int MinNum = 100000;
+        internal static int MaxNum = 999999;
         Random Date = new Random(DateTime.Now.Millisecond);
         static Random Rand = new Random();
         internal static int Num = Rand.Next(MinNum, MaxNum);
@@ -50,6 +50,29 @@ internal static class DataSource
         MyOrderItem[Config.SizeOfOrderItem++] = orderItem;
     }
 
+    private static void CreatOrder(Order order)
+    {
+        string[] Names =
+        {
+            "Moshe", "Aharon", "Sara", "Caroline", "John", "Laura", "Michael",
+            "Lily", "Julia", "Ben", "Grace", "James", "Nick", "Ross", "Monica",
+            "Rachel", "Joey", "Chandler", "Phoebe", "Luca"
+        };
+
+        string[] Emails =
+        {
+            "Moshe@.com", "Aharon@.com", "Sara@.com", "Caroline@.com", "John@.com",
+            "Laura@.com", "Michael@.com", "Lily@.com", "Julia@.com", "Ben@.com",
+            "Grace@.com", "James@.com", "Nick@.com", "Ross@.com", "Monica@.com",
+            "Rachel@.com", "Joey@.com", "Chandler@.com", "Phoebe@.com", "Luca@.com"
+        };
+
+        string[] Adresses =
+        {
+
+        }
+
+    }
     private static void s_Initialize()
     {
         Product product = new Product()
