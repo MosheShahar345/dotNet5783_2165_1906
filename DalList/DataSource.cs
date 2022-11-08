@@ -13,7 +13,7 @@ internal static class DataSource
 {
     static DataSource()
     {
-        s_Initialize();
+        s_Initialize(); 
     }
     internal class Config
     {
@@ -57,21 +57,22 @@ internal static class DataSource
             "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
         };
 
-        for(int i = 0; i < 20; i++)
+        for(int i = 0; i < 20; i++)//A loop that runs 20 times and fills in all the details of the customer
         {
             Order order = new Order();
             order.ID = Config.MinNum + i;
             order.CustomerEmail = Emails[i];
             order.CustomerName = Names[i];
             order.CustomerAdress = Adresses[i];
-            order.OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0);
+            order.OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0);//
 
-            if(i < 16)
+            if(i < 16)//Makes sure that 80 percent of the orders the date will be after the date of Create order
             {
                 order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(5, 10), 0, 0, 0);
             }
 
-            if(i < 10)
+            if(i < 10)//Makes sure that 60 percent that a
+                      //bout 60% of orders shipped will have a delivery date
             {
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 3), 0, 0, 0);
             }
@@ -119,7 +120,7 @@ internal static class DataSource
 
         int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++) //creats 10 products
         {
             Product product = new Product
             {
@@ -127,12 +128,12 @@ internal static class DataSource
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],
-                InStock= (i<9)? InStock[i]:0
+                InStock= (i<9)? InStock[i]: 0 //Makes sure that 5 percent of the products are out of stock
             };
             Products[Config.SizeOfProduct++] = product;
         }
     }
-    private static void s_Initialize()
+    private static void s_Initialize() //A function that calls a default constructor that initializes entities in order
     {
         CreateProducts();
         CreateOrders();
