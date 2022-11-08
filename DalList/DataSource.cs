@@ -135,7 +135,7 @@ internal static class DataSource
             Products[Config.SizeOfProduct++] = product;
         }
     }
-    private static void s_Initialize() //A function that calls a default constructor that initializes entities in order
+    private static void s_Initialize() //
     {
         CreateProducts();
         CreateOrders();
