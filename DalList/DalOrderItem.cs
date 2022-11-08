@@ -11,13 +11,14 @@ namespace Dal;
 
 public class DalOrderItem
 {
-   private static void AddOrderItem(OrderItem orderItem)
+    public static int AddProduct(Product product)
     {
-        foreach (var item in DataSource.OrderItems)
+        foreach (var item in DataSource.Products)
         {
-            if (item.OrderID == orderItem.OrderID && item.ProductID == orderItem.ProductID)
+            if (item.Name == product.Name && item.Category == product.Category)
                 throw new ArgumentException("product already exist");
         }
-        DataSource.OrderItems[Config.SizeOfOrderItem++] = orderItem;
+        DataSource.Products[DataSource.Config.SizeOfProduct++] = product;
+        return product.ID;
     }
 }

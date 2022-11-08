@@ -80,7 +80,6 @@ internal static class DataSource
             }
 
             Orders[Config.SizeOfOrder++] = order;
-
         }
    }
 
@@ -126,11 +125,11 @@ internal static class DataSource
         {
             Product product = new Product
             {
-                ID = Config.Num++,
+                ID = Config.Num,
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],
-                InStock= (i<9)? InStock[i]: 0 //Makes sure that 5 percent of the products are out of stock
+                InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
             };
             Products[Config.SizeOfProduct++] = product;
         }
