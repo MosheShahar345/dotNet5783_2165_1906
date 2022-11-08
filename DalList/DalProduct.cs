@@ -21,14 +21,16 @@ public class DalProduct
         DataSource.Products[Config.SizeOfProduct++] = product;
     }
 
-    private static void DeleteProduct(Product product)
+    private static void DeleteProduct(int productID)
     {
         bool flag = false;
-        foreach (var item in DataSource.Products)
+        for(int i =0; i< DataSource.Config.SizeOfProduct; i++)
         {
-            if (item.Name == product.Name && item.Category == product.Category)
+            
+            if (productID == DataSource.Products[i].ID)
             {
-                flag = true;
+                DataSource.Products[i] = DataSource.Products[DataSource.Config.SizeOfProduct];
+                flag = true; // deleting successfully don't throw an exception
             } 
         }
         if (!flag) 
