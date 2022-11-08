@@ -33,7 +33,7 @@ internal static class DataSource
     internal static OrderItem[] OrderItems = new OrderItem[200];
 
    private static void CreateOrders()
-    {
+   {
         string[] Names =
         {
             "Moshe", "Aharon", "Sara", "Caroline", "John", "Laura", "Michael",
@@ -82,7 +82,7 @@ internal static class DataSource
             Orders[Config.SizeOfOrder++] = order;
 
         }
-    }
+   }
 
     private static void CreateOrderItems()
     {

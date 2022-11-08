@@ -20,4 +20,18 @@ public class DalProduct
         }
         DataSource.Products[Config.SizeOfProduct++] = product;
     }
+
+    private static void DeleteProduct(Product product)
+    {
+        bool flag = false;
+        foreach (var item in DataSource.Products)
+        {
+            if (item.Name == product.Name && item.Category == product.Category)
+            {
+                flag = true;
+            } 
+        }
+        if (!flag) 
+            throw new ArgumentException("product dose not exist");
+    }
 }
