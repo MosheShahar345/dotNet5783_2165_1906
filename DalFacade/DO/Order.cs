@@ -15,5 +15,4 @@ public struct Order
     public DateTime OrderDate { get; set; }
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryDate { get; set; }
-    public Product[] Item;
 }

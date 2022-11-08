@@ -6,6 +6,6 @@
 
 namespace Dal;
 
-public struct DalEnums
+public class DalEnums
 {
 }
