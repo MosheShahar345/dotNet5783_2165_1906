@@ -59,12 +59,14 @@ internal static class DataSource
 
         for(int i = 0; i < 20; i++)
         {
-            Order order = new Order();
-            order.ID = Config.MinNum + i;
-            order.CustomerEmail = Emails[i];
-            order.CustomerName = Names[i];
-            order.CustomerAdress = Adresses[i];
-            order.OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0);
+            Order order = new Order()
+            {
+                ID = Config.MinNum + i,
+                CustomerEmail = Emails[i],
+                CustomerName = Names[i],
+                CustomerAdress = Adresses[i],
+                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0)
+            };
 
             if(i < 16)
             {

@@ -6,6 +6,6 @@
 
 namespace Dal;
 
-public struct DalOrderItem
+public class DalOrderItem
 {
 }
