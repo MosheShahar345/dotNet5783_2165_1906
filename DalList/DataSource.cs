@@ -74,18 +74,18 @@ internal static class DataSource
                 CustomerEmail = Emails[i],
                 CustomerName = Names[i],
                 CustomerAdress = Adresses[i],
-                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 26), 0, 0, 0)
+                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)
             };
 
             if(i < 16)//Makes sure that 80 percent of the orders the date will be after the date of Create order
             {
-                order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(5, 10), 0, 0, 0);
+                order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(3, 5), 0, 0, 0);
             }
 
             if(i < 10)//Makes sure that 60 percent that a
                       //bout 60% of orders shipped will have a delivery date
             {
-                order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 3), 0, 0, 0);
+                order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1,2), 0, 0, 0);
             }
 
             Orders[Config.SizeOfOrder++] = order;
