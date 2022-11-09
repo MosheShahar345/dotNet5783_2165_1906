@@ -24,6 +24,7 @@ public class DalProduct
     public static void DeleteProduct(int productID)
     {
         bool flag = false;
+
         for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)
         {
             if (productID == DataSource.Products[i].ID)
