@@ -62,7 +62,6 @@ public class DalProduct
         }
         throw new ArgumentException("product dose not exist");
     }
-
     public static Product[] Get()
     {
         return DataSource.Products;
