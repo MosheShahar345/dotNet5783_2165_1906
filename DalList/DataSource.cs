@@ -32,11 +32,11 @@ internal static class DataSource
             return IdOfOrderItem++;
         }
 
-        static Random Rand = new(DateTime.Now.Millisecond);
-        internal static int Num = Rand.Next(100000, 999999);
+        //static Random Rand = new(DateTime.Now.Millisecond);
+        //internal static int Num = Rand.Next(100000, 999999);
     }
 
-    static readonly Random Rand = new();
+    static readonly Random Rand = new(DateTime.Now.Millisecond);
     internal static Product[] Products = new Product[50];
     internal static Order[] Orders = new Order[100];
     internal static OrderItem[] OrderItems = new OrderItem[200];
@@ -133,7 +133,7 @@ internal static class DataSource
         {
             Product product = new Product
             {
-                ID = Rand.Next(100000,999999),
+                ID = Rand.Next(100000,99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],

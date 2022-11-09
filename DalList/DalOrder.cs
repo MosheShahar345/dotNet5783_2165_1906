@@ -5,7 +5,6 @@
 //using System.Threading.Tasks;
 
 using DO;
-using static Dal.DataSource;
 
 namespace Dal;
 
@@ -18,6 +17,6 @@ public class DalOrder
             if (item.ID == order.ID && item.CustomerName == order.CustomerName && item.OrderDate == order.OrderDate)
                 throw new ArgumentException("product already exist");
         }
-        DataSource.Orders[Config.SizeOfOrder++] = order;
+        DataSource.Orders[DataSource.Config.SizeOfOrder++] = order;
     }
 }
