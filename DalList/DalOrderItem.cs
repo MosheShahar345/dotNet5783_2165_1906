@@ -65,4 +65,14 @@ public class DalOrderItem
     {
         return DataSource.OrderItems;
     }
+
+    public static OrderItem Get(Product product, Order order)
+    {
+        foreach(var item in DataSource.OrderItems)
+        {
+            if(item.ProductID == product.ID && item.OrderID == order.ID)
+                return item;
+        }
+        throw new ArgumentException("order item dose not exist");
+    }
 }
