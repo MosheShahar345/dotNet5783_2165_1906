@@ -5,7 +5,6 @@
 //using System.Threading.Tasks;
 
 using DO;
-using static Dal.DataSource;
 
 namespace Dal;
 

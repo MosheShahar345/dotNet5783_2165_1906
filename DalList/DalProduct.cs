@@ -45,18 +45,11 @@ public class DalProduct
         {
             if (DataSource.Products[i].ID == product.ID)
             {
-                DataSource.Products[i].ID = product.ID;
-                DataSource.Products[i].Name = product.Name;
-                DataSource.Products[i].Price = product.Price;
-                DataSource.Products[i].Category = product.Category;
-                DataSource.Products[i].InStock = product.InStock;
+                DataSource.Products[i] = product;
                 flag = true;
             }
         }
         if (!flag)
             throw new ArgumentException("product dose not exist");
     }
-
-
-
 }
