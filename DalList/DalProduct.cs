@@ -52,4 +52,19 @@ public class DalProduct
         if (!flag)
             throw new ArgumentException("product dose not exist");
     }
+
+    public static Product Get(int productID)
+    {
+        foreach (var item in DataSource.Products)
+        {
+            if (item.ID == productID)
+                return item;
+        }
+        throw new ArgumentException("product dose not exist");
+    }
+
+    public static Product[] Get()
+    {
+        return DataSource.Products;
+    }
 }

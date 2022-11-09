@@ -32,11 +32,11 @@ internal static class DataSource
             return IdOfOrderItem++;
         }
 
-        static Random Rand = new(DateTime.Now.Millisecond);
-        internal static int Num = Rand.Next(100000, 999999);
+        //static Random Rand = new(DateTime.Now.Millisecond);
+        //internal static int Num = Rand.Next(100000, 999999);
     }
 
-    static readonly Random Rand = new();
+    static readonly Random Rand = new(DateTime.Now.Millisecond);
     internal static Product[] Products = new Product[50];
     internal static Order[] Orders = new Order[100];
     internal static OrderItem[] OrderItems = new OrderItem[200];
@@ -82,8 +82,7 @@ internal static class DataSource
                 order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(3, 5), 0, 0, 0);
             }
 
-            if(i < 10)//Makes sure that 60 percent that a
-                      //bout 60% of orders shipped will have a delivery date
+            if(i < 10)//Makes sure that 60 percent that about 60% of orders shipped will have a delivery date
             {
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1,2), 0, 0, 0);
             }
@@ -134,7 +133,7 @@ internal static class DataSource
         {
             Product product = new Product
             {
-                ID = Rand.Next(100000,999999),
+                ID = Rand.Next(100000,99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],
