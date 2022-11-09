@@ -20,14 +20,23 @@ internal static class DataSource
         internal static int SizeOfProduct = 0;
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
-        internal static int MinNum = 100000; // id of order 
-        internal static int MaxNum = 999999;
+        private static int IdOfOrder = 0;
+        private static int IdOfOrderItem = 0;
+        public static int GetOrderID()
+        {
+            return IdOfOrder++;
+        }
 
-        static Random Rand = new Random(DateTime.Now.Millisecond);
-        internal static int Num = Rand.Next(MinNum, MaxNum);
+        public static int GetOrderItemID()
+        {
+            return IdOfOrderItem++;
+        }
+
+        static Random Rand = new(DateTime.Now.Millisecond);
+        internal static int Num = Rand.Next(100000, 999999);
     }
 
-    static readonly Random Rand = new Random();
+    static readonly Random Rand = new();
     internal static Product[] Products = new Product[50];
     internal static Order[] Orders = new Order[100];
     internal static OrderItem[] OrderItems = new OrderItem[200];
@@ -61,7 +70,7 @@ internal static class DataSource
         {
             Order order = new Order()
             {
-                ID = Config.MinNum + i,
+                ID = Config.GetOrderID(),
                 CustomerEmail = Emails[i],
                 CustomerName = Names[i],
                 CustomerAdress = Adresses[i],
@@ -87,7 +96,7 @@ internal static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            int ordindex = Rand.Next(Config.MinNum, Orders.Length + Config.MinNum);
+            int ordindex = Rand.Next(Config.GetOrderItemID(), Orders.Length + Config.GetOrderItemID());
             int prodindex = Rand.Next(Config.SizeOfProduct);
 
             OrderItem orderItem = new OrderItem
@@ -125,7 +134,7 @@ internal static class DataSource
         {
             Product product = new Product
             {
-                ID = Config.Num,
+                ID = Rand.Next(100000,999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],

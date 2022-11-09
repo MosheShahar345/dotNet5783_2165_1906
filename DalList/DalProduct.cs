@@ -36,4 +36,26 @@ public class DalProduct
         if (!flag) 
             throw new ArgumentException("product dose not exist");
     }
+
+    public static void Update(Product product)
+    {
+        bool flag = false;
+        for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)
+        {
+            if (DataSource.Products[i].ID == product.ID)
+            {
+                DataSource.Products[i].ID = product.ID;
+                DataSource.Products[i].Name = product.Name;
+                DataSource.Products[i].Price = product.Price;
+                DataSource.Products[i].Category = product.Category;
+                DataSource.Products[i].InStock = product.InStock;
+                flag = true;
+            }
+        }
+        if (!flag)
+            throw new ArgumentException("product dose not exist");
+    }
+
+
+
 }
