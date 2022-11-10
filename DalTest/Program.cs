@@ -3,7 +3,7 @@ using DO;
 
 namespace Dal
 {
-    class Program
+    public class Program
     {
         private static DalProduct dal_product = new DalProduct();
         private static DalOrder dal_order = new DalOrder();
@@ -22,9 +22,9 @@ namespace Dal
             DELETE,
             CHECK,
             UPDATE,
-            PRINT,
+            PRINT
         }
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             int choice = int.Parse(Console.ReadLine());
             PrintStartMenu();
@@ -84,8 +84,8 @@ namespace Dal
                     product.Price = double.Parse(Console.ReadLine());
                     product.InStock = int.Parse(Console.ReadLine());
                     try
-                    {
-                        DalProduct.AddProduct(product);
+                    { 
+                        dal_product.AddProduct(product);// ??????
                     }
                     catch (Exception str)
                     {
@@ -156,10 +156,10 @@ namespace Dal
         }
         public static void PrintStartMenu()
         {
-            Console.Write("click 0 to exit \n" +
+            Console.WriteLine("click 0 to exit \n" +
                           "click 1 to view product \n" +
                           "click 2 to view order \n" +
-                          "click 3 to view item \n");
+                          "click 3 to view order item \n");
         }
     }
 }

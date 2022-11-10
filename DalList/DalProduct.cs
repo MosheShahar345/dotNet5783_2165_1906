@@ -10,7 +10,7 @@ namespace Dal;
 
 public class DalProduct
 {
-    public static int AddProduct(Product product)
+    public static void AddProduct(Product product)
     {
         foreach (var item in DataSource.Products)
         {
@@ -18,7 +18,6 @@ public class DalProduct
                 throw new ArgumentException("product already exist");
         }
         DataSource.Products[DataSource.Config.SizeOfProduct++] = product;
-        return product.ID;
     }
 
     public static void DeleteProduct(int productID)
