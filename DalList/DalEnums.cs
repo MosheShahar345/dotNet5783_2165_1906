@@ -4,8 +4,9 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-namespace Dal;
-
-public class DalEnums
+namespace Dal
 {
+    internal class DalEnums
+    {
+    }
 }
