@@ -109,7 +109,7 @@ internal static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            int ordindex = Rand.Next(Config.GetOrderItemID(), Orders.Length + Config.GetOrderItemID());//Generates a random number from the last number of an order code to the size of the array + the same number
+            int ordindex = Rand.Next(Config.SizeOfOrder);//Generates a random number from the last number of an order code to the size of the array + the same number
             int prodindex = Rand.Next(Config.SizeOfProduct);//Generates a random number from the number of the size of the array of products
 
             OrderItem orderItem = new OrderItem
@@ -149,14 +149,14 @@ internal static class DataSource
         for(int i = 0; i < 10; i++) //creats 10 products
         {
             Product product = new Product
-            {
-                ID = Rand.Next(100000,99999999),
+            { 
+                ID = Rand.Next(100000, 99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],
                 InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
             };
-            Products[Config.SizeOfProduct++] = product;
+              Products[Config.SizeOfProduct++] = product;
         }
     }
     /// <summary>

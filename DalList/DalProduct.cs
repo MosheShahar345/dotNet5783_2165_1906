@@ -18,10 +18,12 @@ public class DalProduct
     /// </summary>
     public void addProduct(Product product)
     {
-        foreach (var item in DataSource.Products)
+        for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)//Checks if such a product exists according to ID
         {
-            if (item.Name == product.Name && item.Category == product.Category)// A check uf the product is already exists
+            if (product.ID == DataSource.Products[i].ID)
+            {
                 throw new ArgumentException("product already exist");
+            }
         }
         DataSource.Products[DataSource.Config.SizeOfProduct++] = product;//if it does not exist, it is inserted into the array
     }
