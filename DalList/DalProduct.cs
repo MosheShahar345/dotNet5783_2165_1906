@@ -16,7 +16,7 @@ public class DalProduct
     /// <summary>
     /// Adding an product to the product array
     /// </summary>
-    public static void AddProduct(Product product)
+    public void addProduct(Product product)
     {
         foreach (var item in DataSource.Products)
         {
@@ -28,7 +28,7 @@ public class DalProduct
     /// <summary>
     /// deletes an existing product
     /// </summary>
-    public static void DeleteProduct(int productID)
+    public void deleteProduct(int productID)
     {
         bool flag = false;
 
@@ -47,7 +47,7 @@ public class DalProduct
     /// <summary>
     /// updateing an existing product
     /// </summary>
-    public static void Update(Product product)
+    public void update(Product product)
     {
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)
@@ -64,7 +64,7 @@ public class DalProduct
     /// <summary>
     /// receives a id and returns his product
     /// </summary>
-    public static Product Get(int productID)
+    public Product get(int productID)
     {
         foreach (var item in DataSource.Products)
         {
@@ -76,7 +76,7 @@ public class DalProduct
     /// <summary>
     /// returns the array of products
     /// </summary>
-    public static Product[] Get()
+    public Product[] get()
     {
         return DataSource.Products;
     }

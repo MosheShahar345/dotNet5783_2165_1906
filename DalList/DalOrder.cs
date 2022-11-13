@@ -15,7 +15,7 @@ public class DalOrder
     /// <summary>
     /// Adding an order to the order array
     /// </summary>
-    private static void AddOrder(Order order)
+    public void addOrder(Order order)
     {
         foreach (var item in DataSource.Orders)
         {
@@ -27,7 +27,7 @@ public class DalOrder
     /// <summary>
     /// deletes an existing order
     /// </summary>
-    public static void DeleteOrder(int orderID)
+    public void deleteOrder(int orderID)
     {
         bool flag = false;
 
@@ -46,7 +46,7 @@ public class DalOrder
     /// <summary>
     /// updateing an existing order
     /// </summary>
-    public static void Update(Order order)
+    public void update(Order order)
     {
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfOrder; i++)
@@ -63,7 +63,7 @@ public class DalOrder
     /// <summary>
     /// receives a id and returns his order
     /// </summary>
-    public static Order Get(int orderID)
+    public Order get(int orderID)
     {
         foreach (var item in DataSource.Orders)
         {
@@ -75,7 +75,7 @@ public class DalOrder
     /// <summary>
     /// returns the array of orders
     /// </summary>
-    public static Order[] Get()
+    public Order[] get()
     {
         return DataSource.Orders;
     }

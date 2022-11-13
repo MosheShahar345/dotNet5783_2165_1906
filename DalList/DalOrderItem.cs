@@ -16,7 +16,7 @@ public class DalOrderItem
    /// <summary>
    /// Adding an order item to the array
    /// </summary>
-    public static int AddOrderItem(OrderItem orderItem)
+    public int addOrderItem(OrderItem orderItem)
     {
         foreach (var item in DataSource.OrderItems)
         {
@@ -29,7 +29,7 @@ public class DalOrderItem
     /// <summary>
     /// deletes an existing order item
     /// </summary>
-    public static void DeleteOrderItem(int orderItemID)
+    public void deleteOrderItem(int orderItemID)
     {
         bool flag = false;
 
@@ -48,7 +48,7 @@ public class DalOrderItem
     /// <summary>
     /// updateing an existing order item
     /// </summary>
-    public static void Update(OrderItem orderItem)
+    public void update(OrderItem orderItem)
     {
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
@@ -65,26 +65,27 @@ public class DalOrderItem
     /// <summary>
     /// receives a id and returns his order item
     /// </summary>
-    public static OrderItem Get(int orderItemID)
+    public OrderItem get(int orderItemID)
     {
-        foreach (var item in DataSource.OrderItems)
+        OrderItem orderItem;
+        orderItem = DataSource.OrderItems.FirstOrDefault(item => item.OrderItemID == orderItemID);
+        if(orderItem.OrderItemID != orderItemID)
         {
-            if (item.OrderID == orderItemID)
-                return item;
+            throw new ArgumentException("order item dose not exist");//Throws an exception if the order does not exist
         }
-        throw new ArgumentException("order item dose not exist");//Throws an exception if the order does not exist
+        return orderItem;
     }
     /// <summary>
     /// returns the array of order items
     /// </summary>
-    public static OrderItem[] Get()
+    public OrderItem[] get()
     {
         return DataSource.OrderItems;
     }
     /// <summary>
     /// returns the array of order items if the product id and the order id is equal 
     /// </summary>
-    public static OrderItem Get(Product product, Order order)
+    public OrderItem get(Product product, Order order)
     {
         foreach(var item in DataSource.OrderItems)
         {
