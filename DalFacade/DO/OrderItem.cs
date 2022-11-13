@@ -6,6 +6,9 @@
 
 namespace DO;
 
+/// <summary>
+///  geter's and seter's for all variables in order item
+/// </summary>
 public struct OrderItem
 {
     public int ProductID { get; set; }

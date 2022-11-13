@@ -11,6 +11,9 @@ namespace Dal;
 
 internal static class DataSource
 {
+    /// <summary>
+    ///  Initializes all entities in order
+    /// </summary>
     static DataSource()
     {
         s_Initialize(); 
@@ -20,13 +23,19 @@ internal static class DataSource
         internal static int SizeOfProduct = 0;
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
-        private static int IdOfOrder = 0;
-        private static int IdOfOrderItem = 0;
+        private static int IdOfOrder = 0;//Resets the order code to 0
+        private static int IdOfOrderItem = 0;//Resets the order item code to 0
+
+        /// <summary>
+        ///  Increases the order code by one
+        /// </summary>
         public static int GetOrderID()
         {
             return IdOfOrder++;
         }
-
+        /// <summary>
+        ///  Increases the order item code by one
+        /// </summary>
         public static int GetOrderItemID()
         {
             return IdOfOrderItem++;
@@ -41,7 +50,10 @@ internal static class DataSource
     internal static Order[] Orders = new Order[100];
     internal static OrderItem[] OrderItems = new OrderItem[200];
 
-   private static void CreateOrders()
+    /// <summary>
+    ///  Order creator
+    /// </summary>
+    private static void CreateOrders()
    {
         string[] Names =
         {
@@ -74,7 +86,7 @@ internal static class DataSource
                 CustomerEmail = Emails[i],
                 CustomerName = Names[i],
                 CustomerAdress = Adresses[i],
-                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)
+                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)//Makes sure that the creation of the order is before the creation of the program
             };
 
             if(i < 16)//Makes sure that 80 percent of the orders the date will be after the date of Create order
@@ -90,25 +102,30 @@ internal static class DataSource
             Orders[Config.SizeOfOrder++] = order;
         }
    }
-
+    /// <summary>
+    ///  Order item creator
+    /// </summary>
     private static void CreateOrderItems()
     {
         for (int i = 0; i < 40; i++)
         {
-            int ordindex = Rand.Next(Config.GetOrderItemID(), Orders.Length + Config.GetOrderItemID());
-            int prodindex = Rand.Next(Config.SizeOfProduct);
+            int ordindex = Rand.Next(Config.GetOrderItemID(), Orders.Length + Config.GetOrderItemID());//Generates a random number from the last number of an order code to the size of the array + the same number
+            int prodindex = Rand.Next(Config.SizeOfProduct);//Generates a random number from the number of the size of the array of products
 
             OrderItem orderItem = new OrderItem
             {
                 OrderID = Orders[ordindex].ID,
                 ProductID = Products[prodindex].ID,
                 Price = Products[prodindex].Price,
-                Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)
+                Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
             };
-            Products[prodindex].InStock -= orderItem.Amount;
+            Products[prodindex].InStock -= orderItem.Amount;//Updates the quantity in stock
             OrderItems[Config.SizeOfOrderItem++] = orderItem;
         }
     }
+    /// <summary>
+    ///  Product creator
+    /// </summary>
     private static void CreateProducts()
     {
         string[] Names =
@@ -142,7 +159,12 @@ internal static class DataSource
             Products[Config.SizeOfProduct++] = product;
         }
     }
-    private static void s_Initialize() //
+    /// <summary>
+    ///  The s_Initialize method will schedule the method of adding objects
+    ///  to the entity arrays in the correct order according to the dependencies
+    ///  between the entities
+    /// </summary>
+    private static void s_Initialize() 
     {
         CreateProducts();
         CreateOrders();
