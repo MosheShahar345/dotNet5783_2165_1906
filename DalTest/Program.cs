@@ -29,9 +29,9 @@ namespace Dal
         }
         static int Main(string[] args)
         {
-            int choice = int.Parse(Console.ReadLine());
             PrintStartMenu();
-
+            int choice = int.Parse(Console.ReadLine());
+            
             do
             {
                 switch (choice)
@@ -52,6 +52,8 @@ namespace Dal
                         choice = 0;
                         break;
                 }
+                PrintStartMenu();
+                int.Parse(Console.ReadLine());
             } while (choice != 0);
 
             return 0;
@@ -69,9 +71,6 @@ namespace Dal
             int orderID;
             double price;
             int amount;
-
-
-
 
             bool status = int.TryParse(Console.ReadLine(), out choice);
 
@@ -274,10 +273,11 @@ namespace Dal
             switch (choice)
             {
                 case (int)OPTIONS.ADD:
-                    Console.WriteLine("enter: name, email, adress");
+                    Console.WriteLine("enter: name, category, price, in stock ");
                     product.Name = Console.ReadLine();
                     product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
                     product.Price = double.Parse(Console.ReadLine());
+                    
                     product.InStock = int.Parse(Console.ReadLine());
                     try
                     {

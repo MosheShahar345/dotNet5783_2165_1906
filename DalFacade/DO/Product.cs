@@ -11,6 +11,15 @@ namespace DO;
 /// </summary>
 public struct Product
 {
+    public Product(int iD, string name, double price, Enums.Category category, int inStock)
+    {
+        ID = iD;
+        Name = name;
+        Price = price;
+        Category = category;
+        InStock = inStock;
+    }
+
     public int ID { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
