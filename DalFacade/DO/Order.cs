@@ -7,11 +7,11 @@
 namespace DO;
 
 /// <summary>
-///  geter's and seter's for all variables in order 
+///  geters and seters for all variables in order 
 /// </summary>
 public struct Order
 {
-    public int ID { get; set; }
+    public int OrderID { get; set; }
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
     public string CustomerAdress { get; set; }
@@ -19,7 +19,7 @@ public struct Order
     public DateTime? ShipDate { get; set; }
     public DateTime? DeliveryDate { get; set; }
     public override string ToString() => $@"
-        ID = {ID}
+        ID = {OrderID}
         Customer Name: {CustomerEmail}
     	Customer Email: {CustomerEmail}
         Customer Adress: {CustomerAdress}

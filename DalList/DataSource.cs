@@ -82,7 +82,7 @@ internal static class DataSource
         {
             Order order = new Order()
             {
-                ID = Config.GetOrderID(),
+                OrderID = Config.GetOrderID(),
                 CustomerEmail = Emails[i],
                 CustomerName = Names[i],
                 CustomerAdress = Adresses[i],
@@ -114,7 +114,7 @@ internal static class DataSource
 
             OrderItem orderItem = new OrderItem
             {
-                OrderID = Orders[ordindex].ID,
+                OrderID = Orders[ordindex].OrderID,
                 ProductID = Products[prodindex].ID,
                 Price = Products[prodindex].Price,
                 Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
