@@ -29,11 +29,13 @@ namespace Dal
         }
         static int Main(string[] args)
         {
-            PrintStartMenu();
-            int choice = int.Parse(Console.ReadLine());
+            int choice;
 
             do
             {
+                PrintStartMenu();
+                choice = int.Parse(Console.ReadLine());
+
                 switch (choice)
                 {
                     case (int)ITEMS.PRODUCT:
@@ -52,8 +54,6 @@ namespace Dal
                         choice = 0;
                         break;
                 }
-                PrintStartMenu();
-                int.Parse(Console.ReadLine());
             } while (choice != 0);
 
             return 0;
