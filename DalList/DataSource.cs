@@ -24,7 +24,7 @@ internal static class DataSource
         internal static int SizeOfOrder = 0;
         internal static int SizeOfOrderItem = 0;
         private static int IdOfOrder = 0;//Resets the order code to 0
-        private static int IdOfOrderItem = 0;//Resets the order item code to 0
+        private static int IdOfOrderItem = 100000;//Resets the order item code to 100000
 
         /// <summary>
         ///  Increases the order code by one
@@ -82,7 +82,7 @@ internal static class DataSource
         {
             Order order = new Order()
             {
-                OrderID = Config.GetOrderID(),           
+                ID = Config.GetOrderID(),           
                 CustomerName = Names[i],
                 CustomerEmail = Emails[i],
                 CustomerAdress = Adresses[i],
@@ -114,8 +114,9 @@ internal static class DataSource
 
             OrderItem orderItem = new OrderItem
             {
-                OrderID = Orders[ordindex].OrderID,
-                ProductID = Products[prodindex].ProductID,
+                ID = Config.GetOrderItemID(),
+                OrderID = Config.GetOrderID(),
+                ProductID = Products[prodindex].ID,
                 Price = Products[prodindex].Price,
                 Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
             };
@@ -150,7 +151,7 @@ internal static class DataSource
         {
             Product product = new Product
             { 
-                ProductID = Rand.Next(100000, 99999999),
+                ID = Rand.Next(100000, 99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],

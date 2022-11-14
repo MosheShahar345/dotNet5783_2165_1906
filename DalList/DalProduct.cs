@@ -20,7 +20,7 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)//Checks if such a product exists according to ID
         {
-            if (product.ProductID == DataSource.Products[i].ProductID)
+            if (product.ID == DataSource.Products[i].ID)
             {
                 throw new ArgumentException("product already exist");
             }
@@ -36,7 +36,7 @@ public class DalProduct
 
         for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)//Checks if such a product exists according to ID
         {
-            if (productID == DataSource.Products[i].ProductID)
+            if (productID == DataSource.Products[i].ID)
             {
                 DataSource.Products[i] = DataSource.Products[DataSource.Config.SizeOfProduct];//replaces the last one with the one that is deleted
                 DataSource.Config.SizeOfProduct--;//decreases the array by one
@@ -54,7 +54,7 @@ public class DalProduct
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)
         {
-            if (DataSource.Products[i].ProductID == product.ProductID)//Searching by id which product to update
+            if (DataSource.Products[i].ID == product.ID)//Searching by id which product to update
             {
                 DataSource.Products[i] = product;
                 flag = true;
@@ -70,7 +70,7 @@ public class DalProduct
     {
         foreach (var item in DataSource.Products)
         {
-            if (item.ProductID == productID)
+            if (item.ID == productID)
                 return item;
         }
         throw new ArgumentException("product dose not exist");//Throws an exception if the product does not exist
