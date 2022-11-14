@@ -6,15 +6,11 @@
 
 namespace DO;
 
-public struct Enums
+public enum Category
 {
-    public enum Category
-    {
-        Suit,
-        Pants,
-        Shoes,
-        Shirts,
-        Ties,
-        Cufflinks
-    }
+    Suit,
+    Pants,
+    Shirts,
+    Ties,
+    Cufflinks
 }

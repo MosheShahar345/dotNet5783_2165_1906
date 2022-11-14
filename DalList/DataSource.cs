@@ -136,11 +136,11 @@ internal static class DataSource
             "Silver cufflinks", "Diamond cunfflinks"
         };
 
-        Enums.Category[] Categories =
+        Category[] Categories =
         {
-            Enums.Category.Suit, Enums.Category.Suit, Enums.Category.Pants,
-            Enums.Category.Pants, Enums.Category.Shirts, Enums.Category.Shirts,
-            Enums.Category.Ties, Enums.Category.Ties, Enums.Category.Cufflinks, Enums.Category.Cufflinks
+            Category.Suit, Category.Suit, Category.Pants,
+            Category.Pants,Category.Shirts, Category.Shirts,
+            Category.Ties, Category.Ties, Category.Cufflinks, Category.Cufflinks
         };
 
         double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };

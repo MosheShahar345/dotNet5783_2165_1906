@@ -272,7 +272,7 @@ namespace Dal
                     Console.WriteLine("enter: product ID, name, category, price, in stock ");
                     product.ID = int.Parse(Console.ReadLine()); ;
                     product.Name = Console.ReadLine();
-                    product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                    product.Category = (Category)Convert.ToInt32(Console.ReadLine());
                     product.Price = double.Parse(Console.ReadLine());
 
                     product.InStock = int.Parse(Console.ReadLine());
@@ -322,7 +322,7 @@ namespace Dal
                         Console.WriteLine(product);
                         Console.WriteLine("enter: name, category, price, in-stock");
                         product.Name = Console.ReadLine();
-                        product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                        product.Category = (Category)Convert.ToInt32(Console.ReadLine());
                         product.Price = double.Parse(Console.ReadLine());
                         product.InStock = int.Parse(Console.ReadLine());
                         dal_product.update(product);
