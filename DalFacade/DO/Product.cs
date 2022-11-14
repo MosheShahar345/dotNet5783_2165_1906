@@ -11,23 +11,15 @@ namespace DO;
 /// </summary>
 public struct Product
 {
-    public Product(int iD, string name, double price, Enums.Category category, int inStock)
-    {
-        ID = iD;
-        Name = name;
-        Price = price;
-        Category = category;
-        InStock = inStock;
-    }
-
-    public int ID { get; set; }
+    public int ProductID { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
     public Enums.Category Category { get; set; }
     public int InStock { get; set; }
 
     public override string ToString() => $@"
-        Product ID = {ID}: {Name}, 
+        Product ID = {ProductID}
+        Name: {Name}, 
         Category - {Category}
     	Price: {Price}
     	Amount in stock: {InStock}

@@ -17,9 +17,9 @@ public class DalOrder
     /// </summary>
     public void addOrder(Order order)
     {
-        foreach (var item in DataSource.Orders)
+        for (int i = 0;i < DataSource.Config.SizeOfOrder; i++)
         {
-            if (item.ID == order.ID)// A check uf the order is already exists
+            if (DataSource.Orders[i].OrderID == order.OrderID)// A check uf the order is already exists
                 throw new ArgumentException("order already exist");
         }
         DataSource.Orders[DataSource.Config.SizeOfOrder++] = order;//if it does not exist, it is inserted into the array
@@ -33,7 +33,7 @@ public class DalOrder
 
         for (int i = 0; i < DataSource.Config.SizeOfOrder; i++)
         {
-            if (orderID == DataSource.Orders[i].ID)//Checks if such a order exists according to ID
+            if (orderID == DataSource.Orders[i].OrderID)//Checks if such a order exists according to ID
             {
                 DataSource.Orders[i] = DataSource.Orders[DataSource.Config.SizeOfOrder];//replaces the last one with the one that is deleted
                 DataSource.Config.SizeOfOrder--;//decreases the array by one
@@ -51,7 +51,7 @@ public class DalOrder
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfOrder; i++)
         {
-            if (DataSource.Orders[i].ID == order.ID)//Searching by id which order to update
+            if (DataSource.Orders[i].OrderID == order.OrderID)//Searching by id which order to update
             {
                 DataSource.Orders[i] = order;
                 flag = true;
@@ -67,7 +67,7 @@ public class DalOrder
     {
         foreach (var item in DataSource.Orders)
         {
-            if (item.ID == orderID)
+            if (item.OrderID == orderID)
                 return item;
         }
         throw new ArgumentException("order dose not exist");//Throws an exception if the order does not exist

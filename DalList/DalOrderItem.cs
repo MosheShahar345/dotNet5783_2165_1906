@@ -18,13 +18,13 @@ public class DalOrderItem
    /// </summary>
     public int addOrderItem(OrderItem orderItem)
     {
-        foreach (var item in DataSource.OrderItems)
+        for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
         {
-            if (item.ProductID == orderItem.ProductID && item.OrderID == orderItem.OrderID)// A check uf the order item is already exists
+            if (DataSource.OrderItems[i].OrderItemID == orderItem.OrderItemID)// A check uf the order item is already exists
                 throw new ArgumentException("order item already exist");
         }
         DataSource.OrderItems[DataSource.Config.SizeOfOrderItem++] = orderItem;//if it does not exist, it is inserted into the array
-        return orderItem.OrderID;
+        return orderItem.OrderItemID;
     }
     /// <summary>
     /// deletes an existing order item
@@ -40,6 +40,8 @@ public class DalOrderItem
                 DataSource.OrderItems[i] = DataSource.OrderItems[DataSource.Config.SizeOfOrderItem];//replaces the last one with the one that is deleted
                 DataSource.Config.SizeOfOrderItem--;//decreases the array by one
                 flag = true; // deleting successfully don't throw an exception
+                if (flag)
+                    break;
             }
         }
         if (!flag)
@@ -89,7 +91,7 @@ public class DalOrderItem
     {
         foreach(var item in DataSource.OrderItems)
         {
-            if(item.ProductID == product.ID && item.OrderID == order.ID)
+            if(item.ProductID == product.ProductID && item.OrderID == order.OrderID)
                 return item;
         }
         throw new ArgumentException("order item dose not exist");

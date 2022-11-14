@@ -82,9 +82,9 @@ internal static class DataSource
         {
             Order order = new Order()
             {
-                OrderID = Config.GetOrderID(),
-                CustomerEmail = Emails[i],
+                OrderID = Config.GetOrderID(),           
                 CustomerName = Names[i],
+                CustomerEmail = Emails[i],
                 CustomerAdress = Adresses[i],
                 OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)//Makes sure that the creation of the order is before the creation of the program
             };
@@ -109,13 +109,13 @@ internal static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            int ordindex = Rand.Next(Config.SizeOfOrder);//Generates a random number from the last number of an order code to the size of the array + the same number
+            int ordindex = Rand.Next(Config.SizeOfOrder);
             int prodindex = Rand.Next(Config.SizeOfProduct);//Generates a random number from the number of the size of the array of products
 
             OrderItem orderItem = new OrderItem
             {
                 OrderID = Orders[ordindex].OrderID,
-                ProductID = Products[prodindex].ID,
+                ProductID = Products[prodindex].ProductID,
                 Price = Products[prodindex].Price,
                 Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
             };
@@ -150,7 +150,7 @@ internal static class DataSource
         {
             Product product = new Product
             { 
-                ID = Rand.Next(100000, 99999999),
+                ProductID = Rand.Next(100000, 99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],

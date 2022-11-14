@@ -6,7 +6,7 @@ using DO;
 
 namespace Dal
 {
-   public class Program
+    public class Program
     {
         private static DalProduct dal_product = new DalProduct();
         private static DalOrder dal_order = new DalOrder();
@@ -30,8 +30,7 @@ namespace Dal
         static int Main(string[] args)
         {
             PrintStartMenu();
-            int choice;
-            bool status = int.TryParse(Console.ReadLine(), out choice);
+            int choice = int.Parse(Console.ReadLine());
 
             do
             {
@@ -53,9 +52,8 @@ namespace Dal
                         choice = 0;
                         break;
                 }
-
-                int.TryParse(Console.ReadLine(), out choice);
-
+                PrintStartMenu();
+                int.Parse(Console.ReadLine());
             } while (choice != 0);
 
             return 0;
@@ -69,31 +67,31 @@ namespace Dal
                              "update order item - 4 \n" +
                              "print order item - 5 \n");
             int choice;
-            int orderItemID;
+            int orderItemId;
             int productID;
             int orderID;
             double price;
             int amount;
 
             bool status = int.TryParse(Console.ReadLine(), out choice);
-            OrderItem orderitem; 
-            int ID;
+
+            //int choice = int.Parse(Console.ReadLine());
+            OrderItem orderitem;
+            int orderItemID;
             switch (choice)
             {
                 case (int)OPTIONS.ADD:
-                    Console.WriteLine("enter: product ID, order ID, price, amount ");
-
-                    orderItemID = int.Parse(Console.ReadLine());
+                    Console.WriteLine("enter:order item ID, product ID, order ID, price, amount ");
+                    orderItemId = int.Parse(Console.ReadLine());
                     productID = int.Parse(Console.ReadLine());
                     orderID = int.Parse(Console.ReadLine());
                     price = double.Parse(Console.ReadLine());
                     amount = int.Parse(Console.ReadLine());
-
                     try
                     {
                         orderitem = new OrderItem
                         {
-                            OrderItemID = orderItemID,
+                            OrderItemID = orderItemId,
                             ProductID = productID,
                             OrderID = orderID,
                             Price = price,
@@ -109,10 +107,10 @@ namespace Dal
 
                 case (int)OPTIONS.DELETE:
                     Console.WriteLine("enter order item ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    orderItemID = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_order_item.deleteOrderItem(ID);
+                        dal_order_item.deleteOrderItem(orderItemID);
                     }
                     catch (Exception str)
                     {
@@ -122,10 +120,10 @@ namespace Dal
 
                 case (int)OPTIONS.CHECK:
                     Console.WriteLine("enter order item ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    orderItemID = int.Parse(Console.ReadLine());
                     try
                     {
-                        orderitem = dal_order_item.get(ID);
+                        orderitem = dal_order_item.get(orderItemID);
                         Console.WriteLine(orderitem);
                     }
                     catch (Exception str)
@@ -135,24 +133,15 @@ namespace Dal
                     break;
 
                 case (int)OPTIONS.UPDATE:
-                    Console.WriteLine("enter: product ID, order ID, price, amount ");
-
+                    Console.WriteLine("enter:order item ID");
                     orderItemID = int.Parse(Console.ReadLine());
-                    productID = int.Parse(Console.ReadLine());
-                    orderID = int.Parse(Console.ReadLine());
-                    price = double.Parse(Console.ReadLine());
-                    amount = int.Parse(Console.ReadLine());
-
                     try
                     {
-                        orderitem = new OrderItem
-                        {
-                            OrderItemID = orderItemID,
-                            ProductID = productID,
-                            OrderID = orderID,
-                            Price = price,
-                            Amount = amount
-                        };
+                        orderitem = dal_order_item.get(orderItemID);
+                        Console.WriteLine(orderitem);
+                        Console.WriteLine("enter: price, amount ");
+                        orderitem.Price = int.Parse(Console.ReadLine());
+                        orderitem.Amount = int.Parse(Console.ReadLine());
                         dal_order_item.update(orderitem);
                     }
                     catch (Exception str)
@@ -173,6 +162,7 @@ namespace Dal
                     Console.WriteLine("try harder, i did");
                     break;
             }
+
         }
 
         public static void MenuOfOrder()
@@ -182,34 +172,20 @@ namespace Dal
                               "check order - 3 \n" +
                               "update order - 4 \n" +
                               "print order - 5 \n");
-            int orderID;
-            string customerName;
-            string customerEmail;
-            string customerAdress;
 
-            int choice;
-            bool status = int.TryParse(Console.ReadLine(), out choice);
-
-            Order order;
+            int choice = int.Parse(Console.ReadLine());
+            Order order = new Order();
+            int ID;
             switch (choice)
             {
                 case (int)OPTIONS.ADD:
-                    Console.WriteLine("enter: customerName, customerEmail, customerAdress");
-
-                    orderID = int.Parse(Console.ReadLine());
-                    customerName = Console.ReadLine();
-                    customerEmail = Console.ReadLine();
-                    customerAdress = Console.ReadLine();
-
+                    Console.WriteLine("enter: order ID, customer name, cstomer email, customer adress");
+                    order.OrderID = int.Parse(Console.ReadLine());
+                    order.CustomerName = Console.ReadLine();
+                    order.CustomerEmail = Console.ReadLine();
+                    order.CustomerAdress = Console.ReadLine();
                     try
                     {
-                        order = new Order()
-                        {
-                            OrderID = orderID,
-                            CustomerName = customerName,
-                            CustomerEmail = customerEmail,
-                            CustomerAdress = customerAdress
-                        };
                         dal_order.addOrder(order);
                     }
                     catch (Exception str)
@@ -220,10 +196,10 @@ namespace Dal
 
                 case (int)OPTIONS.DELETE:
                     Console.WriteLine("enter order ID:");
-                    orderID = int.Parse(Console.ReadLine());
+                    ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_order.deleteOrder(orderID);
+                        dal_order.deleteOrder(ID);
                     }
                     catch (Exception str)
                     {
@@ -233,10 +209,10 @@ namespace Dal
 
                 case (int)OPTIONS.CHECK:
                     Console.WriteLine("enter order ID:");
-                    orderID = int.Parse(Console.ReadLine());
+                    ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        order = dal_order.get(orderID);
+                        order = dal_order.get(ID);
                         Console.WriteLine(order);
                     }
                     catch (Exception str)
@@ -247,26 +223,22 @@ namespace Dal
 
                 case (int)OPTIONS.UPDATE:
                     Console.WriteLine("enter order ID");
-                    orderID = int.Parse(Console.ReadLine());
+                    order.OrderID = int.Parse(Console.ReadLine());
                     try
                     {
-                        order = dal_order.get(orderID);
-                        dal_order.update(order);
+                        order = dal_order.get(order.OrderID);
                         Console.WriteLine(order);
+                        Console.WriteLine("enter customer name, cstomer email, customer adress ");
+                        order.CustomerName = Console.ReadLine();
+                        order.CustomerEmail = Console.ReadLine();
+                        order.CustomerAdress = Console.ReadLine();
+                        dal_order.update(order);
                     }
                     catch (Exception str)
                     {
                         Console.WriteLine(str);
                         break;
                     }
-                    Console.WriteLine("enter:  name, email, adress");
-                    order = new Order()
-                    {
-                        CustomerName = Console.ReadLine(),
-                        CustomerEmail = Console.ReadLine(),
-                        CustomerAdress = Console.ReadLine()
-                    };
-                    dal_order.addOrder(order);
                     break;
 
                 case (int)OPTIONS.PRINT:
@@ -292,36 +264,21 @@ namespace Dal
                               "update product - 4 \n" +
                               "print ptoduct - 5 \n");
 
+            int choice = int.Parse(Console.ReadLine());
+            Product product = new Product();
             int productID;
-            string name;
-            double price;
-            Enums.Category category;
-            int inStock;
-
-            int choice;
-            bool status = int.TryParse(Console.ReadLine(), out choice);
-            Product product;
             switch (choice)
             {
                 case (int)OPTIONS.ADD:
-                    Console.WriteLine("enter: name, email, adress");
+                    Console.WriteLine("enter: product ID, name, category, price, in stock ");
+                    product.ProductID = int.Parse(Console.ReadLine()); ;
+                    product.Name = Console.ReadLine();
+                    product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                    product.Price = double.Parse(Console.ReadLine());
 
-                    productID = int.Parse(Console.ReadLine());
-                    name = Console.ReadLine();
-                    price = double.Parse(Console.ReadLine());
-                    category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
-                    inStock = int.Parse(Console.ReadLine());
-
+                    product.InStock = int.Parse(Console.ReadLine());
                     try
                     {
-                        product = new Product()
-                        {
-                            ID = productID,
-                            Name = name,
-                            Category = category,
-                            Price = price,
-                            InStock = inStock
-                        };
                         dal_product.addProduct(product);
                     }
                     catch (Exception str)
@@ -359,27 +316,24 @@ namespace Dal
 
                 case (int)OPTIONS.UPDATE:
                     Console.WriteLine("enter product ID");
-                    productID = int.Parse(Console.ReadLine());
+                    product.ProductID = int.Parse(Console.ReadLine());
                     try
                     {
-                        product = dal_product.get(productID);
+                        product = dal_product.get(product.ProductID);
                         Console.WriteLine(product);
+                        Console.WriteLine("enter: name, category, price, in-stock");
+                        product.Name = Console.ReadLine();
+                        product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                        product.Price = double.Parse(Console.ReadLine());
+                        product.InStock = int.Parse(Console.ReadLine());
+                        dal_product.update(product);
                     }
                     catch (Exception str)
                     {
                         Console.WriteLine(str);
                         break;
                     }
-                    Console.WriteLine("enter: name, category, price, in-stock");
-                    product = new Product()
-                    {
-                        Name = Console.ReadLine(),
-                        Category = (Enums.Category)Convert.ToInt32(Console.ReadLine()),
-                        Price = double.Parse(Console.ReadLine()),
-                        InStock = int.Parse(Console.ReadLine())
-
-                    };
-                    dal_product.addProduct(product);
+                    //dal_product.addProduct(product);
                     break;
 
                 case (int)OPTIONS.PRINT:
