@@ -35,7 +35,7 @@ public class DalOrderItem
 
         for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
         {
-            if (orderItemID == DataSource.OrderItems[i].OrderID)//Checks if such a order exists according to ID
+            if (orderItemID == DataSource.OrderItems[i].ID)//Checks if such a order exists according to ID
             {
                 DataSource.OrderItems[i] = DataSource.OrderItems[DataSource.Config.SizeOfOrderItem];//replaces the last one with the one that is deleted
                 DataSource.Config.SizeOfOrderItem--;//decreases the array by one
