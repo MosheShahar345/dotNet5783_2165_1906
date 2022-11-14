@@ -55,7 +55,7 @@ public class DalOrderItem
         bool flag = false;
         for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
         {
-            if (DataSource.OrderItems[i].OrderID == orderItem.OrderID)//Searching by id which order to update
+            if (DataSource.OrderItems[i].ID == orderItem.ID)//Searching by id which order to update
             {
                 DataSource.OrderItems[i] = orderItem;
                 flag = true;
