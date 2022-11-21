@@ -1,14 +1,6 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-using Dal;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using DO;
-
 namespace Dal;
-
 internal static class DataSource
 {
     /// <summary>
@@ -20,9 +12,6 @@ internal static class DataSource
     }
     internal class Config
     {
-        internal static int SizeOfProduct = 0;
-        internal static int SizeOfOrder = 0;
-        internal static int SizeOfOrderItem = 0;
         private static int IdOfOrder = 0;//Resets the order code to 0
         private static int IdOfOrderItem = 100000;//Resets the order item code to 100000
 
@@ -46,9 +35,9 @@ internal static class DataSource
     }
 
     static readonly Random Rand = new(DateTime.Now.Millisecond);
-    internal static Product[] Products = new Product[50];
-    internal static Order[] Orders = new Order[100];
-    internal static OrderItem[] OrderItems = new OrderItem[200];
+    internal static List<Product> Products;
+    internal static List<Order> Orders;
+    internal static List<OrderItem> OrderItems;
 
     /// <summary>
     ///  Order creator
@@ -99,7 +88,7 @@ internal static class DataSource
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1,2), 0, 0, 0);
             }
 
-            Orders[Config.SizeOfOrder++] = order;
+            Orders.Add(order);
         }
    }
     /// <summary>
@@ -121,7 +110,7 @@ internal static class DataSource
                 Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
             };
             Products[prodindex].InStock -= orderItem.Amount;//Updates the quantity in stock
-            OrderItems[Config.SizeOfOrderItem++] = orderItem;
+            OrderItems.Add(orderItem);
         }
     }
     /// <summary>
@@ -157,7 +146,7 @@ internal static class DataSource
                 Price = Price[i],
                 InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
             };
-              Products[Config.SizeOfProduct++] = product;
+              Products.Add(product) ;
         }
     }
     /// <summary>
