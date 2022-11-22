@@ -22,7 +22,7 @@ public class DalProduct
         {
             if (product.ID == DataSource.Products[i].ID)
             {
-                throw new ArgumentException("product already exist");
+                throw new AlreadyExistException("product already exist");
             }
         }
         DataSource.Products[DataSource.Config.SizeOfProduct++] = product;//if it does not exist, it is inserted into the array
@@ -44,7 +44,7 @@ public class DalProduct
             } 
         }
         if (!flag) 
-            throw new ArgumentException("product dose not exist");
+            throw new NotExistException("product dose not exist");
     }
     /// <summary>
     /// updateing an existing product
@@ -61,7 +61,7 @@ public class DalProduct
             }
         }
         if (!flag)
-            throw new ArgumentException("product dose not exist");
+            throw new NotExistException("product dose not exist");
     }
     /// <summary>
     /// receives a id and returns his product
@@ -73,7 +73,7 @@ public class DalProduct
             if (item.ID == productID)
                 return item;
         }
-        throw new ArgumentException("product dose not exist");//Throws an exception if the product does not exist
+        throw new NotExistException("product dose not exist");//Throws an exception if the product does not exist
     }
     /// <summary>
     /// returns the array of products

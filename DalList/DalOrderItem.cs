@@ -21,7 +21,7 @@ public class DalOrderItem
         for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
         {
             if (DataSource.OrderItems[i].ID == orderItem.ID)// A check uf the order item is already exists
-                throw new ArgumentException("order item already exist");
+                throw new AlreadyExistException("order item already exist");
         }
         DataSource.OrderItems[DataSource.Config.SizeOfOrderItem++] = orderItem;//if it does not exist, it is inserted into the array
         return orderItem.ID;
@@ -45,7 +45,7 @@ public class DalOrderItem
             }
         }
         if (!flag)
-            throw new ArgumentException("order item dose not exist");
+            throw new NotExistException("order item dose not exist");
     }
     /// <summary>
     /// updateing an existing order item
@@ -62,7 +62,7 @@ public class DalOrderItem
             }
         }
         if (!flag)
-            throw new ArgumentException("order item dose not exist");
+            throw new NotExistException("order item dose not exist");
     }
     /// <summary>
     /// receives a id and returns his order item
@@ -73,7 +73,7 @@ public class DalOrderItem
         orderItem = DataSource.OrderItems.FirstOrDefault(item => item.ID == orderItemID);
         if(orderItem.ID != orderItemID)
         {
-            throw new ArgumentException("order item dose not exist");//Throws an exception if the order does not exist
+            throw new NotExistException("order item dose not exist");//Throws an exception if the order does not exist
         }
         return orderItem;
     }
@@ -94,6 +94,6 @@ public class DalOrderItem
             if(item.ProductID == product.ID && item.OrderID == order.ID)
                 return item;
         }
-        throw new ArgumentException("order item dose not exist");
+        throw new NotExistException("order item dose not exist");
     }
 }
