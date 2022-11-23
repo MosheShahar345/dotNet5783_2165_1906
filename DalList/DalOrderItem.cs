@@ -18,12 +18,12 @@ public class DalOrderItem
    /// </summary>
     public int addOrderItem(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
+        for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
             if (DataSource.OrderItems[i].ID == orderItem.ID)// A check uf the order item is already exists
                 throw new AlreadyExistException("order item already exist");
         }
-        DataSource.OrderItems[DataSource.Config.SizeOfOrderItem++] = orderItem;//if it does not exist, it is inserted into the array
+        DataSource.OrderItems.Add(orderItem);//if it does not exist, it is inserted into the list
         return orderItem.ID;
     }
     /// <summary>
@@ -33,12 +33,11 @@ public class DalOrderItem
     {
         bool flag = false;
 
-        for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
+        for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
             if (orderItemID == DataSource.OrderItems[i].ID)//Checks if such a order exists according to ID
             {
-                DataSource.OrderItems[i] = DataSource.OrderItems[DataSource.Config.SizeOfOrderItem];//replaces the last one with the one that is deleted
-                DataSource.Config.SizeOfOrderItem--;//decreases the array by one
+                DataSource.OrderItems.RemoveAt(i);
                 flag = true; // deleting successfully don't throw an exception
                 if (flag)
                     break;
@@ -53,7 +52,7 @@ public class DalOrderItem
     public void update(OrderItem orderItem)
     {
         bool flag = false;
-        for (int i = 0; i < DataSource.Config.SizeOfOrderItem; i++)
+        for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
             if (DataSource.OrderItems[i].ID == orderItem.ID)//Searching by id which order to update
             {
@@ -80,7 +79,7 @@ public class DalOrderItem
     /// <summary>
     /// returns the array of order items
     /// </summary>
-    public OrderItem[] get()
+    public List<OrderItem> get()
     {
         return DataSource.OrderItems;
     }

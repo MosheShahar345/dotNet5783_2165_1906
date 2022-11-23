@@ -96,21 +96,21 @@ internal static class DataSource
     /// </summary>
     private static void CreateOrderItems()
     {
-        for (int i = 0; i < 40; i++)
-        {
-            int ordindex = Rand.Next(Config.SizeOfOrder);
-            int prodindex = Rand.Next(Config.SizeOfProduct);//Generates a random number from the number of the size of the array of products
+        OrderItem orderItem = new OrderItem();
 
-            OrderItem orderItem = new OrderItem
+        for (int i = 0; i < Orders.Count;i++)
+        {
+            for (int j = 0; j < Rand.Next(1,5);j++)
             {
-                ID = Config.GetOrderItemID(),
-                OrderID = Config.GetOrderID(),
-                ProductID = Products[prodindex].ID,
-                Price = Products[prodindex].Price,
-                Amount = Math.Min(Rand.Next(1,5), Products[prodindex].InStock)//Accepts no more than 4 orders
-            };
-            Products[prodindex].InStock -= orderItem.Amount;//Updates the quantity in stock
-            OrderItems.Add(orderItem);
+                orderItem.ID = Config.GetOrderItemID();
+                orderItem.OrderID = Orders[i].ID;
+                
+                Product product = Products[Rand.Next(0,Products.Count)];
+                orderItem.ProductID = product.ID;
+                orderItem.Price = product.Price;
+                orderItem.Amount = Rand.Next(1,10);
+                OrderItems.Add(orderItem);
+            }
         }
     }
     /// <summary>

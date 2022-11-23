@@ -17,12 +17,12 @@ public class DalOrder
     /// </summary>
     public void addOrder(Order order)
     {
-        for (int i = 0;i < DataSource.Config.SizeOfOrder; i++)
+        for (int i = 0;i < DataSource.Orders.Count; i++)
         {
             if (DataSource.Orders[i].ID == order.ID)// A check uf the order is already exists
                 throw new AlreadyExistException("order already exist");
         }
-        DataSource.Orders[DataSource.Config.SizeOfOrder++] = order;//if it does not exist, it is inserted into the array
+        DataSource.Orders.Add(order) ;//if it does not exist, it is inserted into the array
     }
     /// <summary>
     /// deletes an existing order
@@ -31,12 +31,11 @@ public class DalOrder
     {
         bool flag = false;
 
-        for (int i = 0; i < DataSource.Config.SizeOfOrder; i++)
+        for (int i = 0; i < DataSource.Orders.Count; i++)
         {
             if (orderID == DataSource.Orders[i].ID)//Checks if such a order exists according to ID
             {
-                DataSource.Orders[i] = DataSource.Orders[DataSource.Config.SizeOfOrder];//replaces the last one with the one that is deleted
-                DataSource.Config.SizeOfOrder--;//decreases the array by one
+                DataSource.Orders.RemoveAt(i);
                 flag = true; // deleting successfully don't throw an exception
             }
         }
@@ -49,7 +48,7 @@ public class DalOrder
     public void update(Order order)
     {
         bool flag = false;
-        for (int i = 0; i < DataSource.Config.SizeOfOrder; i++)
+        for (int i = 0; i < DataSource.Orders.Count; i++)
         {
             if (DataSource.Orders[i].ID == order.ID)//Searching by id which order to update
             {
@@ -75,7 +74,7 @@ public class DalOrder
     /// <summary>
     /// returns the array of orders
     /// </summary>
-    public Order[] get()
+    public List<Order> get()
     {
         return DataSource.Orders;
     }

@@ -14,18 +14,18 @@ namespace Dal;
 public class DalProduct
 {
     /// <summary>
-    /// Adding an product to the product array
+    /// Adding a product to the product array
     /// </summary>
     public void addProduct(Product product)
     {
-        for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)//Checks if such a product exists according to ID
+        for (int i = 0; i < DataSource.Products.Count; i++)//Checks if such a product exists according to ID
         {
             if (product.ID == DataSource.Products[i].ID)
             {
                 throw new AlreadyExistException("product already exist");
             }
         }
-        DataSource.Products[DataSource.Config.SizeOfProduct++] = product;//if it does not exist, it is inserted into the array
+        DataSource.Products.Add(product);//if it does not exist, it is inserted into the list
     }
     /// <summary>
     /// deletes an existing product
@@ -34,13 +34,12 @@ public class DalProduct
     {
         bool flag = false;
 
-        for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)//Checks if such a product exists according to ID
+        for (int i = 0; i < DataSource.Products.Count; i++)//Checks if such a product exists according to ID
         {
             if (productID == DataSource.Products[i].ID)
             {
-                DataSource.Products[i] = DataSource.Products[DataSource.Config.SizeOfProduct];//replaces the last one with the one that is deleted
-                DataSource.Config.SizeOfProduct--;//decreases the array by one
-                flag = true; // deleting successfully don't throw an exception
+                DataSource.Products.RemoveAt(i);
+                flag = true;
             } 
         }
         if (!flag) 
@@ -52,7 +51,7 @@ public class DalProduct
     public void update(Product product)
     {
         bool flag = false;
-        for (int i = 0; i < DataSource.Config.SizeOfProduct; i++)
+        for (int i = 0; i < DataSource.Products.Count; i++)
         {
             if (DataSource.Products[i].ID == product.ID)//Searching by id which product to update
             {
@@ -78,7 +77,7 @@ public class DalProduct
     /// <summary>
     /// returns the array of products
     /// </summary>
-    public Product[] get()
+    public List<Product> get()
     {
         return DataSource.Products;
     }
