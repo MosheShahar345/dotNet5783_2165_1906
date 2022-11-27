@@ -1,7 +1,6 @@
 ﻿using DalApi;
 using DO;
 using System.Security.Principal;
-
 namespace Dal;
 
 sealed public class DalList : IDal

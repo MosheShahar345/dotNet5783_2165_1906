@@ -1,5 +1,4 @@
 ﻿using DalApi;
-
 using DO;
 using System.Linq;
 
@@ -25,13 +24,13 @@ internal class DalOrder : IOrder
     /// <summary>
     /// deletes an existing order
     /// </summary>
-    public void Delete(Order order)
+    public void Delete(int id)
     {
         bool flag = false;
 
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
-            if (order.ID == DataSource.Orders[i].ID)//Checks if such a order exists according to ID
+            if (id == DataSource.Orders[i].ID)//Checks if such a order exists according to ID
             {
                 DataSource.Orders.RemoveAt(i);
                 flag = true; // deleting successfully don't throw an exception
