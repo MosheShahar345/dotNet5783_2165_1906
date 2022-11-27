@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
-using Dal;
+using DalApi;
 using DO;
+using Dal;
 
 
-namespace Dal
+namespace DalTest
 {
-    public class Program
+    internal class Program
     {
-        private static DalProduct dal_product = new DalProduct();
-        private static DalOrder dal_order = new DalOrder();
-        private static DalOrderItem dal_order_item = new DalOrderItem();
-
+        private static IEnumerable<Product> dal_product;
+        private static IEnumerable<Order> dal_order;
+        private static IEnumerable<OrderItem> dal_order_item;
+        private static IDal test = new DalList();
         enum ITEMS
         {
             PRODUCT = 1,
@@ -123,7 +124,7 @@ namespace Dal
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        orderitem = dal_order_item.get(ID);
+                        orderitem = dal_order_item.Get(ID);
                         Console.WriteLine(orderitem);
                     }
                     catch (Exception str)
