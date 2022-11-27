@@ -25,13 +25,13 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// deletes an existing order item
     /// </summary>
-    public void Delete(OrderItem orderItem)
+    public void Delete(int id)
     {
         bool flag = false;
 
         for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
-            if (orderItem.ID == DataSource.OrderItems[i].ID)//Checks if such a order exists according to ID
+            if (id == DataSource.OrderItems[i].ID)//Checks if such a order exists according to ID
             {
                 DataSource.OrderItems.RemoveAt(i);
                 flag = true; // deleting successfully don't throw an exception
@@ -105,8 +105,9 @@ internal class DalOrderItem : IOrderItem
         {
             if (DataSource.OrderItems[i].OrderID == orderId)
             {
-                return orderitems;
+                orderitems[i] = DataSource.OrderItems[i];
             }
         }
+        return orderitems;
     }
  }

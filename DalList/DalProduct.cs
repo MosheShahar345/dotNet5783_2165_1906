@@ -27,13 +27,13 @@ internal class DalProduct : IProduct
     /// <summary>
     /// deletes an existing product
     /// </summary>
-    public void Delete(Product product)
+    public void Delete(int id)
     {
         bool flag = false;
 
         for (int i = 0; i < DataSource.Products.Count; i++)//Checks if such a product exists according to ID
         {
-            if (product.ID == DataSource.Products[i].ID)
+            if (id == DataSource.Products[i].ID)
             {
                 DataSource.Products.RemoveAt(i);
                 flag = true;
