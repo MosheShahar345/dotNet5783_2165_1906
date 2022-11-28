@@ -8,6 +8,6 @@ namespace DalApi
         void Update(T item);
         void Delete(int ID);
         T GetById(int id);
-        IEnumerable<T>? GetAll();
+        IEnumerable<T?> GetAll();
     }
 }
