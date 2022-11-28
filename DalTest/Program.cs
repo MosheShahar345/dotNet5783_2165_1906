@@ -9,9 +9,6 @@ namespace DalTest
 {
     internal class Program
     {
-        private static IEnumerable<Product> dal_product;
-        private static IEnumerable<Order> dal_order;
-        private static IEnumerable<OrderItem> dal_order_item;
         private static IDal test = new DalList();
         enum ITEMS
         {
@@ -67,21 +64,21 @@ namespace DalTest
                              "check order item - 3 \n" +
                              "update order item - 4 \n" +
                              "print order item - 5 \n");
-            int choice;
+
+            char choice = char.Parse(Console.ReadLine());
             int orderItemId;
             int productID;
             int orderID;
             double price;
             int amount;
 
-            bool status = int.TryParse(Console.ReadLine(), out choice);
+            //bool status = int.TryParse(Console.ReadLine(), out choice);
 
-            //int choice = int.Parse(Console.ReadLine());
             OrderItem orderitem;
             int ID;
             switch (choice)
             {
-                case (int)OPTIONS.ADD:
+                case 'a':
                     Console.WriteLine("enter:order item ID, product ID, order ID, price, amount ");
                     orderItemId = int.Parse(Console.ReadLine());
                     productID = int.Parse(Console.ReadLine());
@@ -98,7 +95,7 @@ namespace DalTest
                             Price = price,
                             Amount = amount
                         };
-                        dal_order_item.addOrderItem(orderitem);
+                        test.OrderItem.Add(orderitem);
                     }
                     catch (Exception str)
                     {
@@ -106,25 +103,12 @@ namespace DalTest
                     }
                     break;
 
-                case (int)OPTIONS.DELETE:
+                case 'b':
                     Console.WriteLine("enter order item ID:");
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_order_item.deleteOrderItem(ID);
-                    }
-                    catch (Exception str)
-                    {
-                        Console.WriteLine(str);
-                    }
-                    break;
-
-                case (int)OPTIONS.CHECK:
-                    Console.WriteLine("enter order item ID:");
-                    ID = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        orderitem = dal_order_item.Get(ID);
+                        orderitem = test.OrderItem.Get(ID);
                         Console.WriteLine(orderitem);
                     }
                     catch (Exception str)
@@ -133,28 +117,42 @@ namespace DalTest
                     }
                     break;
 
-                case (int)OPTIONS.UPDATE:
+                case 'c':
+                    OrderItem[] orderItems = test.OrderItem.Get();
+                    foreach (var item in orderItems)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    break;
+
+                case 'd':
                     Console.WriteLine("enter:order item ID");
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        orderitem = dal_order_item.get(ID);
+                        orderitem = test.OrderItem.Get(ID);
                         Console.WriteLine(orderitem);
                         Console.WriteLine("enter: price, amount ");
                         orderitem.Price = int.Parse(Console.ReadLine());
                         orderitem.Amount = int.Parse(Console.ReadLine());
-                        dal_order_item.update(orderitem);
+                        test.OrderItem.Update(orderitem);
                     }
                     catch (Exception str)
                     {
                         Console.WriteLine(str);
                     }
                     break;
-                case (int)OPTIONS.PRINT:
-                    OrderItem[] orderItems = dal_order_item.get();
-                    foreach (var item in orderItems)
+
+                case 'e':
+                    Console.WriteLine("enter order item ID:");
+                    ID = int.Parse(Console.ReadLine());
+                    try
                     {
-                        Console.WriteLine(item);
+                        test.OrderItem.Delete(ID);
+                    }
+                    catch (Exception str)
+                    {
+                        Console.WriteLine(str);
                     }
                     break;
 
@@ -162,7 +160,6 @@ namespace DalTest
                     Console.WriteLine("try harder, i did");
                     break;
             }
-
         }
 
         public static void MenuOfOrder()
@@ -186,7 +183,7 @@ namespace DalTest
                     order.CustomerAdress = Console.ReadLine();
                     try
                     {
-                        dal_order.addOrder(order);
+                        test.Order.Add(order);
                     }
                     catch (Exception str)
                     {
@@ -199,7 +196,7 @@ namespace DalTest
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_order.deleteOrder(ID);
+                        test.Order.Add();
                     }
                     catch (Exception str)
                     {
@@ -212,7 +209,7 @@ namespace DalTest
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        order = dal_order.get(ID);
+                        order = test.Order.Get(ID);
                         Console.WriteLine(order);
                     }
                     catch (Exception str)
@@ -226,13 +223,13 @@ namespace DalTest
                     order.ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        order = dal_order.get(order.ID);
+                        order = test.Order.Get(order.ID);
                         Console.WriteLine(order);
                         Console.WriteLine("enter customer name, cstomer email, customer adress ");
                         order.CustomerName = Console.ReadLine();
                         order.CustomerEmail = Console.ReadLine();
                         order.CustomerAdress = Console.ReadLine();
-                        dal_order.update(order);
+                        test.Order.Update(order);
                     }
                     catch (Exception str)
                     {
@@ -242,7 +239,7 @@ namespace DalTest
                     break;
 
                 case (int)OPTIONS.PRINT:
-                    Order[] orders = dal_order.get();
+                    Order[] orders = test.Order.Get();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -275,11 +272,10 @@ namespace DalTest
                     product.Name = Console.ReadLine();
                     product.Category = (Category)Convert.ToInt32(Console.ReadLine());
                     product.Price = double.Parse(Console.ReadLine());
-
                     product.InStock = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_product.addProduct(product);
+                        test.Product.Add(product);
                     }
                     catch (Exception str)
                     {
@@ -292,7 +288,7 @@ namespace DalTest
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        dal_product.deleteProduct(ID);
+                        test.Product.Delete(ID);
                     }
                     catch (Exception str)
                     {
@@ -305,7 +301,7 @@ namespace DalTest
                     ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        product = dal_product.get(ID);
+                        product = test.Product.Get(ID);
                         Console.WriteLine(product);
                     }
                     catch (Exception str)
@@ -319,14 +315,14 @@ namespace DalTest
                     product.ID = int.Parse(Console.ReadLine());
                     try
                     {
-                        product = dal_product.get(product.ID);
+                        product = test.Product.Get(product.ID);
                         Console.WriteLine(product);
                         Console.WriteLine("enter: name, category, price, in-stock");
                         product.Name = Console.ReadLine();
                         product.Category = (Category)Convert.ToInt32(Console.ReadLine());
                         product.Price = double.Parse(Console.ReadLine());
                         product.InStock = int.Parse(Console.ReadLine());
-                        dal_product.update(product);
+                        test.Product.Update(product);
                     }
                     catch (Exception str)
                     {
@@ -337,7 +333,7 @@ namespace DalTest
                     break;
 
                 case (int)OPTIONS.PRINT:
-                    Product[] products = dal_product.get();
+                    Product[] products = test.Product.Get();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
