@@ -1,6 +1,6 @@
 ﻿using DalApi;
 using DO;
-using System.Security.Principal;
+
 
 namespace Dal;
 
@@ -74,9 +74,9 @@ internal class DalProduct : IProduct
     /// <summary>
     /// returns the array of products
     /// </summary>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll()
     {
-        List<Product> products = new List<Product>();
+        List<Product?> products = new List<Product?>();
         for (int i = 0; i < DataSource.Products.Count; i++)
         {
             Product product = new Product();

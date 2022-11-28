@@ -75,9 +75,9 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// returns the array of order items
     /// </summary>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem?> GetAll()
     {
-        List<OrderItem> orderitems = new List<OrderItem>();
+        List<OrderItem?> orderitems = new List<OrderItem?>();
         for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
             OrderItem orderitem = new OrderItem();

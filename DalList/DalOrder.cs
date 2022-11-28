@@ -71,9 +71,9 @@ internal class DalOrder : IOrder
     /// <summary>
     /// returns the array of orders
     /// </summary>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll()
     {
-        List<Order> orders = new List<Order>();
+        List<Order?> orders = new List<Order?>();
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
             Order order = new Order();
