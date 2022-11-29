@@ -1,8 +1,4 @@
 ﻿using BlApi;
-using Dal;
-using DalApi;
-using static BO.NotEnoughRoomInStockException;
-
 namespace BlImplementation;
 
 internal class BlCart : ICart
