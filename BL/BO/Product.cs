@@ -1,5 +1,4 @@
-﻿
-namespace BO;
+﻿namespace BO;
 
 public class Product
 {
@@ -8,5 +7,4 @@ public class Product
     public double Price { get; set; }
     public Category Category { get; set; }
     public int InStock { get; set; }
-
 }

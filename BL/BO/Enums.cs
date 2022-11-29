@@ -1,6 +1,4 @@
-﻿
-
-namespace BO;
+﻿namespace BO;
 
 public enum Category
 {
@@ -10,12 +8,14 @@ public enum Category
     Ties,
     Cufflinks
 }
+
 public enum OrderStatus
 {
     CONFIRMED,
     SENT,
     DELIVERED
 }
+
 public enum Availability
 {
     INSTUCK,
