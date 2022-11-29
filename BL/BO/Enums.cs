@@ -10,7 +10,7 @@ public enum Category
     Ties,
     Cufflinks
 }
-public enum OrderState
+public enum OrderStatus
 {
     CONFIRMED,
     SENT,

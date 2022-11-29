@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using Dal;
 using DalApi;
+using static BO.NotEnoughRoomInStockException;
 
 namespace BlImplementation;
 
@@ -13,18 +14,18 @@ internal class BlCart : ICart
         if (productId <= 0) 
 			throw new InvalidInputException();
 
-        DO.Product tempProduct;
+        DO.Product p;
 
 		try
 		{
-			tempProduct = Dal.Product.GetById(productId);
+			p = Dal.Product.GetById(productId);
 		}
 		catch (Exception e)
 		{
-
 			throw new InvalidInputException();
 		}
-		if (cart.Items)
+
+		if (cart.Items.Exists()
 		{
 
 		}
