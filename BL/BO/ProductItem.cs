@@ -1,6 +1,4 @@
-﻿
-
-namespace BO;
+﻿namespace BO;
 
 public class ProductItem
 {
@@ -10,5 +8,4 @@ public class ProductItem
     public Category Category { get; set; }
     public int Amount { get; set; }
     public bool InStock { get; set; }
-
 }

@@ -4,11 +4,10 @@ namespace BlApi;
 public interface IOrder
 {
     public IEnumerable<OrderForList> GetOrderForList();
-    public IOrder GetOrder(int orderId);
-    public IOrder UpdateOrderShipping(int orderId, DateTime shippingDate);
-    public IOrder UpdateOrderDelivery(int orderId, DateTime deliveryDate);
+    public Order GetOrder(int orderId);
+    public Order UpdateOrderShipping(int orderId, DateTime shippingDate);
+    public Order UpdateOrderDelivery(int orderId, DateTime deliveryDate);
     public OrderTracking TrackOrder(int orderId);
-
 }
 
 

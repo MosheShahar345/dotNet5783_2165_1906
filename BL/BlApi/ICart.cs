@@ -1,11 +1,9 @@
-﻿
-
-using BO;
-
+﻿using BO;
 namespace BlApi;
- public interface ICart
+
+public interface ICart
 {
     public Cart AddPToCart(Cart cart, int productId);
     public Cart UpdateAmount(Cart cart, int productId, int amount);
-    public void CreatOrder(Cart cart, string name, string email, string address);
+    public void CreatOrder(Cart cart);
 }

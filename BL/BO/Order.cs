@@ -1,6 +1,4 @@
-﻿
-
-namespace BO;
+﻿namespace BO;
 
 internal class Order
 {
