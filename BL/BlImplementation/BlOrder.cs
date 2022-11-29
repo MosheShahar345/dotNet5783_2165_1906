@@ -1,5 +1,4 @@
-﻿
-using BlApi;
+﻿using BlApi;
 using BO;
 using Dal;
 using DalApi;
