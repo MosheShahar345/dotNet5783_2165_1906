@@ -30,7 +30,7 @@ public enum Entities
     Product
 }
 
-public enum CartOpts
+public enum CartOptstions
 {
     Exit,
     Add,

@@ -3,7 +3,7 @@ namespace BlApi;
 
 public interface IOrder
 {
-    public IEnumerable<OrderForList> GetOrderForList();
+    public IEnumerable<BO.OrderForList> GetOrderForList();
     public Order GetOrder(int orderId);
     public Order UpdateOrderShipping(int orderId, DateTime shippingDate);
     public Order UpdateOrderDelivery(int orderId, DateTime deliveryDate);

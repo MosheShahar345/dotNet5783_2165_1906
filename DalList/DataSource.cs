@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using DO;
+﻿using DO;
 namespace Dal;
+
 internal static class DataSource
 {
     /// <summary>
