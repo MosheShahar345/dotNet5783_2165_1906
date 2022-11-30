@@ -5,10 +5,9 @@ public interface IOrder
 {
     public IEnumerable<BO.OrderForList> GetOrderForList();
     public Order GetOrder(int orderId);
-    public Order UpdateOrderShipping(int orderId, DateTime shippingDate);
-    public Order UpdateOrderDelivery(int orderId, DateTime deliveryDate);
+    public Order UpdateOrderShipping(int orderId);
+    public Order UpdateOrderDelivery(int orderId);
     public OrderTracking TrackOrder(int orderId);
-    private Category GetStatus(DO.Order order);
 }
 
 
