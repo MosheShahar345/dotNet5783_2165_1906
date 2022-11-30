@@ -12,25 +12,21 @@ internal class BlCart : ICart
 
     public BO.Cart AddToCart(BO.Cart cart, int productId)
     {
-        if (productId <= 0) 
-			throw new InvalidInputException();
+        DO.Product product1 = new DO.Product();
+        DO.OrderItem orderitem1 = new DO.OrderItem();
 
-        DO.Product p;
-		
-		try
-		{
-			p = Dal.Product.GetById(productId);
-		}
-		catch (Exception e)
-		{
-			throw new InvalidInputException();
-		}
-
-		if (cart.Items.Exists(item => item.ProductID == p.ID))
-		{
-			throw new InvalidInputException();
+        try
+        {
+            product1 = Dal.Product.GetById(productId);
+            orderitem1 = Dal.OrderItem.GetById(productId);
         }
-		
+        catch (Exception) { }
+        foreach (var item in cart.Items)
+        {
+            if (productId == item.ProductID)
+            {
+
+            }
+        }
 
     }
-}

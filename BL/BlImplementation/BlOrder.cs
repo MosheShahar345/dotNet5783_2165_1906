@@ -61,8 +61,8 @@ internal class BlOrder : IOrder
 			ID=o.ID,
 
 		};
-
         return oB;
     }
+	private 
 	
 }

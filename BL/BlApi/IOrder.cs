@@ -8,6 +8,7 @@ public interface IOrder
     public Order UpdateOrderShipping(int orderId, DateTime shippingDate);
     public Order UpdateOrderDelivery(int orderId, DateTime deliveryDate);
     public OrderTracking TrackOrder(int orderId);
+    private Category GetStatus(DO.Order order);
 }
 
 
