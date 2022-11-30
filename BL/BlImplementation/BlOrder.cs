@@ -1,6 +1,8 @@
 ﻿using BlApi;
+using BO;
 using Dal;
 using DalApi;
+using System;
 using System.Reflection.Metadata.Ecma335;
 using static BO.NotEnoughRoomInStockException;
 
@@ -16,25 +18,25 @@ internal class BlOrder : IOrder
 
 		try
 		{
-			orders = Dal.Order.GetAll().ToList();
+			orders = (List<DO.Order>)Dal.Order.GetAll();
 		}
 		catch (Exception) { }
 
 		foreach (var item in orders)
 		{
-			BO.OrderForList order = new BO.OrderForList()
+			BO.OrderForList temporder = new BO.OrderForList()
 			{
 				ID = item.ID,
 				CoustomerName = item.CustomerName,
 				Status = GetStatus(item)
             };
 			List<DO.OrderItem> orderitems = Dal.OrderItem.GetOrderItem(item.ID);
-			foreach (var item2 in orderitems)
+			foreach (var it in orderitems)
 			{
-				order.AmountOfItems += item2.Amount;
-				order.TotalPrice += item2.Price * item2.Amount;
+				temporder.AmountOfItems += it.Amount;
+				temporder.TotalPrice += it.Price * it.Amount;
 			}
-			ordersForList.Add(order);
+			ordersForList.Add(temporder);
 		}
 		return ordersForList;
     }
@@ -43,26 +45,128 @@ internal class BlOrder : IOrder
         if (orderId <= 0)
             throw new InvalidInputException();
 
-        DO.Order o;
-        DO.OrderItem oI;
+		List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
+		DO.Order dOrder = new DO.Order();
 
         try
         {
-            o = Dal.Order.GetById(orderId);
-            oI = Dal.OrderItem.GetById(orderId);
+            dOrder = Dal.Order.GetById(orderId);
         }
-        catch (Exception e)
-        {
-            throw new InvalidInputException();
-        }
+		catch (BO.NotExsitsException e) {Console.WriteLine(e);}
 
-		BO.Order oB = new BO.Order()
+        orderItems = Dal.OrderItem.GetAll().ToList();
+
+		BO.Order bOrder = new BO.Order()
 		{
-			ID=o.ID,
-
-		};
-        return oB;
+			ID = dOrder.ID,
+			CustomerName = dOrder.CustomerName,
+			CustomerEmail = dOrder.CustomerEmail,
+			CustomerAdress = dOrder.CustomerAdress,
+			Status = GetStatus(dOrder),
+			OrderDate = dOrder.OrderDate,
+			ShipDate = dOrder.ShipDate,
+			DeliveryDate = dOrder.DeliveryDate,
+			Items = DoBoConvert(orderItems, dOrder.ID).Item1,
+		    TotalPrice = DoBoConvert(orderItems, dOrder.ID).Item2
+        };
+        return bOrder;
     }
-	private 
-	
+	private BO.OrderStatus GetStatus(DO.Order o)
+	{
+		if (o.DeliveryDate != DateTime.MinValue)
+			return BO.OrderStatus.DELIVERED;
+		if (o.ShipDate != DateTime.MinValue)
+			return BO.OrderStatus.SENT;
+		return BO.OrderStatus.CONFIRMED;
+	}
+	private(List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
+	{
+		List<BO.OrderItem> bOrderItem = new List<BO.OrderItem>();
+		double s = 0;
+		foreach (var item in orderItem)
+		{
+			if (item.OrderID == dOrderID)
+			{
+				BO.OrderItem orderitem = new BO.OrderItem()
+				{
+					ID = item.ID,
+					Name = Dal.Product.GetById(item.ID).Name,
+					Price = item.Price,
+					ProductID = item.ProductID,
+					Amount = item.Amount,
+				};
+				bOrderItem.Add(orderitem);
+			}
+		}
+		return (bOrderItem, s);
+	}
+	public BO.Order UpdateOrderShipping(int orderId)
+	{
+		if (orderId <= 0)
+			throw new BO.InvalidInputException();
+
+		DO.Order dOrder = new DO.Order();
+		BO.Order bOrder = new BO.Order();
+
+		try
+		{
+			dOrder = Dal.Order.GetById(orderId);
+			bOrder = GetOrder(orderId);
+		}
+		catch (Exception e) { Console.WriteLine(e); }
+
+		if (dOrder.ShipDate == DateTime.MinValue)
+		{
+			dOrder.ShipDate = DateTime.Now;
+            bOrder.ShipDate = DateTime.Now;
+        }
+		Dal.Order.Update(dOrder);
+		return bOrder;
+	}
+	public BO.Order UpdateOrderDelivery(int orderId)
+	{
+        if (orderId <= 0)
+            throw new BO.InvalidInputException();
+
+        DO.Order dOrder = new DO.Order();
+        BO.Order bOrder = new BO.Order();
+
+        try
+        {
+            dOrder = Dal.Order.GetById(orderId);
+            bOrder = GetOrder(orderId);
+        }
+        catch (Exception e) { Console.WriteLine(e); }
+
+        if (dOrder.DeliveryDate == DateTime.MinValue)
+        {
+            dOrder.DeliveryDate = DateTime.Now;
+            bOrder.DeliveryDate = DateTime.Now;
+        }
+        Dal.Order.Update(dOrder);
+        return bOrder;
+    }
+	public BO.OrderTracking TrackOrder(int orderId)
+	{
+        if (orderId <= 0)
+            throw new BO.InvalidInputException();
+
+        DO.Order dOrder = new DO.Order();
+      
+        try
+        {
+            dOrder = Dal.Order.GetById(orderId);
+        }
+        catch (Exception) { }
+
+
+		BO.OrderTracking orderTracking = new BO.OrderTracking();
+		orderTracking.Id = orderId;
+		orderTracking.Status = GetStatus(dOrder);
+        Tuple<DateTime, BO.OrderStatus> tuple = new Tuple<DateTime, BO.OrderStatus>(
+            (DateTime)dOrder.OrderDate, (BO.OrderStatus)orderTracking.Status);
+		orderTracking.Var.Add(tuple);
+
+		return orderTracking;
+    }
 }
