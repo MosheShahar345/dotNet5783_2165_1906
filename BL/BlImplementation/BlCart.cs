@@ -1,4 +1,5 @@
-﻿using BlApi;
+﻿using System.ComponentModel.DataAnnotations;
+using BlApi;
 using BO;
 using Dal;
 using DalApi;
@@ -94,9 +95,12 @@ internal class BlCart : ICart
     }
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (!cart.Items.Any() || cart.Name == null || cart.Adress == null || cart.Email == null)
+        if (!cart.Items.Any() || cart.Name == null || cart.Adress == null)
             throw new NotExsitsException();
         
+        if (!new EmailAddressAttribute().IsValid(cart.Email))
+            throw new NotExsitsException();
+
         foreach (var item in cart.Items)
         {
             if (item.Amount < 0)
@@ -113,9 +117,18 @@ internal class BlCart : ICart
             DeliveryDate = DateTime.MinValue
         };
 
+        try
+        {
+            Dal.Order.Add(dOrder);
+        }
+        catch (Exception e)
+        {
+            throw new NotExsitsException(e: e);
+        }
 
-
+        List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
+        
 
     }
-    
+
 }
