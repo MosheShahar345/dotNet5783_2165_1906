@@ -1,6 +1,4 @@
-﻿
-
-namespace BO;
+﻿namespace BO;
 
 [Serializable]
 public class NotEnoughRoomInStockException : Exception
@@ -48,7 +46,7 @@ public class OrderIsAlreadyDeliverdException : Exception
 [Serializable]
 public class NotExsitsException : Exception
 {
-    public NotExsitsException() { }
+    public NotExsitsException(Exception e) { }
     public NotExsitsException(string message) : base(message) { }
     public NotExsitsException(string message, Exception inner) : base(message, inner) { }
     protected NotExsitsException(

@@ -21,7 +21,10 @@ internal class BlProduct : IProduct
         {
             products = (List<DO.Product>)Dal.Product.GetAll();
         }
-        catch (Exception) { }
+        catch (Exception e)
+        {
+            throw new NotExsitsException(e: e);
+        }
 
         foreach (var item in products)
         {
@@ -44,11 +47,16 @@ internal class BlProduct : IProduct
         DO.Product dProduct = new DO.Product();
         DO.OrderItem dOrderItem = new DO.OrderItem();
 
-        dProduct = Dal.Product.GetById(productId);
-        dOrderItem = Dal.OrderItem.GetById(productId);
-
-        if (dProduct.Name == null)
-            throw new BO.NotExsitsException();
+        try
+        {
+            dProduct = Dal.Product.GetById(productId); 
+            dOrderItem = Dal.OrderItem.GetById(productId);
+        }
+        catch (Exception e)
+        {
+            throw new BO.NotExsitsException(e: e);
+        }
+          
 
         BO.ProductItem productItem = new BO.ProductItem()
         {
@@ -56,7 +64,8 @@ internal class BlProduct : IProduct
             Name = dProduct.Name,
             Price = dProduct.Price,
             Category = (Category)dProduct.Category,
-            InStock = dProduct.InStock > 0 ? true : false
+            InStock = dProduct.InStock > 0 ? true : false,
+            Amount = dOrderItem.Amount
         };
 
         return productItem;
