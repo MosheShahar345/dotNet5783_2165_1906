@@ -95,7 +95,8 @@ internal class BlProduct : BlApi.IProduct
 
     public void AddProductAdmin(BO.Product product)
     {
-        if(product.ID < 1000000 || product.ID > 999999 || product.Name == null || product.Price <= 0 || product.InStock < 0)
+        if(product.ID < 1000000 || product.ID > 999999 
+            || product.Name == null || product.Price <= 0 || product.InStock < 0)
             throw new BO.InvalidInputException();
 
         DO.Product dProduct = new DO.Product()
@@ -113,7 +114,7 @@ internal class BlProduct : BlApi.IProduct
         }
         catch (Exception)
         {
-            throw new BO.NotExistsException();
+            throw new BO.AlreadyExistsException();
         }
     }
 
@@ -134,7 +135,6 @@ internal class BlProduct : BlApi.IProduct
         }
         catch (Exception)
         {
-
             throw new BO.NotExistsException();
         }
     }
