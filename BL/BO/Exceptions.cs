@@ -56,6 +56,16 @@ public class NotExsitsException : Exception
       System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
 
+public class AlreadyExsitsException : Exception
+{
+    public AlreadyExsitsException(Exception e) { }
+    public AlreadyExsitsException(string message) : base(message) { }
+    public AlreadyExsitsException(string message, Exception inner) : base(message, inner) { }
+    protected AlreadyExsitsException(
+      System.Runtime.Serialization.SerializationInfo info,
+      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
 
 
 

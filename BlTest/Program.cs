@@ -3,6 +3,7 @@ using Dal;
 using DalApi;
 using BO;
 using System.Threading.Channels;
+using DO;
 
 namespace BlTest
 {
@@ -66,7 +67,7 @@ namespace BlTest
                         test.Cart.AddPToCart(cart, idProduct);
 
                     }
-                    catch (NotExistException ex) { Console.WriteLine(ex); }
+                    catch (DoesNotExistException ex) { Console.WriteLine(ex); }
 
                     break;
 
@@ -210,7 +211,7 @@ namespace BlTest
                     product.InStock = int.Parse(Console.ReadLine());
                     try
                     {
-                        test.Product.UpdateProduct(product);
+                        test.Product.UpdateProductAdmin(product);
                     }
                     catch (NotExistException ex) { Console.WriteLine(ex); }
 
@@ -237,7 +238,7 @@ namespace BlTest
             switch (choise)
             {
                 case "a":
-                    List<OrderForList> orders = test.Order.GetOrderLists().ToList();
+                    List<OrderForList> orders = test.Order.GetOrderForList().ToList();
                     orders.ForEach(order => Console.WriteLine(order));
                     break;
 
@@ -255,20 +256,20 @@ namespace BlTest
                 case "c":
                     Console.Write("Please enter order id: ");
                     orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.ShippingUpdate(orderID));
+                    Console.WriteLine(test.Order.UpdateOrderShipping(orderID));
 
                     break;
 
                 case "d":
                     Console.Write("Please enter order id: ");
                     orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.SupplyUpdateOrder(orderID));
+                    Console.WriteLine(test.Order.UpdateOrderDelivery(orderID));
                     break;
 
                 case "e":
                     Console.Write("Please enter order id: ");
                     orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.TrackingOtder(orderID));
+                    Console.WriteLine(test.Order.TrackOrder(orderID));
                     break;
 
                 default:
