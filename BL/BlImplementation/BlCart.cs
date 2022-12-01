@@ -2,9 +2,6 @@
 using BO;
 using Dal;
 using DalApi;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
-using static BO.NotEnoughRoomInStockException;
 
 namespace BlImplementation;
 
@@ -22,7 +19,11 @@ internal class BlCart : ICart
             product1 = Dal.Product.GetById(productId);
             orderitem1 = Dal.OrderItem.GetById(productId);
         }
-        catch (Exception) { }
+        catch (Exception e)
+        {
+            throw new NotExsitsException(e: e);
+        }
+
         foreach (var item in cart.Items)
         {
             if (productId == item.ProductID)
@@ -36,6 +37,7 @@ internal class BlCart : ICart
                 }
             }
         }
+
         if (product1.InStock > 0)
         {
             BO.OrderItem orderitemBO = new BO.OrderItem
@@ -47,8 +49,10 @@ internal class BlCart : ICart
                 Amount = 1,
                 TotalPrice = orderitem1.Price
             };
+
             cart.Items.Add(orderitemBO);
         }
+
         return cart;
     }
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int Namount)
@@ -82,18 +86,35 @@ internal class BlCart : ICart
                 else
                 {
                     cart.Items.Remove(item);
-                    cart.TotalPrice-= item.TotalPrice; 
+                    cart.TotalPrice -= item.TotalPrice; 
                 }
             }
         }
         return cart;
     }
-    public BO.Cart ConfirmationOrder(BO.Cart cart)
+    public void ConfirmationOrder(BO.Cart cart)
     {
+        if (!cart.Items.Any() || cart.Name == null || cart.Adress == null || cart.Email == null)
+            throw new NotExsitsException();
+        
         foreach (var item in cart.Items)
         {
-          
+            if (item.Amount < 0)
+                throw new NotExsitsException();
         }
+
+        DO.Order dOrder = new DO.Order()
+        {
+            CustomerName = cart.Name,
+            CustomerAdress = cart.Adress,
+            CustomerEmail = cart.Email,
+            OrderDate = DateTime.Now,
+            ShipDate = DateTime.MinValue,
+            DeliveryDate = DateTime.MinValue
+        };
+
+
+
 
     }
     
