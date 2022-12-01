@@ -46,7 +46,7 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return ordersForList;
     }
-	public BO.Order GetOrder(int orderId)
+	public Order GetOrder(int orderId)
 	{
         if (orderId <= 0)
             throw new InvalidInputException();
@@ -80,7 +80,7 @@ internal class BlOrder : BlApi.IOrder
         };
         return bOrder;
     }
-	private BO.OrderStatus GetStatus(DO.Order o)
+	private OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate != DateTime.MinValue)
 			return BO.OrderStatus.DELIVERED;
@@ -110,7 +110,7 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return (bOrderItem, s);
 	}
-	public BO.Order UpdateOrderShipping(int orderId)
+	public Order UpdateOrderShipping(int orderId)
 	{
 		if (orderId <= 0)
 			throw new BO.InvalidInputException();
@@ -136,7 +136,7 @@ internal class BlOrder : BlApi.IOrder
 		Dal.Order.Update(dOrder);
 		return bOrder;
 	}
-	public BO.Order UpdateOrderDelivery(int orderId)
+	public Order UpdateOrderDelivery(int orderId)
 	{
         if (orderId <= 0)
             throw new BO.InvalidInputException();
@@ -162,7 +162,7 @@ internal class BlOrder : BlApi.IOrder
         Dal.Order.Update(dOrder);
         return bOrder;
     }
-	public BO.OrderTracking TrackOrder(int orderId)
+	public OrderTracking TrackOrder(int orderId)
 	{
         if (orderId <= 0)
             throw new BO.InvalidInputException();

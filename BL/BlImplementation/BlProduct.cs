@@ -1,4 +1,5 @@
-﻿using BO;
+﻿
+using BO;
 using Dal;
 using DalApi;
 
@@ -34,6 +35,32 @@ internal class BlProduct : BlApi.IProduct
             productForList.Add(tempproduct);
         }
         return productForList;
+    }
+
+    public Product GetProduct(int productId)
+    {
+        if (productId <= 0)
+            throw new BO.InvalidInputException();
+
+        DO.Product dProduct = new DO.Product();
+
+        try
+        {
+            dProduct = Dal.Product.GetById(productId);
+        }
+        catch (Exception e)
+        {
+            throw new BO.NotExsitsException(e: e);
+        }
+
+        BO.Product bProduct = new BO.Product()
+        {
+            ID = dProduct.ID,
+            Name = dProduct.Name,
+            Price = dProduct.Price,
+            Category = (Category)dProduct.Category
+        };
+        return bProduct;
     }
     public BO.ProductItem GetProductCustomer(int productId, BO.Cart cart)
     {
@@ -135,5 +162,10 @@ internal class BlProduct : BlApi.IProduct
         {
             throw new BO.NotExsitsException(e);
         }
+    }
+
+    Product BlApi.IProduct.GetProduct(int productId)
+    {
+        throw new NotImplementedException();
     }
 }
