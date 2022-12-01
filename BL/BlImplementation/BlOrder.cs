@@ -177,13 +177,12 @@ internal class BlOrder : BlApi.IOrder
         {
             throw new NotExistsException();
         }
-
+		
 		BO.OrderTracking orderTracking = new BO.OrderTracking();
-		orderTracking.Id = orderId;
+        orderTracking.Id = orderId;
 		orderTracking.Status = GetStatus(dOrder);
         Tuple<DateTime, string> tuple = new Tuple<DateTime, string>(
             (DateTime)dOrder.OrderDate, orderTracking.Status.ToString());
-
 		orderTracking.Log.Add(tuple);
 
 		return orderTracking;
