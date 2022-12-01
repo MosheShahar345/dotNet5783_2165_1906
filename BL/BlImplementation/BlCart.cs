@@ -18,9 +18,9 @@ internal class BlCart : BlApi.ICart
             product1 = Dal.Product.GetById(productId);
             orderitem1 = Dal.OrderItem.GetById(productId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e: e);
+            throw new BO.NotExistsException();
         }
 
         foreach (var item in cart.Items)
@@ -61,7 +61,10 @@ internal class BlCart : BlApi.ICart
         {
             product1 = Dal.Product.GetById(productId);
         }
-        catch (Exception) { }
+        catch (Exception)
+        {
+                throw new BO.NotExistsException();
+        }
 
         foreach (var item in cart.Items)
         {
@@ -94,16 +97,10 @@ internal class BlCart : BlApi.ICart
     public void ConfirmationOrder(BO.Cart cart)
     {
         if (!cart.Items.Any() || cart.Name == null || cart.Address == null)
-            throw new BO.NotExsitsException("");
+            throw new BO.NotExistsException();
 
         if (!new EmailAddressAttribute().IsValid(cart.Email))
-            throw new BO.NotExsitsException(" ");
-
-        foreach (var item in cart.Items)
-        {
-            if (item.Amount < 0)
-                throw new BO.NotExsitsException("");
-        }
+            throw new BO.InvalidEmailException();
 
         DO.Order dOrder = new DO.Order()
         {
@@ -115,16 +112,38 @@ internal class BlCart : BlApi.ICart
             DeliveryDate = DateTime.MinValue
         };
 
+        int OrderId;
+
         try
         {
-            Dal.Order.Add(dOrder);
+            OrderId = Dal.Order.Add(dOrder);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e: e);
+            throw new BO.AlreadyExistsException();
+        }
+        
+        foreach (var item in cart.Items)
+        {
+            DO.OrderItem dOrderItem = new DO.OrderItem()
+            {
+                ID = item.ID,
+                ProductID = item.ProductID,
+                OrderID = OrderId,
+                Price = item.Price,
+                Amount = item.Amount
+            };
+
+            Dal.OrderItem.Add(dOrderItem);
         }
 
-        List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
+        DO.Product product = new DO.Product();
 
+        foreach (var item in cart.Items)
+        {
+            product = Dal.Product.GetById(item.ProductID);
+            product.InStock -= item.Amount;
+            Dal.Product.Add(product);
+        }
     }
 } 
