@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿
+
+namespace BO;
 
 [Serializable]
 public class NotEnoughRoomInStockException : Exception
