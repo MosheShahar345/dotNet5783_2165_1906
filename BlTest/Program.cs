@@ -1,282 +1,283 @@
 ﻿using BlApi;
-using Dal;
-using DalApi;
 using BO;
-using System.Threading.Channels;
+namespace BlTest;
 
-namespace BlTest
+internal class Program
 {
-    internal class Program
+    private static IBl test = new BlImplementation.Bl();
+    static Cart cart = new Cart();
+
+    static int Main(string[] args)
     {
-        private static IBl test = new BlImplementation.Bl();
-        static Cart cart = new Cart();
+        cart.Items = new List<OrderItem>();
+        int choice;
 
-        static void Main(string[] args)
+        do
         {
-            cart.Items = new List<OrderItem>();
+            Console.WriteLine("\nenter your choice:" +
+                              "\n 0. Exit. " +
+                              "\n 1. Cart. " +
+                              "\n 2. Product. " +
+                              "\n 3. Order");
 
-            int choice;
-            do
+            choice = int.Parse(Console.ReadLine());
+            StartChoose option = (StartChoose)choice;
+
+            switch (option)
             {
-                Console.WriteLine("\nEnter your choice:\n 0. Exit. \n 1. Cart. \n 2. Product. \n 3. Order");
-                choice = int.Parse(Console.ReadLine());
-                StartChoose option = (StartChoose)choice;
-                switch (option)
+                case StartChoose.EXIT:
+                    Console.WriteLine("bye");
+                    break;
+
+                case StartChoose.CART:
+                    MenuOfCart();
+                    break;
+
+                case StartChoose.PRODUCT:
+                    MenuOfProduct();
+                    break;
+                case StartChoose.ORDER:
+                    MenuOfOrder();
+                    break;
+
+                default:
+                    Console.WriteLine("ERROR");
+                    break;
+            }
+        } while (choice != 0);
+
+        return 0;
+    }
+
+    public static void MenuOfCart()
+    {
+        Console.WriteLine("enter your choice:\n" +
+                          " a. Add product to the cart.\n" +
+                          " b. Update the product in the cart.\n" +
+                          " c. Confirm Order.");
+
+        string? choice = Console.ReadLine();
+
+        switch (choice)
+        {
+            case "a":
+                Console.Write("enter id of product: ");
+                int idProduct = int.Parse(Console.ReadLine());
+                try
                 {
-                    case StartChoose.EXIT:
-                        Console.WriteLine("Have a good day");
-                        break;
-
-                    case StartChoose.CART:
-                        choiceCart();
-                        break;
-
-                    case StartChoose.PRODUCT:
-                        choiceProduct();
-                        break;
-                    case StartChoose.ORDER:
-                        choiceOrder();
-                        break;
-
-                    default:
-                        Console.WriteLine("Error Typing");
-                        break;
+                    test.Cart.AddPToCart(cart, idProduct);
                 }
-            } while (choice != 0);
-            Console.WriteLine();
+                catch (NotExsitsException e) { Console.WriteLine(e); }
+                break;
+
+            case "b":
+                int productId, newAmount;
+                Console.Write("product ID: ");
+
+                int.TryParse(Console.ReadLine(), out productId);
+                OrderItem orderitem = new OrderItem();
+                orderitem = cart.Items.Find(it => it.ProductID == productId);
+                Console.WriteLine(orderitem);
+                Console.WriteLine("To update please enter the following details:");
+                Console.Write("Amount of product to update: ");
+
+                newAmount = int.Parse(Console.ReadLine());
+                test.Cart.UpdateAmount(cart, productId, newAmount);
+                break;
+
+            case "c":
+                Console.Write("enter your name: ");
+                cart.Name = Console.ReadLine();
+
+                Console.Write("enter tour email: ");
+                cart.Email = Console.ReadLine();
+
+                Console.Write("enter a your home address: ");
+                cart.Address = Console.ReadLine();
+                test.Cart.ConfirmationOrder(cart);
+                break;
+
+            default:
+                Console.WriteLine("ERROR");
+                break;
         }
-        public static void choiceCart()
+    }
+    public static void MenuOfProduct()
+    {
+        Console.WriteLine("enter your choice:\n" +
+                          " a. Get product list.\n" +
+                          " b. Get product for admin.\n" +
+                          " c. Get product for customer.\n" +
+                          " d. Add new product.\n" +
+                          " e. Delete product.\n" +
+                          " f. Update product.");
+
+        string? choice = Console.ReadLine();
+        int ichoice;
+        int ID;
+        switch (choice)
         {
-            Console.WriteLine("Please enter your choice:\n" +
-                              " a. add product to the cart.\n" +
-                              " b. Updat the quantity of a product in the shopping cart.\n" +
-                              " c. Confrim Order.");
+            case "a":
+                List<BO.ProductForList> products = new List<BO.ProductForList>();
+                products = test.Product.GetProductForList().ToList();
+                products.ForEach(product => Console.WriteLine(product));
+                break;
 
+            case "b":
+                Console.Write("Please enter id :");
+                ID = int.Parse(Console.ReadLine());
+                try
+                {
+                    Console.WriteLine(test.Product.GetProduct(ID));
 
-            string? choise = Console.ReadLine();
+                }
+                catch (DO.DoesNotExistException e) { Console.WriteLine(e); }
+                break;
 
-            switch (choise)
-            {
-                case "a":
+            case "c":
+                Console.Write("enter ID: ");
+                ID = int.Parse(Console.ReadLine());
+                Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
+                break;
 
-                    Console.Write("Enter the id of product you want to add to the cart: ");
-                    int idProduct = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        test.Cart.AddPToCart(cart, idProduct);
+            case "d":
+                Product product = new Product();
+                Console.Write("enter product ID: ");
+                product.ID = int.Parse(Console.ReadLine());
 
-                    }
-                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
+                Console.Write("enter name of product: ");
+                product.Name = Console.ReadLine();
 
-                    break;
+                Console.Write("enter a product price: ");
+                product.Price = int.Parse(Console.ReadLine());
 
-                case "b":
+                Console.WriteLine("select a product category" +
+                                  "\n 0. Suits." +
+                                  "\n 1. Pants. " +
+                                  "\n 2. Shirts. " +
+                                  "\n 3. Ties. " +
+                                  "\n 4. Cufflinks.");
 
-                    int idProduct1, newAmount;
-                    Console.Write("ID product: ");
-                    int.TryParse(Console.ReadLine(), out idProduct1);
-                    OrderItem orderitem = new OrderItem();
-                    orderitem = cart.Items.Find(x => x.ProductID == idProduct1);
-                    Console.WriteLine(orderitem);
-                    Console.WriteLine("For update please enter the following details:");
-                    Console.Write("Amount of product to update: ");
-                    newAmount = int.Parse(Console.ReadLine());
-                    test.Cart.UpdateAmount(cart, idProduct1, newAmount);
-                    break;
+                ichoice = int.Parse(Console.ReadLine());
+                product.Category = (Category)ichoice;
 
-                case "c":
-                    Console.Write("Please enter a your name: ");
-                    cart.Name = Console.ReadLine();
-                    Console.Write("Please enter tour Email: ");
-                    cart.Email = Console.ReadLine();
-                    Console.Write("Please enter a your addres home: ");
-                    cart.Address = Console.ReadLine();
-                    test.Cart.ConfirmationOrder(cart);
+                Console.Write("enter the quantity of the product in stock: ");
+                product.InStock = int.Parse(Console.ReadLine());
+                try
+                {
+                    test.Product.AddProductAdmin(product);
+                }
+                catch (AlreadyExsitsException e) { Console.WriteLine(e); }
+                break;
 
-                    break;
+            case "e":
+                Console.Write("enter ID of prodcut to delete: ");
+                ID = int.Parse(Console.ReadLine());
+                try
+                {
+                    test.Product.DeleteProductAdmin(ID);
+                    Console.WriteLine("sucsses");
+                }
+                catch (NotExsitsException e) { Console.WriteLine(e); }
+                break;
 
+            case "f":
+                product = new Product();
+                Console.Write("enter ID of product to update: ");
+                ID = int.Parse(Console.ReadLine());
+                try
+                {
+                    Console.WriteLine(test.Product.GetProduct(ID));
+                }
+                catch (NotExsitsException e) { Console.WriteLine(e); }
 
-                default:
-                    Console.WriteLine("Error Tayping");
-                    break;
+                Console.WriteLine("enter the details of the product to update:");
 
-            }
+                Console.Write("enter ID of product number: ");
+                product.ID = int.Parse(Console.ReadLine());
+
+                Console.Write("enter name of product: ");
+                product.Name = Console.ReadLine();
+
+                Console.Write("enter price of product: ");
+                product.Price = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("select a category " +
+                                  "\n 0. Suit." +
+                                  "\n 1. Pants. " +
+                                  "\n 2. Shirts. " +
+                                  "\n 3. Ties. " +
+                                  "\n 4. Cufflinks.");
+
+                ichoice = int.Parse(Console.ReadLine());
+                product.Category = (Category)ichoice;
+
+                Console.Write("enter the quantity of the product in stock: ");
+                product.InStock = int.Parse(Console.ReadLine());
+                try
+                {
+                    test.Product.UpdateProductAdmin(product);
+                }
+                catch (NotExsitsException e) { Console.WriteLine(e); }
+                break;
+
+            default:
+                Console.WriteLine("ERROR");
+                break;
+
         }
-        public static void choiceProduct()
+    }
+    public static void MenuOfOrder()
+    {
+        Console.WriteLine(" a. Get order list.\n" +
+                          " b. Get order.\n" +
+                          " c. Shipping update.\n" +
+                          " d. Supply Update Order.\n" +
+                          " e. TrackingOrder.\n");
+
+        string? choice = Console.ReadLine();
+        int orderId;
+
+        switch (choice)
         {
-            Console.WriteLine("Please enter your choice:\n" +
-                              " a. Get product list.\n" +
-                              " b. Get product for the admin.\n" +
-                              " c. Get product for the claint.\n" +
-                              " d. Add product (for the admin).\n" +
-                              " e. Delete product.\n" +
-                              " f. Update product.");
+            case "a":
+                List<OrderForList> orders = test.Order.GetOrderForList().ToList();
+                orders.ForEach(order => Console.WriteLine(order));
+                break;
 
-            string? choise = Console.ReadLine();
+            case "b":
+                Console.Write("enter order ID: ");
+                orderId = int.Parse(Console.ReadLine());
+                try
+                {
+                    Console.WriteLine(test.Order.GetOrder(orderId));
+                }
+                catch (NotExsitsException e) { Console.WriteLine(e); }
 
+                break;
 
-            switch (choise)
-            {
-                case "a":
+            case "c":
+                Console.Write("enter order ID: ");
+                orderId = int.Parse(Console.ReadLine());
+                Console.WriteLine(test.Order.UpdateOrderShipping(orderId));
+                break;
 
-                    List<BO.ProductForList> products = new List<BO.ProductForList>();
-                    products = test.Product.GetProductForList().ToList();
-                    products.ForEach(product => Console.WriteLine(product));
+            case "d":
+                Console.Write("enter order ID: ");
+                orderId = int.Parse(Console.ReadLine());
+                Console.WriteLine(test.Order.UpdateOrderDelivery(orderId));
+                break;
 
-                    break;
+            case "e":
+                Console.Write("enter order ID: ");
+                orderId = int.Parse(Console.ReadLine());
+                Console.WriteLine(test.Order.TrackOrder(orderId));
+                break;
 
-                case "b":
-                    Console.Write("Please enter id :");
-                    int id = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        Console.WriteLine(test.Product.GetProduct(id));
-
-                    }
-                    catch (DO.DoesNotExistException ex) { Console.WriteLine(ex); }
-
-                    break;
-
-                case "c":
-                    Console.Write("Please enter ID :");
-                    int idc = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Product.GetProductCustomer(idc, cart));
-                    break;
-
-                case "d":
-                    Product product = new Product();
-
-                    Console.Write("Please enter a product ID number: ");
-                    product.ID = int.Parse(Console.ReadLine());
-
-                    Console.Write("Please enter Product Name:");
-                    product.Name = Console.ReadLine();
-
-                    Console.Write("Please enter a product price: ");
-                    product.Price = int.Parse(Console.ReadLine());
-
-                    Console.WriteLine("Please select a product category \n 0. Suits.\n 1. Pants. \n 2. Shirts. \n 3. Ties. \n 4. Cufflinks.");
-                    int choise2 = int.Parse(Console.ReadLine());
-                    product.Category = (Category)choise2;
-
-                    Console.Write("Please enter the quantity of the product in stock: ");
-                    product.InStock = int.Parse(Console.ReadLine());
-
-                    try
-                    {
-                        test.Product.AddProductAdmin(product);
-                    }
-                    catch (AlreadyExsitsException str) { Console.WriteLine(str); }
-                    break;
-
-                case "e":
-                    Console.Write("Enter Prodcut ID to delete: ");
-                    int IdToDelete = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        test.Product.DeleteProductAdmin(IdToDelete);
-                        Console.WriteLine("sucsses");
-                    }
-                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
-                    break;
-
-                case "f":
-                    product = new Product();
-                    Console.Write("Enter the ID number of the product you want to update: ");
-                    int ID2 = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        Console.WriteLine(test.Product.GetProduct(ID2));
-                    }
-                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
-
-
-                    Console.WriteLine("Please enter the detials product to update:");
-
-                    Console.Write("Please enter a product ID number: ");
-                    product.ID = int.Parse(Console.ReadLine());
-
-                    Console.Write("Please enter Product Name Product ID: ");
-                    product.Name = Console.ReadLine();
-
-                    Console.Write("Please enter a product price: ");
-                    product.Price = int.Parse(Console.ReadLine());
-
-                    Console.WriteLine("Please select a product category \n 0. Shose.\n 1. Shirts. \n 2. Shorts. \n 3. Hoodies. \n 4. Socks.");
-                    int choise3 = int.Parse(Console.ReadLine());
-                    product.Category = (Category)choise3;
-
-                    Console.Write("Please enter the quantity of the product in stock: ");
-                    product.InStock = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        test.Product.UpdateProductAdmin(product);
-                    }
-                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
-
-                    break;
-
-                default:
-                    Console.WriteLine("Error Tayping");
-                    break;
-
-            }
+            default:
+                Console.WriteLine("ERROR");
+                break;
         }
-        public static void choiceOrder()
-        {
-            Console.WriteLine(" a.Get order list.\n" +
-                              " b. Get order.\n" +
-                              " c. Shipping update.\n" +
-                              " d. Supply Update Order.\n" +
-                              " e. TrackingOtder.\n");
-
-
-            string? choise = Console.ReadLine();
-
-            int orderID;
-            switch (choise)
-            {
-                case "a":
-                    List<OrderForList> orders = test.Order.GetOrderForList().ToList();
-                    orders.ForEach(order => Console.WriteLine(order));
-                    break;
-
-                case "b":
-                    Console.Write("Please enter order id: ");
-                    orderID = int.Parse(Console.ReadLine());
-                    try
-                    {
-                        Console.WriteLine(test.Order.GetOrder(orderID));
-                    }
-                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
-
-                    break;
-
-                case "c":
-                    Console.Write("Please enter order id: ");
-                    orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.UpdateOrderShipping(orderID));
-
-                    break;
-
-                case "d":
-                    Console.Write("Please enter order id: ");
-                    orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.UpdateOrderDelivery(orderID));
-                    break;
-
-                case "e":
-                    Console.Write("Please enter order id: ");
-                    orderID = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Order.TrackOrder(orderID));
-                    break;
-
-                default:
-                    Console.WriteLine("Error Tayping");
-                    break;
-
-            }
-        }
-
     }
 }
+
