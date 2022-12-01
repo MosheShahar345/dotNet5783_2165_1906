@@ -163,9 +163,4 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.NotExsitsException(e);
         }
     }
-
-    Product BlApi.IProduct.GetProduct(int productId)
-    {
-        throw new NotImplementedException();
-    }
 }
