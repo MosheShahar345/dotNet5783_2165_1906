@@ -74,7 +74,13 @@ internal class BlProduct : IProduct
     public void AddProductAdmin(BO.Product product)
     {
         if(product.ID <= 0 || product.Name == null || product.Price <= 0 || product.InStock < 0)
-            throw new BO.NotExsitsException();
+            throw new BO.InvalidInputException();
         DO.Product dProduct = new DO.Product();
+    }
+
+    public void DeleteProductAdmin(int productId)
+    {
+        BO.Product product = new BO.Product();
+        product = 
     }
 }
