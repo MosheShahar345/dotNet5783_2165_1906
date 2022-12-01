@@ -3,7 +3,6 @@ using Dal;
 using DalApi;
 using BO;
 using System.Threading.Channels;
-using DO;
 
 namespace BlTest
 {
@@ -67,7 +66,7 @@ namespace BlTest
                         test.Cart.AddPToCart(cart, idProduct);
 
                     }
-                    catch (DoesNotExistException ex) { Console.WriteLine(ex); }
+                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
 
                     break;
 
@@ -167,7 +166,7 @@ namespace BlTest
                     {
                         test.Product.AddProductAdmin(product);
                     }
-                    catch (AlreadyExistsException str) { Console.WriteLine(str); }
+                    catch (AlreadyExsitsException str) { Console.WriteLine(str); }
                     break;
 
                 case "e":
@@ -178,7 +177,7 @@ namespace BlTest
                         test.Product.DeleteProductAdmin(IdToDelete);
                         Console.WriteLine("sucsses");
                     }
-                    catch (NotExistException ex) { Console.WriteLine(ex); }
+                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
                     break;
 
                 case "f":
@@ -189,7 +188,7 @@ namespace BlTest
                     {
                         Console.WriteLine(test.Product.GetProduct(ID2));
                     }
-                    catch (NotExistsException ex) { Console.WriteLine(ex); }
+                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
 
 
                     Console.WriteLine("Please enter the detials product to update:");
@@ -213,7 +212,7 @@ namespace BlTest
                     {
                         test.Product.UpdateProductAdmin(product);
                     }
-                    catch (NotExistException ex) { Console.WriteLine(ex); }
+                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
 
                     break;
 
@@ -249,7 +248,7 @@ namespace BlTest
                     {
                         Console.WriteLine(test.Order.GetOrder(orderID));
                     }
-                    catch (NotExistException ex) { Console.WriteLine(ex); }
+                    catch (NotExsitsException ex) { Console.WriteLine(ex); }
 
                     break;
 

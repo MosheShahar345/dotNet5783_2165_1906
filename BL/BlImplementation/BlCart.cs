@@ -20,7 +20,7 @@ internal class BlCart : BlApi.ICart
         }
         catch (Exception e)
         {
-            throw new NotExsitsException(e: e);
+            throw new BO.NotExsitsException(e: e);
         }
 
         foreach (var item in cart.Items)
@@ -85,7 +85,7 @@ internal class BlCart : BlApi.ICart
                 else
                 {
                     cart.Items.Remove(item);
-                    cart.TotalPrice -= item.TotalPrice; 
+                    cart.TotalPrice -= item.TotalPrice;
                 }
             }
         }
@@ -94,10 +94,10 @@ internal class BlCart : BlApi.ICart
     public void ConfirmationOrder(BO.Cart cart)
     {
         if (!cart.Items.Any() || cart.Name == null || cart.Address == null)
-            throw new NotExsitsException();
-        
+            throw new BO.NotExsitsException("");
+
         if (!new EmailAddressAttribute().IsValid(cart.Email))
-            throw new NotExsitsException();
+            throw new BO.NotExsitsException(" ");
 
         foreach (var item in cart.Items)
         {
@@ -121,12 +121,10 @@ internal class BlCart : BlApi.ICart
         }
         catch (Exception e)
         {
-            throw new NotExsitsException(e: e);
+            throw new BO.NotExsitsException(e: e);
         }
 
         List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
-        
 
     }
-
-   
+} 

@@ -8,11 +8,8 @@ internal class BlProduct : BlApi.IProduct
 {
     private IDal Dal = new DalList();
 
-    public IEnumerable<BO.ProductForList> GetProductForList(int productId)
+    public IEnumerable<BO.ProductForList> GetProductForList()
     {
-        if (productId <= 0)
-            throw new BO.InvalidInputException();   
-       
         List<DO.Product> products = new List<DO.Product>();
         List<BO.ProductForList> productForList = new List<BO.ProductForList>();
 
