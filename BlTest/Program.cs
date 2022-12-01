@@ -67,7 +67,7 @@ internal class Program
                 {
                     test.Cart.AddPToCart(cart, idProduct);
                 }
-                catch (NotExsitsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case "b":
@@ -115,6 +115,7 @@ internal class Program
         string? choice = Console.ReadLine();
         int ichoice;
         int ID;
+
         switch (choice)
         {
             case "a":
@@ -167,7 +168,7 @@ internal class Program
                 {
                     test.Product.AddProductAdmin(product);
                 }
-                catch (AlreadyExsitsException e) { Console.WriteLine(e); }
+                catch (InvalidEmailException e) { Console.WriteLine(e); }
                 break;
 
             case "e":
@@ -178,7 +179,7 @@ internal class Program
                     test.Product.DeleteProductAdmin(ID);
                     Console.WriteLine("sucsses");
                 }
-                catch (NotExsitsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case "f":
@@ -189,7 +190,7 @@ internal class Program
                 {
                     Console.WriteLine(test.Product.GetProduct(ID));
                 }
-                catch (NotExsitsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
 
                 Console.WriteLine("enter the details of the product to update:");
 
@@ -218,7 +219,7 @@ internal class Program
                 {
                     test.Product.UpdateProductAdmin(product);
                 }
-                catch (NotExsitsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             default:
@@ -252,7 +253,7 @@ internal class Program
                 {
                     Console.WriteLine(test.Order.GetOrder(orderId));
                 }
-                catch (NotExsitsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
 
                 break;
 

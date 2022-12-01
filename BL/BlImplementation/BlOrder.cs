@@ -20,9 +20,9 @@ internal class BlOrder : BlApi.IOrder
         {
             orders = (List<DO.Order>)Dal.Order.GetAll();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
 
 		foreach (var item in orders)
@@ -49,7 +49,7 @@ internal class BlOrder : BlApi.IOrder
 	public Order GetOrder(int orderId)
 	{
         if (orderId <= 0)
-            throw new InvalidInputException();
+            throw new IdIsLessThanZeroException();
 
 		List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
 		DO.Order dOrder = new DO.Order();
@@ -58,9 +58,9 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = Dal.Order.GetById(orderId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
 
         orderItems = Dal.OrderItem.GetAll().ToList();
@@ -113,7 +113,7 @@ internal class BlOrder : BlApi.IOrder
 	public Order UpdateOrderShipping(int orderId)
 	{
 		if (orderId <= 0)
-			throw new BO.InvalidInputException();
+			throw new BO.IdIsLessThanZeroException();
 
 		DO.Order dOrder = new DO.Order();
 		BO.Order bOrder = new BO.Order();
@@ -123,9 +123,9 @@ internal class BlOrder : BlApi.IOrder
             dOrder = Dal.Order.GetById(orderId);
             bOrder = GetOrder(orderId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
 
 		if (dOrder.ShipDate == DateTime.MinValue)
@@ -139,7 +139,7 @@ internal class BlOrder : BlApi.IOrder
 	public Order UpdateOrderDelivery(int orderId)
 	{
         if (orderId <= 0)
-            throw new BO.InvalidInputException();
+            throw new BO.IdIsLessThanZeroException();
 
         DO.Order dOrder = new DO.Order();
         BO.Order bOrder = new BO.Order();
@@ -149,9 +149,9 @@ internal class BlOrder : BlApi.IOrder
             dOrder = Dal.Order.GetById(orderId);
             bOrder = GetOrder(orderId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
 
         if (dOrder.DeliveryDate == DateTime.MinValue)
@@ -173,17 +173,16 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = Dal.Order.GetById(orderId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
-
 
 		BO.OrderTracking orderTracking = new BO.OrderTracking();
 		orderTracking.Id = orderId;
 		orderTracking.Status = GetStatus(dOrder);
-        Tuple<DateTime, BO.OrderStatus> tuple = new Tuple<DateTime, string>(
-            (DateTime)dOrder.OrderDate, (BO.OrderStatus)orderTracking.Status.ToString());
+        Tuple<DateTime, string> tuple = new Tuple<DateTime, string>(
+            (DateTime)dOrder.OrderDate, orderTracking.Status.ToString());
 
 		orderTracking.Log.Add(tuple);
 

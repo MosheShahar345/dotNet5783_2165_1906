@@ -1,6 +1,4 @@
 ﻿using BlApi;
-
-
 namespace BlImplementation;
 
 sealed public class Bl : IBl

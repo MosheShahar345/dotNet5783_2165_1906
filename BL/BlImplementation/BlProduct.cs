@@ -18,9 +18,9 @@ internal class BlProduct : BlApi.IProduct
         {
             products = (List<DO.Product>)Dal.Product.GetAll();
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new NotExsitsException(e: e);
+            throw new NotExistsException();
         }
 
         foreach (var item in products)
@@ -40,7 +40,7 @@ internal class BlProduct : BlApi.IProduct
     public Product GetProduct(int productId)
     {
         if (productId <= 0)
-            throw new BO.InvalidInputException();
+            throw new BO.IdIsLessThanZeroException();
 
         DO.Product dProduct = new DO.Product();
 
@@ -48,9 +48,9 @@ internal class BlProduct : BlApi.IProduct
         {
             dProduct = Dal.Product.GetById(productId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e: e);
+            throw new BO.NotExistsException();
         }
 
         BO.Product bProduct = new BO.Product()
@@ -65,7 +65,7 @@ internal class BlProduct : BlApi.IProduct
     public BO.ProductItem GetProductCustomer(int productId, BO.Cart cart)
     {
         if (productId <= 0)
-            throw new BO.InvalidInputException();
+            throw new BO.IdIsLessThanZeroException();
 
         DO.Product dProduct = new DO.Product();
         DO.OrderItem dOrderItem = new DO.OrderItem();
@@ -75,12 +75,11 @@ internal class BlProduct : BlApi.IProduct
             dProduct = Dal.Product.GetById(productId); 
             dOrderItem = Dal.OrderItem.GetById(productId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e: e);
+            throw new BO.NotExistsException();
         }
-          
-
+        
         BO.ProductItem productItem = new BO.ProductItem()
         {
             ID = productId,
@@ -112,9 +111,9 @@ internal class BlProduct : BlApi.IProduct
         {
             Dal.Product.Add(dProduct);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e);
+            throw new BO.NotExistsException();
         }
     }
 
@@ -126,24 +125,26 @@ internal class BlProduct : BlApi.IProduct
         foreach (var item in orderItems)
         {
             if(item.ProductID == productId)
-                throw new Exception();
+                throw new AlreadyExistsException();
         }
 
         try
         {
             Dal.Product.Delete(productId);
         }
-        catch (Exception e)
+        catch (Exception)
         {
 
-            throw new BO.NotExsitsException(e);
+            throw new BO.NotExistsException();
         }
     }
 
     public void UpdateProductAdmin(BO.Product product)
     {
-        if (product.ID < 1000000 || product.ID > 999999 || product.Name == null || product.Price <= 0 || product.InStock < 0)
-            throw new BO.InvalidInputException();
+        if (product.ID < 1000000 || product.ID > 999999 ||
+            product.Name == null || product.Price <= 0 ||
+            product.InStock < 0)
+            throw new BO.NotExistsException();
 
         DO.Product dProduct = new DO.Product()
         {
@@ -158,14 +159,9 @@ internal class BlProduct : BlApi.IProduct
         {
             Dal.Product.Update(dProduct);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            throw new BO.NotExsitsException(e);
+            throw new BO.NotExistsException();
         }
-    }
-
-    Product BlApi.IProduct.GetProduct(int productId)
-    {
-        throw new NotImplementedException();
     }
 }
