@@ -1,11 +1,10 @@
 ﻿using BO;
-using BlApi;
 using Dal;
 using DalApi;
 
 namespace BlImplementation;
 
-internal class BlProduct : IProduct
+internal class BlProduct : BlApi.IProduct
 {
     private IDal Dal = new DalList();
 

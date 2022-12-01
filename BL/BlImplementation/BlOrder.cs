@@ -8,7 +8,7 @@ using static BO.NotEnoughRoomInStockException;
 
 namespace BlImplementation;
 
-internal class BlOrder : IOrder
+internal class BlOrder : BlApi.IOrder
 {
     private IDal Dal = new DalList();
     public IEnumerable<BO.OrderForList> GetOrderForList()
@@ -182,10 +182,10 @@ internal class BlOrder : IOrder
 		BO.OrderTracking orderTracking = new BO.OrderTracking();
 		orderTracking.Id = orderId;
 		orderTracking.Status = GetStatus(dOrder);
-        Tuple<DateTime, BO.OrderStatus> tuple = new Tuple<DateTime, BO.OrderStatus>(
-            (DateTime)dOrder.OrderDate, (BO.OrderStatus)orderTracking.Status);
+        Tuple<DateTime, BO.OrderStatus> tuple = new Tuple<DateTime, string>(
+            (DateTime)dOrder.OrderDate, (BO.OrderStatus)orderTracking.Status.ToString());
 
-		orderTracking.Var.Add(tuple);
+		orderTracking.Log.Add(tuple);
 
 		return orderTracking;
     }

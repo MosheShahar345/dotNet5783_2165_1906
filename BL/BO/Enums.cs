@@ -15,3 +15,12 @@ public enum OrderStatus
     SENT,
     DELIVERED
 }
+
+public enum StartChoose
+{
+    EXIT,
+    CART,
+    PRODUCT,
+    ORDER
+}
+

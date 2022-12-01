@@ -3,7 +3,7 @@ namespace BlApi;
 
 public interface IProduct
 {
-    public IEnumerable<BO.ProductForList> GetProductForList(int productId);
+    public IEnumerable<BO.ProductForList> GetProductForList();
     public ProductItem GetProductCustomer(int productId, BO.Cart cart);
     public void AddProductAdmin(BO.Product product);
     public void DeleteProductAdmin(int productId);

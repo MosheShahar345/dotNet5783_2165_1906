@@ -1,16 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using BlApi;
-using BO;
 using Dal;
 using DalApi;
 
 namespace BlImplementation;
 
-internal class BlCart : ICart
+internal class BlCart : BlApi.ICart
 {
     private IDal Dal = new DalList();
 
-    public BO.Cart AddToCart(BO.Cart cart, int productId)
+    public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
         DO.Product product1 = new DO.Product();
         DO.OrderItem orderitem1 = new DO.OrderItem();
@@ -95,7 +93,7 @@ internal class BlCart : ICart
     }
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (!cart.Items.Any() || cart.Name == null || cart.Adress == null)
+        if (!cart.Items.Any() || cart.Name == null || cart.Address == null)
             throw new NotExsitsException();
         
         if (!new EmailAddressAttribute().IsValid(cart.Email))
@@ -104,13 +102,13 @@ internal class BlCart : ICart
         foreach (var item in cart.Items)
         {
             if (item.Amount < 0)
-                throw new NotExsitsException();
+                throw new BO.NotExsitsException("");
         }
 
         DO.Order dOrder = new DO.Order()
         {
             CustomerName = cart.Name,
-            CustomerAdress = cart.Adress,
+            CustomerAdress = cart.Address,
             CustomerEmail = cart.Email,
             OrderDate = DateTime.Now,
             ShipDate = DateTime.MinValue,
@@ -131,4 +129,4 @@ internal class BlCart : ICart
 
     }
 
-}
+   

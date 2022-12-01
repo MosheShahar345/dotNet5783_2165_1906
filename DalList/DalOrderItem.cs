@@ -75,6 +75,7 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// returns the array of order items
     /// </summary>
+    /// 
     public IEnumerable<OrderItem?> GetAll()
     {
         List<OrderItem?> orderitems = new List<OrderItem?>();
@@ -110,4 +111,6 @@ internal class DalOrderItem : IOrderItem
         }
         return orderitems;
     }
- }
+
+ 
+}
