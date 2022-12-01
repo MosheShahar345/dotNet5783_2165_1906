@@ -15,25 +15,3 @@ public enum OrderStatus
     SENT,
     DELIVERED
 }
-
-public enum Availability
-{
-    INSTUCK,
-    OUTOFSTUCK
-}
-
-public enum Entities
-{
-    Exit,
-    Cart,
-    Order,
-    Product
-}
-
-public enum CartOptstions
-{
-    Exit,
-    Add,
-    Update,
-    Authorization
-}
