@@ -140,7 +140,7 @@ namespace BlTest
                 case "c":
                     Console.Write("Please enter ID :");
                     int idc = int.Parse(Console.ReadLine());
-                    Console.WriteLine(test.Product.GetProduct(cart, idc));
+                    Console.WriteLine(test.Product.GetProductCustomer(idc, cart));
                     break;
 
                 case "d":
