@@ -15,7 +15,7 @@ namespace BlTest
         {
             cart.Items = new List<OrderItem>();
 
-            int? choice;
+            int choice;
             do
             {
                 Console.WriteLine("\nEnter your choice:\n 0. Exit. \n 1. Cart. \n 2. Product. \n 3. Order");
