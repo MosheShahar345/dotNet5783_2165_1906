@@ -12,7 +12,6 @@ internal class Program
     {
         cart.Items = new List<OrderItem>();
         int choice;
-        int.TryParse(Console.ReadLine(), out choice);
 
         do
         {
