@@ -146,7 +146,7 @@ internal static class DataSource
                 Price = Price[i],
                 InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
             };
-              Products.Add(product) ;
+            Products.Add(product) ;
         }
     }
     /// <summary>
