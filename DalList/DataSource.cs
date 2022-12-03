@@ -122,7 +122,7 @@ internal static class DataSource
         {
             "Silk suit", "kids suit", "Cotton pants", "Leather pants",
             "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
-            "Silver cufflinks", "Diamond cunfflinks"
+            "Silver cufflinks", "Diamond cufflinks"
         };
 
         Category[] Categories =
