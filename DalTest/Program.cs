@@ -180,7 +180,7 @@ namespace DalTest
                     order.ID = int.Parse(Console.ReadLine());
                     order.CustomerName = Console.ReadLine();
                     order.CustomerEmail = Console.ReadLine();
-                    order.CustomerAdress = Console.ReadLine();
+                    order.CustomerAddress = Console.ReadLine();
                     try
                     {
                         test.Order.Add(order);
@@ -228,7 +228,7 @@ namespace DalTest
                         Console.WriteLine("enter customer name, cstomer email, customer adress ");
                         order.CustomerName = Console.ReadLine();
                         order.CustomerEmail = Console.ReadLine();
-                        order.CustomerAdress = Console.ReadLine();
+                        order.CustomerAddress = Console.ReadLine();
                         test.Order.Update(order);
                     }
                     catch (Exception str)

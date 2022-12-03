@@ -1,5 +1,4 @@
-﻿
-using BO;
+﻿using BO;
 using Dal;
 using DalApi;
 
@@ -163,5 +162,7 @@ internal class BlProduct : BlApi.IProduct
         {
             throw new BO.NotExistsException();
         }
+
+
     }
 }

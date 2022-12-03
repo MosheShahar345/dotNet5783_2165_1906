@@ -16,11 +16,10 @@ public struct Product
     public double Price { get; set; }
     public Category Category { get; set; }
     public int InStock { get; set; }
-
     public override string ToString() => $@"
-        Product ID = {ID}
-        Name: {Name}, 
-        Category - {Category}
+        Product ID: {ID}
+        Name: {Name}
+        Category: {Category}
     	Price: {Price}
     	Amount in stock: {InStock}
 ";

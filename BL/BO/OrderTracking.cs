@@ -2,10 +2,11 @@
 
 public class OrderTracking
 {
-    public int Id { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int ID { get; set; }
     public OrderStatus Status { get; set; }
 
     public List<Tuple<DateTime, string>> Log = new List<Tuple<DateTime, string>>();
-
-
 }
