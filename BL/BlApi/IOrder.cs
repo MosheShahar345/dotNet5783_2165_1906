@@ -13,6 +13,12 @@ public interface IOrder
     public Order GetOrder(int orderId);
 
     /// <summary>
+    /// gets a list of orders from DO to BO
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.OrderForList> GetOrderForList();
+
+    /// <summary>
     /// updates the shipping date of an order 
     /// </summary>
     /// <param name="orderId"></param>

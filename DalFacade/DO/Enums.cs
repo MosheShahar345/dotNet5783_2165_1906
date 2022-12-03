@@ -1,10 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-namespace DO;
+﻿namespace DO;
 
 public enum Category
 {
@@ -13,4 +7,12 @@ public enum Category
     Shirts,
     Ties,
     Cufflinks
+}
+
+public enum StartChoose
+{
+    Exit,
+    Product,
+    Order,
+    OrderItem
 }
