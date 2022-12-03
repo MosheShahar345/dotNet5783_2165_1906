@@ -83,10 +83,10 @@ internal class BlOrder : BlApi.IOrder
 	private OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate != DateTime.MinValue)
-			return BO.OrderStatus.DELIVERED;
+			return BO.OrderStatus.Delivered;
 		if (o.ShipDate != DateTime.MinValue)
-			return BO.OrderStatus.SENT;
-		return BO.OrderStatus.CONFIRMED;
+			return BO.OrderStatus.Sent;
+		return BO.OrderStatus.Confirmed;
 	}
 	private(List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
 	{

@@ -22,18 +22,18 @@ internal class Program
 
             switch (option)
             {
-                case StartChoose.EXIT:
+                case StartChoose.Exit:
                     Console.WriteLine("bye");
                     break;
 
-                case StartChoose.CART:
+                case StartChoose.Cart:
                     MenuOfCart();
                     break;
 
-                case StartChoose.PRODUCT:
+                case StartChoose.Product:
                     MenuOfProduct();
                     break;
-                case StartChoose.ORDER:
+                case StartChoose.Order:
                     MenuOfOrder();
                     break;
 
