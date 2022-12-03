@@ -57,17 +57,16 @@ namespace DalTest
                               " d. update order item\n" +
                               " e. delete order item\n");
 
-            char choice = char.Parse(Console.ReadLine());
+            OrderItem orderitem;
+            int ID;
+            char choice;
             int orderItemId;
             int productID;
             int orderID;
             double price;
             int amount;
-
-            //bool status = int.TryParse(Console.ReadLine(), out choice);
-
-            OrderItem orderitem;
-            int ID;
+            char.TryParse(Console.ReadLine(), out choice);
+            
             switch (choice)
             {
                 case 'a':
@@ -75,11 +74,12 @@ namespace DalTest
                                       "product ID, order ID, " +
                                       "price, amount ");
 
-                    orderItemId = int.Parse(Console.ReadLine());
-                    productID = int.Parse(Console.ReadLine());
-                    orderID = int.Parse(Console.ReadLine());
-                    price = double.Parse(Console.ReadLine());
-                    amount = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out orderItemId);
+                    int.TryParse(Console.ReadLine(), out productID);
+                    int.TryParse(Console.ReadLine(), out orderID);
+                    double.TryParse(Console.ReadLine(), out price);
+                    int.TryParse(Console.ReadLine(), out amount);
+
                     try
                     {
                         orderitem = new OrderItem
@@ -100,7 +100,7 @@ namespace DalTest
 
                 case 'b':
                     Console.WriteLine("enter order item ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         orderitem = test.OrderItem.GetById(ID);
@@ -122,7 +122,7 @@ namespace DalTest
 
                 case 'd':
                     Console.WriteLine("enter:order item ID");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         orderitem = test.OrderItem.GetById(ID);
@@ -140,7 +140,7 @@ namespace DalTest
 
                 case 'e':
                     Console.WriteLine("enter order item ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         test.OrderItem.Delete(ID);
@@ -166,9 +166,10 @@ namespace DalTest
                               " d. update order item\n" +
                               " e. delete order item\n");
 
-            char choice = char.Parse(Console.ReadLine());
             Order order = new Order();
             int ID;
+            char choice;
+            char.TryParse(Console.ReadLine(), out choice);
 
             switch (choice)
             {
@@ -194,7 +195,7 @@ namespace DalTest
 
                 case 'e':
                     Console.WriteLine("enter order ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         test.Order.Delete(ID);
@@ -207,7 +208,7 @@ namespace DalTest
 
                 case 'b':
                     Console.WriteLine("enter order ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         order = test.Order.GetById(ID);
@@ -254,9 +255,7 @@ namespace DalTest
                     Console.WriteLine("try harder");
                     break;
             }
-
         }
-
         public static void MenuOfProduct()
         {
             Console.WriteLine("enter your choice:\n" +
@@ -266,9 +265,10 @@ namespace DalTest
                               " d. update order item\n" +
                               " e. delete order item\n");
 
-            char choice = char.Parse(Console.ReadLine());
             Product product = new Product();
             int ID;
+            char choice;
+            char.TryParse(Console.ReadLine(), out choice);
 
             switch (choice)
             {
@@ -293,7 +293,7 @@ namespace DalTest
 
                 case 'e':
                     Console.WriteLine("enter product ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         test.Product.Delete(ID);
@@ -306,7 +306,7 @@ namespace DalTest
 
                 case 'b':
                     Console.WriteLine("enter product ID:");
-                    ID = int.Parse(Console.ReadLine());
+                    int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
                         product = test.Product.GetById(ID);
