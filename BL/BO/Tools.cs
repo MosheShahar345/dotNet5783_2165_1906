@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace BO;
 
-public static class Tools
+internal static class Tools
 {
     public static string ToStringProperty<T>(this T t)
     {
@@ -19,7 +19,7 @@ public static class Tools
             }
             else
             {
-                str += "\n" + item.Name + ": " + item.GetValue(t, null);
+                str += "\n" + item.Name + ", " + item.GetValue(t, null);
             }
         }
 

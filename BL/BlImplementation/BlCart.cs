@@ -6,7 +6,7 @@ namespace BlImplementation;
 
 internal class BlCart : BlApi.ICart
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = new DalList(); // to access DO entities
 
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
