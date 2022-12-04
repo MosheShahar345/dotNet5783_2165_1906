@@ -58,7 +58,7 @@ internal class Program
         switch (choice)
         {
             case 'a':
-                Console.Write("enter id of product: ");
+                Console.Write("enter ID of product: ");
                 int idProduct;
                 int.TryParse(Console.ReadLine(), out idProduct);
                 try
@@ -76,8 +76,7 @@ internal class Program
                 OrderItem orderitem = new OrderItem();
                 orderitem = cart.Items.Find(it => it.ProductID == productId);
                 Console.WriteLine(orderitem);
-                Console.WriteLine("To update please enter the following details:");
-                Console.Write("Amount of product to update: ");
+                Console.Write("enter the amount of products to update: ");
 
                 int.TryParse(Console.ReadLine(), out newAmount);
                 test.Cart.UpdateAmount(cart, productId, newAmount);
@@ -87,10 +86,10 @@ internal class Program
                 Console.Write("enter your name: ");
                 cart.Name = Console.ReadLine();
 
-                Console.Write("enter tour email: ");
+                Console.Write("enter your email: ");
                 cart.Email = Console.ReadLine();
 
-                Console.Write("enter a your home address: ");
+                Console.Write("enter your home address: ");
                 cart.Address = Console.ReadLine();
                 test.Cart.ConfirmationOrder(cart);
                 break;
@@ -124,7 +123,7 @@ internal class Program
                 break;
 
             case 'b':
-                Console.Write("Please enter id :");
+                Console.Write("enter product ID: ");
                 int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
@@ -134,7 +133,7 @@ internal class Program
                 break;
 
             case 'c':
-                Console.Write("enter ID: ");
+                Console.Write("enter product ID: ");
                 int.TryParse(Console.ReadLine(), out ID);
                 Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
                 break;
@@ -147,7 +146,7 @@ internal class Program
                 Console.Write("enter name of product: ");
                 product.Name = Console.ReadLine();
 
-                Console.Write("enter a product price: ");
+                Console.Write("enter price of a product: ");
                 product.Price = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("select a product category" +
@@ -170,12 +169,12 @@ internal class Program
                 break;
 
             case 'e':
-                Console.Write("enter ID of prodcut to delete: ");
+                Console.Write("enter ID of product to delete: ");
                 int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
                     test.Product.DeleteProductAdmin(ID);
-                    Console.WriteLine("sucsses");
+                    Console.WriteLine("success");
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
@@ -198,7 +197,7 @@ internal class Program
                 Console.Write("enter name of product: ");
                 product.Name = Console.ReadLine();
 
-                Console.Write("enter price of product: ");
+                Console.Write("enter price of a product: ");
                 product.Price = int.Parse(Console.ReadLine());
 
                 Console.WriteLine("select a category" +

@@ -12,16 +12,13 @@ internal static class DataSource
     }
     internal class Config
     {
-        private static int IdOfOrder = 0;//Resets the order code to 0
+        private static int IdOfOrder = 1000000;//Resets the order code to 0
         private static int IdOfOrderItem = 100000;//Resets the order item code to 100000
 
         /// <summary>
         ///  Increases the order code by one
         /// </summary>
-        public static int GetOrderID()
-        {
-            return IdOfOrder++;
-        }
+        public static int GetOrderID() => IdOfOrder++;
         /// <summary>
         ///  Increases the order item code by one
         /// </summary>
@@ -31,13 +28,13 @@ internal static class DataSource
         }
 
         //static Random Rand = new(DateTime.Now.Millisecond);
-        //internal static int Num = Rand.Next(100000, 999999);
+        internal static Random Num = new Random();
     }
 
     static readonly Random Rand = new(DateTime.Now.Millisecond);
     internal static List<Product> Products = new List<Product>();
-    internal static List<Order> Orders;
-    internal static List<OrderItem> OrderItems;
+    internal static List<Order> Orders = new List<Order>();
+    internal static List<OrderItem> OrderItems = new List<OrderItem>();
 
     /// <summary>
     ///  Order creator
@@ -136,7 +133,7 @@ internal static class DataSource
 
         int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
 
-        for(int i = 0; i < 10; i++) //creats 10 products
+        for(int i = 0; i < 10; i++) //creates 10 products
         {
             Product product = new Product
             { 

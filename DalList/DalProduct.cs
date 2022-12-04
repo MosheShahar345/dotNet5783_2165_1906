@@ -1,7 +1,6 @@
 ﻿using DalApi;
 using DO;
 
-
 namespace Dal;
 
 /// <summary>
@@ -10,20 +9,47 @@ namespace Dal;
 internal class DalProduct : IProduct
 {
     /// <summary>
-    /// Adding a product to the product array
+    /// Adding a product to the product list
     /// </summary>
     public int Add(Product product)
     {
-        for (int i = 0; i < DataSource.Products.Count; i++)//Checks if such a product exists according to ID
+        if (product.ID != 0)
         {
-            if (product.ID == DataSource.Products[i].ID)
+            try
             {
-                throw new AlreadyExistsException($"product with ID={product.ID} already exists");
+                GetById(product.ID);
+            }
+            catch (DoesNotExistException)
+            {
+                DataSource.Products.Add(product);
+                return product.ID;
+            }
+
+            throw new AlreadyExistsException($"product with ID: {product.ID} already exists");
+        }
+
+        bool inStock = false;
+        int id = 0;
+
+        while (!inStock)
+        {
+            id = DataSource.Config.Num.Next(100000, 999999);
+
+            try
+            {
+                GetById(id);
+            }
+            catch (DoesNotExistException)
+            {
+                inStock = true;
             }
         }
-        DataSource.Products.Add(product);//if it does not exist, it is inserted into the list
+
+        product.ID = id;
+        DataSource.Products.Add(product);
         return product.ID;  
     }
+
     /// <summary>
     /// deletes an existing product
     /// </summary>
@@ -74,14 +100,12 @@ internal class DalProduct : IProduct
     /// <summary>
     /// returns the array of products
     /// </summary>
-    public IEnumerable<Product?> GetAll()
+    public IEnumerable<Product> GetAll()
     {
-        List<Product?> products = new List<Product?>();
-        for (int i = 0; i < DataSource.Products.Count; i++)
+        List<Product> products = new List<Product>();
+        foreach (var item in DataSource.Products)
         {
-            Product product = new Product();
-            product = DataSource.Products[i];
-            products.Add(product);
+            products.Add(item);
         }
         return products;
     }
