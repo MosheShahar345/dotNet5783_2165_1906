@@ -35,7 +35,7 @@ internal static class DataSource
     }
 
     static readonly Random Rand = new(DateTime.Now.Millisecond);
-    internal static List<Product> Products;
+    internal static List<Product> Products = new List<Product>();
     internal static List<Order> Orders;
     internal static List<OrderItem> OrderItems;
 

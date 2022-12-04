@@ -63,7 +63,7 @@ internal class BlOrder : BlApi.IOrder
             throw new NotExistsException();
         }
 
-        orderItems = Dal.OrderItem.GetAll().ToList();
+        //orderItems = Dal.OrderItem.GetAll().ToList();
 
 		BO.Order bOrder = new BO.Order()
 		{

@@ -162,7 +162,5 @@ internal class BlProduct : BlApi.IProduct
         {
             throw new BO.NotExistsException();
         }
-
-
     }
 }

@@ -113,7 +113,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<DO.OrderItem> orderItems = test.OrderItem.GetAll();
+                    IEnumerable<DO.OrderItem?> orderItems = test.OrderItem.GetAll();
                     foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
@@ -244,7 +244,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Order> orders = test.Order.GetAll();
+                    IEnumerable<Order?> orders = test.Order.GetAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -340,7 +340,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Product> products = test.Product.GetAll();
+                    IEnumerable<Product?> products = test.Product.GetAll();
            
                     foreach (var item in products)
                     {
