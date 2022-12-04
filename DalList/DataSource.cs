@@ -12,7 +12,7 @@ internal static class DataSource
     }
     internal class Config
     {
-        private static int IdOfOrder = 1000000;//Resets the order code to 0
+        private static int IdOfOrder = 100000;//Resets the order code to 0
         private static int IdOfOrderItem = 100000;//Resets the order item code to 100000
 
         /// <summary>
@@ -22,10 +22,7 @@ internal static class DataSource
         /// <summary>
         ///  Increases the order item code by one
         /// </summary>
-        public static int GetOrderItemID()
-        {
-            return IdOfOrderItem++;
-        }
+        public static int GetOrderItemID() => IdOfOrderItem++;
 
         //static Random Rand = new(DateTime.Now.Millisecond);
         internal static Random Num = new Random();
