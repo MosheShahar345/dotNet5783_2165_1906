@@ -12,7 +12,7 @@ internal static class DataSource
     }
     internal class Config
     {
-        private static int IdOfOrder = 100000;//Resets the order code to 0
+        private static int IdOfOrder = 100000;//Resets the order code to 100000
         private static int IdOfOrderItem = 100000;//Resets the order item code to 100000
 
         /// <summary>
