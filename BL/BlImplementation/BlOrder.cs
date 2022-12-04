@@ -30,7 +30,7 @@ internal class BlOrder : BlApi.IOrder
 			BO.OrderForList temporder = new BO.OrderForList()
 			{
 				ID = item.ID,
-				CoustomerName = item.CustomerName,
+				CustomerName = item.CustomerName,
 				Status = GetStatus(item)
             };
 
@@ -70,7 +70,7 @@ internal class BlOrder : BlApi.IOrder
 			ID = dOrder.ID,
 			CustomerName = dOrder.CustomerName,
 			CustomerEmail = dOrder.CustomerEmail,
-			CustomerAdress = dOrder.CustomerAdress,
+			CustomerAddress = dOrder.CustomerAddress,
 			Status = GetStatus(dOrder),
 			OrderDate = dOrder.OrderDate,
 			ShipDate = dOrder.ShipDate,
@@ -83,10 +83,10 @@ internal class BlOrder : BlApi.IOrder
 	private OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate != DateTime.MinValue)
-			return BO.OrderStatus.DELIVERED;
+			return BO.OrderStatus.Delivered;
 		if (o.ShipDate != DateTime.MinValue)
-			return BO.OrderStatus.SENT;
-		return BO.OrderStatus.CONFIRMED;
+			return BO.OrderStatus.Sent;
+		return BO.OrderStatus.Confirmed;
 	}
 	private(List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
 	{
@@ -179,10 +179,12 @@ internal class BlOrder : BlApi.IOrder
         }
 		
 		BO.OrderTracking orderTracking = new BO.OrderTracking();
-        orderTracking.Id = orderId;
+        orderTracking.ID = orderId;
 		orderTracking.Status = GetStatus(dOrder);
+
         Tuple<DateTime, string> tuple = new Tuple<DateTime, string>(
             (DateTime)dOrder.OrderDate, orderTracking.Status.ToString());
+
 		orderTracking.Log.Add(tuple);
 
 		return orderTracking;

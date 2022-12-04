@@ -11,16 +11,16 @@ public enum Category
 
 public enum OrderStatus
 {
-    CONFIRMED,
-    SENT,
-    DELIVERED
+    Confirmed,
+    Sent,
+    Delivered
 }
 
 public enum StartChoose
 {
-    EXIT,
-    CART,
-    PRODUCT,
-    ORDER
+    Exit,
+    Cart,
+    Product,
+    Order
 }
 

@@ -74,7 +74,7 @@ internal static class DataSource
                 ID = Config.GetOrderID(),           
                 CustomerName = Names[i],
                 CustomerEmail = Emails[i],
-                CustomerAdress = Adresses[i],
+                CustomerAddress = Adresses[i],
                 OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)//Makes sure that the creation of the order is before the creation of the program
             };
 
@@ -122,7 +122,7 @@ internal static class DataSource
         {
             "Silk suit", "kids suit", "Cotton pants", "Leather pants",
             "shirts with cuffs", "Long shirts", "Silk tie", "Floral tie",
-            "Silver cufflinks", "Diamond cunfflinks"
+            "Silver cufflinks", "Diamond cufflinks"
         };
 
         Category[] Categories =
@@ -146,7 +146,7 @@ internal static class DataSource
                 Price = Price[i],
                 InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
             };
-              Products.Add(product) ;
+            Products.Add(product) ;
         }
     }
     /// <summary>

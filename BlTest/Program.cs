@@ -1,11 +1,12 @@
 ﻿using BlApi;
+using BlImplementation;
 using BO;
 namespace BlTest;
 
 internal class Program
 {
-    private static IBl test = new BlImplementation.Bl();
-    static Cart cart = new Cart();
+    private static IBl test = new Bl();
+    private static Cart cart = new Cart();
 
     static int Main(string[] args)
     {
@@ -14,29 +15,24 @@ internal class Program
 
         do
         {
-            Console.WriteLine("\nenter your choice:" +
-                              "\n 0. Exit. " +
-                              "\n 1. Cart. " +
-                              "\n 2. Product. " +
-                              "\n 3. Order");
-
-            choice = int.Parse(Console.ReadLine());
+            PrintStartMenu();
+            int.TryParse(Console.ReadLine(), out choice);
             StartChoose option = (StartChoose)choice;
 
             switch (option)
             {
-                case StartChoose.EXIT:
+                case StartChoose.Exit:
                     Console.WriteLine("bye");
                     break;
 
-                case StartChoose.CART:
+                case StartChoose.Cart:
                     MenuOfCart();
                     break;
 
-                case StartChoose.PRODUCT:
+                case StartChoose.Product:
                     MenuOfProduct();
                     break;
-                case StartChoose.ORDER:
+                case StartChoose.Order:
                     MenuOfOrder();
                     break;
 
@@ -56,13 +52,15 @@ internal class Program
                           " b. Update the product in the cart.\n" +
                           " c. Confirm Order.");
 
-        string? choice = Console.ReadLine();
+        char choice;
+        char.TryParse(Console.ReadLine(), out choice);
 
         switch (choice)
         {
-            case "a":
+            case 'a':
                 Console.Write("enter id of product: ");
-                int idProduct = int.Parse(Console.ReadLine());
+                int idProduct;
+                int.TryParse(Console.ReadLine(), out idProduct);
                 try
                 {
                     test.Cart.AddPToCart(cart, idProduct);
@@ -70,7 +68,7 @@ internal class Program
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
-            case "b":
+            case 'b':
                 int productId, newAmount;
                 Console.Write("product ID: ");
 
@@ -81,11 +79,11 @@ internal class Program
                 Console.WriteLine("To update please enter the following details:");
                 Console.Write("Amount of product to update: ");
 
-                newAmount = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out newAmount);
                 test.Cart.UpdateAmount(cart, productId, newAmount);
                 break;
 
-            case "c":
+            case 'c':
                 Console.Write("enter your name: ");
                 cart.Name = Console.ReadLine();
 
@@ -112,36 +110,36 @@ internal class Program
                           " e. Delete product.\n" +
                           " f. Update product.");
 
-        string? choice = Console.ReadLine();
         int ichoice;
         int ID;
+        char choice;
+        char.TryParse(Console.ReadLine(), out choice);
 
         switch (choice)
         {
-            case "a":
+            case 'a':
                 List<BO.ProductForList> products = new List<BO.ProductForList>();
                 products = test.Product.GetProductForList().ToList();
                 products.ForEach(product => Console.WriteLine(product));
                 break;
 
-            case "b":
+            case 'b':
                 Console.Write("Please enter id :");
-                ID = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
                     Console.WriteLine(test.Product.GetProduct(ID));
-
                 }
                 catch (DO.DoesNotExistException e) { Console.WriteLine(e); }
                 break;
 
-            case "c":
+            case 'c':
                 Console.Write("enter ID: ");
-                ID = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ID);
                 Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
                 break;
 
-            case "d":
+            case 'd':
                 Product product = new Product();
                 Console.Write("enter product ID: ");
                 product.ID = int.Parse(Console.ReadLine());
@@ -154,12 +152,12 @@ internal class Program
 
                 Console.WriteLine("select a product category" +
                                   "\n 0. Suits." +
-                                  "\n 1. Pants. " +
-                                  "\n 2. Shirts. " +
-                                  "\n 3. Ties. " +
+                                  "\n 1. Pants." +
+                                  "\n 2. Shirts." +
+                                  "\n 3. Ties." +
                                   "\n 4. Cufflinks.");
 
-                ichoice = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ichoice);
                 product.Category = (Category)ichoice;
 
                 Console.Write("enter the quantity of the product in stock: ");
@@ -171,9 +169,9 @@ internal class Program
                 catch (InvalidEmailException e) { Console.WriteLine(e); }
                 break;
 
-            case "e":
+            case 'e':
                 Console.Write("enter ID of prodcut to delete: ");
-                ID = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
                     test.Product.DeleteProductAdmin(ID);
@@ -182,10 +180,10 @@ internal class Program
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
-            case "f":
+            case 'f':
                 product = new Product();
                 Console.Write("enter ID of product to update: ");
-                ID = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
                     Console.WriteLine(test.Product.GetProduct(ID));
@@ -203,14 +201,14 @@ internal class Program
                 Console.Write("enter price of product: ");
                 product.Price = int.Parse(Console.ReadLine());
 
-                Console.WriteLine("select a category " +
+                Console.WriteLine("select a category" +
                                   "\n 0. Suit." +
-                                  "\n 1. Pants. " +
-                                  "\n 2. Shirts. " +
-                                  "\n 3. Ties. " +
+                                  "\n 1. Pants." +
+                                  "\n 2. Shirts." +
+                                  "\n 3. Ties." +
                                   "\n 4. Cufflinks.");
 
-                ichoice = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out ichoice);
                 product.Category = (Category)ichoice;
 
                 Console.Write("enter the quantity of the product in stock: ");
@@ -232,23 +230,24 @@ internal class Program
     {
         Console.WriteLine(" a. Get order list.\n" +
                           " b. Get order.\n" +
-                          " c. Shipping update.\n" +
-                          " d. Supply Update Order.\n" +
-                          " e. TrackingOrder.\n");
+                          " c. Update order shipping.\n" +
+                          " d. Update order delivery.\n" +
+                          " e. Tracking order.\n");
 
-        string? choice = Console.ReadLine();
         int orderId;
-
+        char choice;
+        char.TryParse(Console.ReadLine(), out choice);
+        
         switch (choice)
         {
-            case "a":
+            case 'a':
                 List<OrderForList> orders = test.Order.GetOrderForList().ToList();
                 orders.ForEach(order => Console.WriteLine(order));
                 break;
 
-            case "b":
+            case 'b':
                 Console.Write("enter order ID: ");
-                orderId = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out orderId);
                 try
                 {
                     Console.WriteLine(test.Order.GetOrder(orderId));
@@ -257,21 +256,21 @@ internal class Program
 
                 break;
 
-            case "c":
+            case 'c':
                 Console.Write("enter order ID: ");
-                orderId = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out orderId);
                 Console.WriteLine(test.Order.UpdateOrderShipping(orderId));
                 break;
 
-            case "d":
+            case 'd':
                 Console.Write("enter order ID: ");
-                orderId = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out orderId);
                 Console.WriteLine(test.Order.UpdateOrderDelivery(orderId));
                 break;
 
-            case "e":
+            case 'e':
                 Console.Write("enter order ID: ");
-                orderId = int.Parse(Console.ReadLine());
+                int.TryParse(Console.ReadLine(), out orderId);
                 Console.WriteLine(test.Order.TrackOrder(orderId));
                 break;
 
@@ -280,5 +279,13 @@ internal class Program
                 break;
         }
     }
-}
 
+    public static void PrintStartMenu()
+    {
+        Console.WriteLine("\nenter your choice:" +
+                          "\n 0. Exit. " +
+                          "\n 1. Cart. " +
+                          "\n 2. Product. " +
+                          "\n 3. Order");
+    }
+}
