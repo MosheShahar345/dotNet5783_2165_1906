@@ -163,8 +163,8 @@ namespace DalTest
                               " a. add new order\n" +
                               " b. get order\n" +
                               " c. print all orders\n" +
-                              " d. update order item\n" +
-                              " e. delete order item\n");
+                              " d. update order\n" +
+                              " e. delete order\n");
 
             Order order = new Order();
             int ID;
@@ -259,11 +259,11 @@ namespace DalTest
         public static void MenuOfProduct()
         {
             Console.WriteLine("enter your choice:\n" +
-                              " a. add new order\n" +
-                              " b. get order\n" +
-                              " c. print all orders\n" +
-                              " d. update order item\n" +
-                              " e. delete order item\n");
+                              " a. add new product\n" +
+                              " b. get product\n" +
+                              " c. print all products\n" +
+                              " d. update product\n" +
+                              " e. delete product\n");
 
             Product product = new Product();
             int ID;
@@ -355,10 +355,11 @@ namespace DalTest
         }
         public static void PrintStartMenu()
         {
-            Console.WriteLine("click 0 to exit \n" +
-                          "click 1 to view product \n" +
-                          "click 2 to view order \n" +
-                          "click 3 to view order item \n");
+            Console.WriteLine("\nenter your choice:" +
+                              "\n 0. Exit. " +
+                              "\n 1. Product. " +
+                              "\n 2. Order. " +
+                              "\n 3. Order Item");
         }
     }
 }
