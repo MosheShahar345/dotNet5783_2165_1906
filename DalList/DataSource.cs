@@ -19,12 +19,12 @@ internal static class DataSource
         ///  Increases the order code by one
         /// </summary>
         public static int GetOrderID() => IdOfOrder++;
+
         /// <summary>
         ///  Increases the order item code by one
         /// </summary>
         public static int GetOrderItemID() => IdOfOrderItem++;
 
-        //static Random Rand = new(DateTime.Now.Millisecond);
         internal static Random Num = new Random();
     }
 
