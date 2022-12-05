@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BO;
 using Dal;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 
@@ -10,48 +12,54 @@ internal class BlCart : BlApi.ICart
 
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
-        DO.Product product1 = new DO.Product();
-        DO.OrderItem orderitem1 = new DO.OrderItem();
+        DO.Product product = new DO.Product();
+        List<DO.OrderItem> orderitems = Dal.OrderItem.GetAll().ToList();
 
         try
         {
-            product1 = Dal.Product.GetById(productId);
-            orderitem1 = Dal.OrderItem.GetById(productId);
+            product = Dal.Product.GetById(productId);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            throw new BO.NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
 
-        foreach (var item in cart.Items)
+        if (cart.Items != null)
         {
-            if (productId == item.ProductID)
+            foreach (var item in cart.Items)
             {
-                if (product1.InStock > item.Amount)
+                if (productId == item.ProductID)
                 {
-                    item.Amount++;
-                    item.TotalPrice += item.Price;
-                    cart.TotalPrice += item.Price;
-                    return cart;
+                    if (product.InStock > item.Amount)
+                    {
+                        item.Amount++;
+                        item.TotalPrice += item.Price;
+                        cart.TotalPrice += item.Price;
+                        return cart;
+                    }
                 }
             }
         }
-
-        if (product1.InStock > 0)
+        if (product.InStock > 0)
         {
-            BO.OrderItem orderitemBO = new BO.OrderItem
+            foreach (var item in orderitems)
             {
-                ID = orderitem1.OrderID,
-                Name = product1.Name,
-                ProductID = orderitem1.ProductID,
-                Price = orderitem1.Price,
-                Amount = 1,
-                TotalPrice = orderitem1.Price
-            };
-
-            cart.Items.Add(orderitemBO);
+                if (productId == item.ProductID)
+                {
+                    BO.OrderItem orderitem = new BO.OrderItem
+                    {
+                        ID = item.ID,
+                        Name = product.Name,
+                        ProductID = item.ProductID,
+                        Price = item.Price,
+                        Amount = 1,
+                        TotalPrice = item.Price
+                    };
+                    cart.Items.Add(orderitem);
+                    break;
+                }
+            }
         }
-
         return cart;
     }
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int Namount)

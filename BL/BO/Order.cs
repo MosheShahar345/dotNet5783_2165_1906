@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using System.Threading.Channels;
+
+namespace BO;
 
 public class Order
 {
@@ -56,16 +58,21 @@ public class Order
     /// ToString override method
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => $@"
-        ID: {ID}
-        Customer Name: {CustomerName}
-    	Customer Email: {CustomerEmail}
-        Customer Address: {CustomerAddress}
-        Order Status: {Status}
-    	Order Date: {OrderDate}
-        Ship Date: {ShipDate}
-        Delivery Date: {DeliveryDate}
-        Items: {Tools.ToStringProperty(Items)}
-        Total Price: {TotalPrice}
-";
+    public override string ToString()
+    {
+        Console.WriteLine($"        ID: {ID}\n" +
+                          $"        Customer Name: {CustomerName}\n" +
+                          $"        Customer Email: {CustomerEmail}\n" +
+                          $"        Customer Address: {CustomerAddress}\n" +
+                          $"        Order Status: {Status}\n" +
+                          $"        Order Date: {OrderDate}\n" +
+                          $"        Ship Date: {ShipDate}\n" +
+                          $"        Delivery Date: {DeliveryDate}\n" +
+                          $"        Total Price: {TotalPrice}\n " );
+        foreach (var item in Items)
+        {
+            Console.WriteLine(item);
+        }
+        return "";
+    }
 }

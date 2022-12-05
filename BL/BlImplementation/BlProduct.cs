@@ -21,7 +21,6 @@ internal class BlProduct : BlApi.IProduct
         {
             throw new NotExistsException();
         }
-
         foreach (var item in products)
         {
             BO.ProductForList tempproduct = new BO.ProductForList()
@@ -57,7 +56,8 @@ internal class BlProduct : BlApi.IProduct
             ID = dProduct.ID,
             Name = dProduct.Name,
             Price = dProduct.Price,
-            Category = (Category)dProduct.Category
+            Category = (Category)dProduct.Category,
+            InStock = dProduct.InStock
         };
         return bProduct;
     }
@@ -67,34 +67,32 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.IdIsLessThanZeroException();
 
         DO.Product dProduct = new DO.Product();
-        DO.OrderItem dOrderItem = new DO.OrderItem();
-
+        BO.ProductItem bProductItem;
+        
         try
         {
-            dProduct = Dal.Product.GetById(productId); 
-            dOrderItem = Dal.OrderItem.GetById(productId);
+            dProduct = Dal.Product.GetById(productId);
+            bProductItem = new BO.ProductItem()
+            {
+                ID = dProduct.ID,
+                Name = dProduct.Name,
+                Price = dProduct.Price,
+                Category = (Category)dProduct.Category,
+                InStock = dProduct.InStock > 0 ? true : false,
+                Amount = cart.Items.Find(it => it.ProductID == productId).Amount
+            };
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            throw new BO.NotExistsException();
+            throw new BO.NotExistsException("",e);
         }
         
-        BO.ProductItem productItem = new BO.ProductItem()
-        {
-            ID = productId,
-            Name = dProduct.Name,
-            Price = dProduct.Price,
-            Category = (Category)dProduct.Category,
-            InStock = dProduct.InStock > 0 ? true : false,
-            Amount = dOrderItem.Amount
-        };
-
-        return productItem;
+        return bProductItem;
     }
 
     public void AddProductAdmin(BO.Product product)
     {
-        if(product.ID < 1000000 || product.ID > 999999 
+        if(product.ID < 100000 || product.ID > 999999 
             || product.Name == null || product.Price <= 0 || product.InStock < 0)
             throw new BO.InvalidInputException();
 

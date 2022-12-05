@@ -135,7 +135,11 @@ internal class Program
             case 'c':
                 Console.Write("enter product ID: ");
                 int.TryParse(Console.ReadLine(), out ID);
-                Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
+                try
+                {
+                    Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
+                }
+                catch (DO.DoesNotExistException e) { Console.WriteLine(e); }
                 break;
 
             case 'd':
@@ -190,9 +194,7 @@ internal class Program
                 catch (NotExistsException e) { Console.WriteLine(e); }
 
                 Console.WriteLine("enter the details of the product to update:");
-
-                Console.Write("enter ID of product number: ");
-                product.ID = int.Parse(Console.ReadLine());
+                product.ID = ID;
 
                 Console.Write("enter name of product: ");
                 product.Name = Console.ReadLine();

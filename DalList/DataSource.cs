@@ -25,6 +25,7 @@ internal static class DataSource
         /// </summary>
         public static int GetOrderItemID() => IdOfOrderItem++;
 
+
         internal static Random Num = new Random();
     }
 

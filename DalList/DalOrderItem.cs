@@ -100,15 +100,11 @@ internal class DalOrderItem : IOrderItem
     public List<OrderItem> GetOrderItem(int orderId)
     {
         List<OrderItem> orderitems = new List<OrderItem>();
-        for (int i = 0; i < DataSource.OrderItems.Count; i++)
+        foreach (var item in DataSource.OrderItems)
         {
-            if (DataSource.OrderItems[i].OrderID == orderId)
-            {
-                orderitems[i] = DataSource.OrderItems[i];
-            }
+            if (item.OrderID == orderId)
+                orderitems.Add(item);
         }
         return orderitems;
     }
-
- 
 }
