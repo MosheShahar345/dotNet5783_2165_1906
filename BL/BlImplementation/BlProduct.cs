@@ -140,7 +140,7 @@ internal class BlProduct : BlApi.IProduct
 
     public void UpdateProductAdmin(BO.Product product)
     {
-        if (product.ID < 1000000 || product.ID > 999999 ||
+        if (product.ID < 100000 || product.ID > 999999 ||
             product.Name == null || product.Price <= 0 ||
             product.InStock < 0)
             throw new BO.NotExistsException();

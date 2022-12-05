@@ -24,7 +24,7 @@ internal class DalProduct : IProduct
                 DataSource.Products.Add(product);
                 return product.ID;
             }
-
+            
             throw new AlreadyExistsException($"product with ID: {product.ID} already exists");
         }
 
