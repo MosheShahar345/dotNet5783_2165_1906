@@ -12,8 +12,8 @@ internal class BlCart : BlApi.ICart
 
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
-        DO.Product product = new DO.Product();
-        List<DO.OrderItem> orderitems = Dal.OrderItem.GetAll().ToList();
+        DO.Product product;
+        List<DO.OrderItem> orderitems = new();
 
         try
         {
@@ -24,87 +24,103 @@ internal class BlCart : BlApi.ICart
             throw new BO.NotExistsException("", e);
         }
 
-        if (cart.Items != null)
+        if (cart.Items == null)
         {
-            foreach (var item in cart.Items)
-            {
-                if (productId == item.ProductID)
-                {
-                    if (product.InStock > item.Amount)
-                    {
-                        item.Amount++;
-                        item.TotalPrice += item.Price;
-                        cart.TotalPrice += item.Price;
-                        return cart;
-                    }
-                }
-            }
-        }
-        if (product.InStock > 0)
-        {
-            foreach (var item in orderitems)
-            {
-                if (productId == item.ProductID)
-                {
-                    BO.OrderItem orderitem = new BO.OrderItem
-                    {
-                        ID = item.ID,
-                        Name = product.Name,
-                        ProductID = item.ProductID,
-                        Price = item.Price,
-                        Amount = 1,
-                        TotalPrice = item.Price
-                    };
-                    cart.Items.Add(orderitem);
-                    break;
-                }
-            }
-        }
-        return cart;
-    }
-    public BO.Cart UpdateAmount(BO.Cart cart, int productId, int Namount)
-    {
-        DO.Product product1 = new DO.Product();
-        try
-        {
-            product1 = Dal.Product.GetById(productId);
-        }
-        catch (Exception)
-        {
-                throw new BO.NotExistsException();
+            cart.Items = new();
         }
 
         foreach (var item in cart.Items)
         {
             if (productId == item.ProductID)
             {
-                if (Namount > item.Amount)
+                if (product.InStock > item.Amount + 1)
                 {
-                    if (product1.InStock >= item.Amount + Namount)
-                    {
-                        item.Amount += Namount;
-                        item.TotalPrice += item.Price;
-                        cart.TotalPrice += item.Price;
-                    }
+                    item.Amount++;
+                    item.TotalPrice += item.Price;
+                    cart.TotalPrice += item.Price;
+
+                    return cart;
                 }
-                else if (Namount != 0 && Namount < item.Amount)
-                {
-                    item.Amount -= Namount;
-                    item.TotalPrice -= item.Price;
-                    cart.TotalPrice -= item.Price;
-                }
-                else
-                {
-                    cart.Items.Remove(item);
-                    cart.TotalPrice -= item.TotalPrice;
-                }
+
+                throw new BO.NotEnoughRoomInStockException(product.Name);
             }
         }
+
+        if (product.InStock > 0)
+        {
+            cart.Items.Add(new BO.OrderItem
+            {   
+                ID = 0,
+                Name = product.Name,
+                ProductID = product.ID,
+                Price = product.Price,
+                Amount = 1,
+                TotalPrice = product.Price
+            });
+
+            return cart;
+        }
+
+        throw new BO.NotEnoughRoomInStockException(
+            $"product with name: {product.Name} not enough in stock");
+    }
+
+    public BO.Cart UpdateAmount(BO.Cart cart, int productId, int nAmount)
+    {
+        if (productId <= 0 || nAmount < 0)
+            throw new InvalidInputException();
+
+        DO.Product product = new DO.Product();
+        BO.OrderItem orderItem;
+
+        try
+        {
+            orderItem = cart.Items.Find(it => it.ID == productId);
+        }
+        catch (Exception e)
+        {
+            throw new BO.NotExistsException("", e);
+        }
+
+        if (orderItem?.Amount == nAmount) { return cart;}
+
+        try
+        {
+            product = Dal.Product.GetById(productId);
+        }
+        catch (Exception e)
+        {
+            throw new BO.NotExistsException("", e);
+        }
+
+        if (orderItem != null)
+        {
+
+            if (nAmount > orderItem?.Amount)
+            {
+                AddPToCart(cart, productId);
+            }
+
+            else if (nAmount < orderItem?.Amount)
+            {
+                orderItem.Amount = nAmount;
+                cart.TotalPrice -= orderItem.TotalPrice;
+                orderItem.TotalPrice = orderItem.Price * nAmount;
+                cart.TotalPrice += orderItem.TotalPrice;
+            }
+
+            else if (nAmount == 0)
+            {
+                cart.TotalPrice -= orderItem.TotalPrice;
+                cart.Items.Remove(orderItem);
+            }
+        }
+
         return cart;
     }
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (!cart.Items.Any() || cart.Name == null || cart.Address == null)
+        if (cart.Items == null || cart.Name == null || cart.Address == null)
             throw new BO.NotExistsException();
 
         if (!new EmailAddressAttribute().IsValid(cart.Email))
@@ -130,7 +146,7 @@ internal class BlCart : BlApi.ICart
         {
             throw new BO.AlreadyExistsException();
         }
-        
+
         foreach (var item in cart.Items)
         {
             DO.OrderItem dOrderItem = new DO.OrderItem()
@@ -154,4 +170,4 @@ internal class BlCart : BlApi.ICart
             Dal.Product.Add(product);
         }
     }
-} 
+}

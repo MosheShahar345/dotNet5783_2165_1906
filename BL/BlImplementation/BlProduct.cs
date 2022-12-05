@@ -15,7 +15,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            products = (List<DO.Product>)Dal.Product.GetAll();
+            products = Dal.Product.GetAll().ToList();
         }
         catch (Exception)
         {
@@ -46,9 +46,9 @@ internal class BlProduct : BlApi.IProduct
         {
             dProduct = Dal.Product.GetById(productId);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            throw new BO.NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
 
         BO.Product bProduct = new BO.Product()
@@ -57,7 +57,7 @@ internal class BlProduct : BlApi.IProduct
             Name = dProduct.Name,
             Price = dProduct.Price,
             Category = (Category)dProduct.Category,
-            InStock = dProduct.InStock
+            InStock = dProduct.InStock,
         };
         return bProduct;
     }

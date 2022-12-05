@@ -65,7 +65,7 @@ internal class Program
                 {
                     test.Cart.AddPToCart(cart, idProduct);
                 }
-                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (NotEnoughRoomInStockException e) { Console.WriteLine(e); }
                 break;
 
             case 'b':
@@ -76,7 +76,7 @@ internal class Program
                 OrderItem orderitem = new OrderItem();
                 orderitem = cart.Items.Find(it => it.ProductID == productId);
                 Console.WriteLine(orderitem);
-                Console.Write("enter the amount of products to update: ");
+                Console.Write("enter the new amount of products: ");
 
                 int.TryParse(Console.ReadLine(), out newAmount);
                 test.Cart.UpdateAmount(cart, productId, newAmount);

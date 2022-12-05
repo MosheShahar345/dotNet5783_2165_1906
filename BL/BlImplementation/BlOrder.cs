@@ -82,9 +82,9 @@ internal class BlOrder : BlApi.IOrder
     }
 	private OrderStatus GetStatus(DO.Order o)
 	{
-		if (o.DeliveryDate != DateTime.MinValue)
+		if (o.DeliveryDate > DateTime.MinValue)
 			return BO.OrderStatus.Delivered;
-		if (o.ShipDate != DateTime.MinValue)
+		if (o.ShipDate > DateTime.MinValue)
 			return BO.OrderStatus.Sent;
 		return BO.OrderStatus.Confirmed;
 	}
