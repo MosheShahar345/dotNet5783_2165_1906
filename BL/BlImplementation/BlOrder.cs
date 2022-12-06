@@ -96,7 +96,7 @@ internal class BlOrder : BlApi.IOrder
 				BO.OrderItem orderitem = new BO.OrderItem()
 				{
 					ID = item.ID,
-					Name = Dal.Product.GetById(item.ID).Name,
+					Name = Dal.Product.GetById(item.ProductID).Name,
 					Price = item.Price,
 					ProductID = item.ProductID,
 					Amount = item.Amount,

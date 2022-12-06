@@ -60,6 +60,7 @@ public class Order
     /// <returns></returns>
     public override string ToString()
     {
+        Console.WriteLine();
         Console.WriteLine($"        ID: {ID}\n" +
                           $"        Customer Name: {CustomerName}\n" +
                           $"        Customer Email: {CustomerEmail}\n" +
