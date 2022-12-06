@@ -31,11 +31,19 @@ public class Cart
     /// ToString override method
     /// </summary>
     /// <returns></returns>
-    public override string ToString() => $@"
-        Name: {Name}
-    	Email: {Email}
-        Address: {Address}
-        Items: {Tools.ToStringProperty(Items)}
-        Total Price: {TotalPrice}
-";
+    public override string ToString()
+    {
+        Console.WriteLine();
+        Console.WriteLine($"\t\tName: {Name} \n" +
+                          $"\t\tEmail: {Email} \n" +
+                          $"\t\tAddress {Address} \n" +
+                          $"\t\tTotalPrice {TotalPrice} \n");
+
+        foreach (var item in Items)
+        {
+            Console.WriteLine($"\t\tItem:\t\n", item);
+        }
+
+        return "";
+    }
 }

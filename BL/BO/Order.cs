@@ -61,15 +61,16 @@ public class Order
     public override string ToString()
     {
         Console.WriteLine();
-        Console.WriteLine($"        ID: {ID}\n" +
-                          $"        Customer Name: {CustomerName}\n" +
-                          $"        Customer Email: {CustomerEmail}\n" +
-                          $"        Customer Address: {CustomerAddress}\n" +
-                          $"        Order Status: {Status}\n" +
-                          $"        Order Date: {OrderDate}\n" +
-                          $"        Ship Date: {ShipDate}\n" +
-                          $"        Delivery Date: {DeliveryDate}\n" +
-                          $"        Total Price: {TotalPrice}\n " );
+        Console.WriteLine($"\t\tID: {ID}\n" +
+                          $"\t\tCustomer Name: {CustomerName}\n" +
+                          $"\t\tCustomer Email: {CustomerEmail}\n" +
+                          $"\t\tCustomer Address: {CustomerAddress}\n" +
+                          $"\t\tOrder Status: {Status}\n" +
+                          $"\t\tOrder Date: {OrderDate}\n" +
+                          $"\t\tShip Date: {ShipDate}\n" +
+                          $"\t\tDelivery Date: {DeliveryDate}\n" +
+                          $"\t\tTotal Price: {TotalPrice}\n " );
+
         foreach (var item in Items)
         {
             Console.WriteLine(item);

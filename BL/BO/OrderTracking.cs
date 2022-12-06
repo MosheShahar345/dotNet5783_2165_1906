@@ -17,6 +17,10 @@ public class OrderTracking
     /// </summary>
     public List<Tuple<DateTime, string>>? Log { get; set; }
 
+    /// <summary>
+    /// ToString override method
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         Console.WriteLine();
