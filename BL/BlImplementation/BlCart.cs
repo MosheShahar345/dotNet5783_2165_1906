@@ -119,7 +119,7 @@ internal class BlCart : BlApi.ICart
     }
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (cart.Items == null)
+        if (!cart.Items.Any())
             throw new BO.NotExistsException();
 
         if (cart.Address == null)
@@ -179,7 +179,7 @@ internal class BlCart : BlApi.ICart
         {
             product = Dal.Product.GetById(item.ProductID);
             product.InStock -= item.Amount;
-            Dal.Product.Add(product);
+            Dal.Product.Update(product);
         }
     }
 }

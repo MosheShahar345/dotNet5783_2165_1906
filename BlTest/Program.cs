@@ -114,6 +114,8 @@ internal class Program
                 catch (InvalidAmountException e) { Console.WriteLine(e); }
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 catch (NotEnoughInStockException e) { Console.WriteLine(e); }
+                catch (InvalidEmailException e) { Console.WriteLine(e); }
+                catch (AlreadyExistsException e) { Console.WriteLine(e); }
                 break;
 
             default:
