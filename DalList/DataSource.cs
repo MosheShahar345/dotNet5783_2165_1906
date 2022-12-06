@@ -78,7 +78,10 @@ internal static class DataSource
                 order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(3, 5), 0, 0, 0);
             }
 
-            if(i < 10)//Makes sure that 60 percent that about 60% of orders shipped will have a delivery date
+            if (i >= 16)
+                order.ShipDate = DateTime.MinValue;
+
+            if (i < 10)//Makes sure that 60 percent that about 60% of orders shipped will have a delivery date
             {
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1,2), 0, 0, 0);
             }
