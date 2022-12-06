@@ -1,5 +1,4 @@
-﻿using BO;
-using Dal;
+﻿using Dal;
 using DalApi;
 
 namespace BlImplementation;
@@ -17,10 +16,8 @@ internal class BlProduct : BlApi.IProduct
         {
             products = Dal.Product.GetAll().ToList();
         }
-        catch (Exception)
-        {
-            throw new NotExistsException();
-        }
+        catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
+
         foreach (var item in products)
         {
             BO.ProductForList tempproduct = new BO.ProductForList()
@@ -28,16 +25,16 @@ internal class BlProduct : BlApi.IProduct
                 ID = item.ID,
                 Name= item.Name,
                 Price= item.Price,
-                Category = (Category)item.Category
+                Category = (BO.Category)item.Category
             };
             productForList.Add(tempproduct);
         }
         return productForList;
     }
 
-    public Product GetProduct(int productId)
+    public BO.Product GetProductForAdmin(int productId)
     {
-        if (productId <= 0)
+        if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
         DO.Product dProduct = new DO.Product();
@@ -46,7 +43,7 @@ internal class BlProduct : BlApi.IProduct
         {
             dProduct = Dal.Product.GetById(productId);
         }
-        catch (Exception e)
+        catch (DO.NotExistsException e)
         {
             throw new BO.NotExistsException("", e);
         }
@@ -56,19 +53,23 @@ internal class BlProduct : BlApi.IProduct
             ID = dProduct.ID,
             Name = dProduct.Name,
             Price = dProduct.Price,
-            Category = (Category)dProduct.Category,
+            Category = (BO.Category)dProduct.Category,
             InStock = dProduct.InStock,
         };
         return bProduct;
     }
-    public BO.ProductItem GetProductCustomer(int productId, BO.Cart cart)
+    public BO.ProductItem GetProductForCustomer(int productId, BO.Cart cart)
     {
-        if (productId <= 0)
+        if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
         DO.Product dProduct = new DO.Product();
         BO.ProductItem bProductItem;
-        
+        BO.OrderItem bOrderItem;
+
+        bOrderItem = cart.Items?.Find(it => it.ProductID == productId)??
+                     throw new BO.NotExistsException();
+
         try
         {
             dProduct = Dal.Product.GetById(productId);
@@ -77,12 +78,12 @@ internal class BlProduct : BlApi.IProduct
                 ID = dProduct.ID,
                 Name = dProduct.Name,
                 Price = dProduct.Price,
-                Category = (Category)dProduct.Category,
+                Category = (BO.Category)dProduct.Category,
                 InStock = dProduct.InStock > 0 ? true : false,
-                Amount = cart.Items.Find(it => it.ProductID == productId).Amount
+                Amount = bOrderItem.Amount
             };
         }
-        catch (BO.NotExistsException e)
+        catch (DO.NotExistsException e)
         {
             throw new BO.NotExistsException("",e);
         }
@@ -92,9 +93,17 @@ internal class BlProduct : BlApi.IProduct
 
     public void AddProductAdmin(BO.Product product)
     {
-        if(product.ID < 100000 || product.ID > 999999 
-            || product.Name == null || product.Price <= 0 || product.InStock < 0)
-            throw new BO.InvalidInputException();
+        if(product.ID < 100000 || product.ID > 999999)
+            throw new BO.IdIsLessThanZeroException();
+
+        if (product.Name == null) 
+            throw new BO.InvalidNameException();
+
+        if (product.Price <= 0)
+            throw new BO.InvalidPriceException();
+
+        if (product.InStock < 0)
+            throw new BO.InvalidInStockException();
 
         DO.Product dProduct = new DO.Product()
         {
@@ -109,39 +118,51 @@ internal class BlProduct : BlApi.IProduct
         {
             Dal.Product.Add(dProduct);
         }
-        catch (Exception)
+        catch (DO.AlreadyExistsException e)
         {
-            throw new BO.AlreadyExistsException();
+            throw new BO.AlreadyExistsException("", e);
         }
     }
 
     public void DeleteProductAdmin(int productId)
     {
+        if (productId < 0)
+            throw new BO.IdIsLessThanZeroException();
+
         List<DO.OrderItem> orderItems= new List<DO.OrderItem>();
         orderItems = (List<DO.OrderItem>)Dal.OrderItem.GetAll();
 
-        foreach (var item in orderItems)
-        {
-            if(item.ProductID == productId)
-                throw new AlreadyExistsException();
-        }
-
         try
         {
-            Dal.Product.Delete(productId);
+            Dal.Product.GetById(productId);
         }
-        catch (Exception)
+        catch (DO.NotExistsException e)
         {
-            throw new BO.NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
+
+        foreach (var item in orderItems)
+        {
+            if (item.ProductID == productId)
+                throw new BO.CanNotDeleteProductException();
+        }
+
+        Dal.Product.Delete(productId);
     }
 
     public void UpdateProductAdmin(BO.Product product)
     {
-        if (product.ID < 100000 || product.ID > 999999 ||
-            product.Name == null || product.Price <= 0 ||
-            product.InStock < 0)
-            throw new BO.NotExistsException();
+        if (product.ID < 100000 || product.ID > 999999)
+            throw new BO.IdIsLessThanZeroException();
+
+        if (product.Name == null)
+            throw new BO.InvalidNameException();
+
+        if (product.Price <= 0)
+            throw new BO.InvalidPriceException();
+
+        if (product.InStock < 0)
+            throw new BO.InvalidInStockException();
 
         DO.Product dProduct = new DO.Product()
         {
@@ -156,9 +177,9 @@ internal class BlProduct : BlApi.IProduct
         {
             Dal.Product.Update(dProduct);
         }
-        catch (Exception)
+        catch (DO.NotExistsException e)
         {
-            throw new BO.NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
     }
 }

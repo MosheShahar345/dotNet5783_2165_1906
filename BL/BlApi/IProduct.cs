@@ -14,7 +14,7 @@ public interface IProduct
     /// </summary>
     /// <param name="productId"></param>
     /// <returns></returns>
-    public Product GetProduct(int productId);
+    public Product GetProductForAdmin(int productId);
 
     /// <summary>
     /// for customer gets product by id and product from the cart from DO to BO
@@ -22,7 +22,7 @@ public interface IProduct
     /// <param name="productId"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
-    public ProductItem GetProductCustomer(int productId, BO.Cart cart);
+    public ProductItem GetProductForCustomer(int productId, BO.Cart cart);
 
     /// <summary>
     /// adds product to DO

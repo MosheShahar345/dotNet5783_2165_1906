@@ -15,5 +15,5 @@ public class OrderTracking
     /// <summary>
     /// order progress
     /// </summary>
-    public List<Tuple<DateTime, string>> Log = new List<Tuple<DateTime, string>>();
+    public List<Tuple<DateTime, string>> Log  { get; set; }
 }

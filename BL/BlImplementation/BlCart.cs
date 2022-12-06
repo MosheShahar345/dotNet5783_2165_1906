@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using BO;
 using Dal;
 using DalApi;
-using DO;
 
 namespace BlImplementation;
 
@@ -13,12 +11,11 @@ internal class BlCart : BlApi.ICart
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
         if (productId < 0)
-            throw new IdIsLessThanZeroException("ID is less than zero");
+            throw new BO.IdIsLessThanZeroException();
 
         DO.Product product;
         BO.OrderItem orderItem;
-        //List<DO.OrderItem> orderItems = new();
-
+        
         if (cart.Items == null)
         {
             cart.Items = new();
@@ -30,7 +27,7 @@ internal class BlCart : BlApi.ICart
         {
             product = Dal.Product.GetById(productId);
         }
-        catch (BO.NotExistsException e)
+        catch (DO.NotExistsException e)
         {
             throw new BO.NotExistsException("", e);
         }
@@ -61,53 +58,17 @@ internal class BlCart : BlApi.ICart
             throw new BO.NotEnoughInStockException(
                 $"product with name: {product.Name} not enough in stock");
         }
+
         return cart;
-
-        //foreach (var item in cart.Items)
-        //{
-        //    if (productId == item.ProductID)
-        //    {
-        //        if (product.InStock > item.Amount + 1)
-        //        {
-        //            item.Amount++;
-        //            item.TotalPrice += item.Price;
-        //            cart.TotalPrice += item.Price;
-
-        //            return cart;
-        //        }
-        //        else
-        //        {
-        //            throw new BO.NotEnoughInStockException(product.Name);
-        //        }
-        //    }
-        //}
-
-        //if (product.InStock > 0)
-        //{
-        //    cart.Items.Add(new BO.OrderItem
-        //    {   
-        //        ID = 0,
-        //        Name = product.Name,
-        //        ProductID = product.ID,
-        //        Price = product.Price,
-        //        Amount = 1,
-        //        TotalPrice = product.Price
-        //    });
-
-        //    return cart;
-        //}
-
-        //throw new BO.NotEnoughInStockException(
-        //    $"product with name: {product.Name} not enough in stock");
     }
 
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int nAmount)
     {
         if (productId < 0)
-            throw new IdIsLessThanZeroException("ID is less than zero");
+            throw new BO.IdIsLessThanZeroException();
 
         if (nAmount < 0)
-            throw new InvalidAmountException("amount is less than zero");
+            throw new BO.InvalidAmountException();
 
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem;
@@ -116,13 +77,13 @@ internal class BlCart : BlApi.ICart
         {
             product = Dal.Product.GetById(productId);
         }
-        catch (BO.NotExistsException e)
+        catch (DO.NotExistsException e)
         {
             throw new BO.NotExistsException("", e);
         }
 
         orderItem = cart.Items?.Find(it => productId == it.ProductID) ??
-                    throw new BO.NotExistsException("not exists");
+                    throw new BO.NotExistsException();
 
         if (nAmount == orderItem.Amount) { return cart; }
 
@@ -136,7 +97,8 @@ internal class BlCart : BlApi.ICart
             }
             else
             {
-                throw new NotEnoughInStockException("not enough in stock");
+                throw new BO.NotEnoughInStockException(
+                    $"product with name: {product.Name} not enough in stock");
             }
         }
 
@@ -153,46 +115,18 @@ internal class BlCart : BlApi.ICart
             cart.Items.Remove(orderItem);
         }
 
-        //foreach (var item in cart.Items)
-        //{
-        //    if (item.ProductID == productId)
-        //    {
-        //        if (nAmount == item.Amount) { return cart; }
-
-        //        if (nAmount > item.Amount)
-        //        {
-        //            if (product.InStock >= item.Amount + nAmount)
-        //            {
-        //                item.Amount += nAmount;
-        //                item.TotalPrice += item.Price * nAmount;
-        //                cart.TotalPrice += item.TotalPrice;
-        //            }
-        //            else
-        //            {
-        //                throw new NotEnoughInStockException("not enough in stock");
-        //            }
-        //        }
-        //        else if (nAmount != 0 && nAmount < item.Amount)
-        //        {
-        //            item.Amount -= nAmount;
-        //            item.TotalPrice -= item.Price * nAmount;
-        //            cart.TotalPrice -= item.TotalPrice;
-        //        }
-        //        else
-        //        {
-        //            cart.TotalPrice -= item.TotalPrice;
-        //            cart.Items.Remove(item);
-        //            return cart;
-        //        }
-        //    }
-        //}
-
         return cart;
     }
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (cart.Items == null || cart.Name == null || cart.Address == null)
+        if (cart.Items == null)
             throw new BO.NotExistsException();
+
+        if (cart.Address == null)
+            throw new BO.InvalidAddressException();
+
+        if (cart.Name == null)
+            throw new BO.InvalidNameException();
 
         if (!new EmailAddressAttribute().IsValid(cart.Email))
             throw new BO.InvalidEmailException();
@@ -213,9 +147,9 @@ internal class BlCart : BlApi.ICart
         {
             OrderId = Dal.Order.Add(dOrder);
         }
-        catch (Exception)
+        catch (DO.AlreadyExistsException e)
         {
-            throw new BO.AlreadyExistsException();
+            throw new BO.AlreadyExistsException("", e);
         }
 
         foreach (var item in cart.Items)
@@ -229,7 +163,14 @@ internal class BlCart : BlApi.ICart
                 Amount = item.Amount
             };
 
-            Dal.OrderItem.Add(dOrderItem);
+            try
+            {
+                Dal.OrderItem.Add(dOrderItem);
+            }
+            catch (DO.AlreadyExistsException e)
+            {
+                throw new BO.AlreadyExistsException("", e);
+            }
         }
 
         DO.Product product = new DO.Product();

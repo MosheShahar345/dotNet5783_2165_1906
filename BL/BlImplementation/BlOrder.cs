@@ -1,10 +1,6 @@
-﻿using BlApi;
-using BO;
+﻿using BO;
 using Dal;
 using DalApi;
-using System;
-using System.Reflection.Metadata.Ecma335;
-using static BO.NotEnoughInStockException;
 
 namespace BlImplementation;
 
@@ -20,9 +16,9 @@ internal class BlOrder : BlApi.IOrder
         {
             orders = (List<DO.Order>)Dal.Order.GetAll();
         }
-        catch (Exception)
+        catch (DO.NotExistsException e)
         {
-            throw new NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
 
 		foreach (var item in orders)
@@ -46,10 +42,10 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return ordersForList;
     }
-	public Order GetOrder(int orderId)
+	public BO.Order GetOrder(int orderId)
 	{
         if (orderId <= 0)
-            throw new IdIsLessThanZeroException();
+            throw new BO.IdIsLessThanZeroException();
 
 		List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
 		DO.Order dOrder = new DO.Order();
@@ -58,9 +54,9 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = Dal.Order.GetById(orderId);
         }
-        catch (Exception)
+        catch (DO.NotExistsException e)
         {
-            throw new NotExistsException();
+            throw new BO.NotExistsException("", e);
         }
 
         orderItems = Dal.OrderItem.GetAll().ToList();
@@ -80,7 +76,7 @@ internal class BlOrder : BlApi.IOrder
         };
         return bOrder;
     }
-	private OrderStatus GetStatus(DO.Order o)
+	private BO.OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate > DateTime.MinValue)
 			return BO.OrderStatus.Delivered;
@@ -110,9 +106,9 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return (bOrderItem, s);
 	}
-	public Order UpdateOrderShipping(int orderId)
+	public BO.Order UpdateOrderShipping(int orderId)
 	{
-		if (orderId <= 0)
+		if (orderId < 0)
 			throw new BO.IdIsLessThanZeroException();
 
 		DO.Order dOrder = new DO.Order();
@@ -123,10 +119,7 @@ internal class BlOrder : BlApi.IOrder
             dOrder = Dal.Order.GetById(orderId);
             bOrder = GetOrder(orderId);
         }
-        catch (Exception)
-        {
-            throw new NotExistsException();
-        }
+        catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
 		if (dOrder.ShipDate == DateTime.MinValue)
 		{
@@ -136,9 +129,9 @@ internal class BlOrder : BlApi.IOrder
 		Dal.Order.Update(dOrder);
 		return bOrder;
 	}
-	public Order UpdateOrderDelivery(int orderId)
+	public BO.Order UpdateOrderDelivery(int orderId)
 	{
-        if (orderId <= 0)
+        if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
 
         DO.Order dOrder = new DO.Order();
@@ -149,10 +142,7 @@ internal class BlOrder : BlApi.IOrder
             dOrder = Dal.Order.GetById(orderId);
             bOrder = GetOrder(orderId);
         }
-        catch (Exception)
-        {
-            throw new NotExistsException();
-        }
+        catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
         if (dOrder.DeliveryDate == DateTime.MinValue)
         {
@@ -162,7 +152,7 @@ internal class BlOrder : BlApi.IOrder
         Dal.Order.Update(dOrder);
         return bOrder;
     }
-	public OrderTracking TrackOrder(int orderId)
+	public BO.OrderTracking TrackOrder(int orderId)
 	{
         if (orderId <= 0)
             throw new BO.InvalidInputException();
@@ -173,16 +163,13 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = Dal.Order.GetById(orderId);
         }
-        catch (Exception)
-        {
-            throw new NotExistsException();
-        }
+        catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 		
 		BO.OrderTracking orderTracking = new BO.OrderTracking();
         orderTracking.ID = orderId;
 		orderTracking.Status = GetStatus(dOrder);
 
-        Tuple<DateTime, string> tuple = new Tuple<DateTime, string>(
+        Tuple<DateTime, string>? tuple = new Tuple<DateTime, string>(
             (DateTime)dOrder.OrderDate, orderTracking.Status.ToString());
 
 		orderTracking.Log.Add(tuple);

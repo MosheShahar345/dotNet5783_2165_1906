@@ -65,8 +65,11 @@ internal class Program
                 {
                     test.Cart.AddPToCart(cart, idProduct);
                 }
-                catch (NotEnoughInStockException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (InvalidAmountException e) { Console.WriteLine(e); }
                 catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (NotEnoughInStockException e) { Console.WriteLine(e); }
+
                 break;
 
             case 'b':
@@ -75,7 +78,7 @@ internal class Program
 
                 Console.Write("product ID: ");
                 int.TryParse(Console.ReadLine(), out productId);
-                
+
                 orderitem = cart.Items.Find(it => it.ProductID == productId);
 
                 Console.WriteLine(orderitem);
@@ -90,6 +93,8 @@ internal class Program
                 catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 catch (InvalidAmountException e) { Console.WriteLine(e); }
                 catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (NotEnoughInStockException e) { Console.WriteLine(e); }
+
                 break;
 
             case 'c':
@@ -101,7 +106,14 @@ internal class Program
 
                 Console.Write("enter your home address: ");
                 cart.Address = Console.ReadLine();
-                test.Cart.ConfirmationOrder(cart);
+                try
+                {
+                    test.Cart.ConfirmationOrder(cart);
+                }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (InvalidAmountException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (NotEnoughInStockException e) { Console.WriteLine(e); }
                 break;
 
             default:
@@ -128,7 +140,13 @@ internal class Program
         {
             case 'a':
                 List<BO.ProductForList> products = new List<BO.ProductForList>();
-                products = test.Product.GetProductForList().ToList();
+
+                try
+                {
+                    products = test.Product.GetProductForList().ToList();
+                }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+
                 products.ForEach(product => Console.WriteLine(product));
                 break;
 
@@ -137,9 +155,10 @@ internal class Program
                 int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
-                    Console.WriteLine(test.Product.GetProduct(ID));
+                    Console.WriteLine(test.Product.GetProductForAdmin(ID));
                 }
-                catch (DO.NotExistsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             case 'c':
@@ -147,9 +166,10 @@ internal class Program
                 int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
-                    Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
+                    Console.WriteLine(test.Product.GetProductForCustomer(ID, cart));
                 }
-                catch (DO.NotExistsException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             case 'd':
@@ -179,7 +199,12 @@ internal class Program
                 {
                     test.Product.AddProductAdmin(product);
                 }
-                catch (InvalidEmailException e) { Console.WriteLine(e); }
+                catch (InvalidPriceException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (InvalidNameException e) { Console.WriteLine(e); }
+                catch (InvalidInStockException e) { Console.WriteLine(e); }
+                catch (AlreadyExistsException e) { Console.WriteLine(e); }
+
                 break;
 
             case 'e':
@@ -191,6 +216,7 @@ internal class Program
                     Console.WriteLine("success");
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (CanNotDeleteProductException e) { Console.WriteLine(e); }
                 break;
 
             case 'f':
@@ -199,9 +225,10 @@ internal class Program
                 int.TryParse(Console.ReadLine(), out ID);
                 try
                 {
-                    Console.WriteLine(test.Product.GetProduct(ID));
+                    Console.WriteLine(test.Product.GetProductForAdmin(ID));
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (CanNotDeleteProductException e) { Console.WriteLine(e); }
 
                 Console.WriteLine("enter the details of the product to update:");
                 product.ID = ID;
@@ -229,6 +256,10 @@ internal class Program
                     test.Product.UpdateProductAdmin(product);
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (InvalidPriceException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (InvalidNameException e) { Console.WriteLine(e); }
+                catch (InvalidInStockException e) { Console.WriteLine(e); }
                 break;
 
             default:
@@ -264,25 +295,43 @@ internal class Program
                     Console.WriteLine(test.Order.GetOrder(orderId));
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
-
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             case 'c':
                 Console.Write("enter order ID: ");
                 int.TryParse(Console.ReadLine(), out orderId);
-                Console.WriteLine(test.Order.UpdateOrderShipping(orderId));
+
+                try
+                {
+                    Console.WriteLine(test.Order.UpdateOrderShipping(orderId));
+                }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             case 'd':
                 Console.Write("enter order ID: ");
                 int.TryParse(Console.ReadLine(), out orderId);
-                Console.WriteLine(test.Order.UpdateOrderDelivery(orderId));
+
+                try
+                {
+                    Console.WriteLine(test.Order.UpdateOrderDelivery(orderId));
+                }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             case 'e':
                 Console.Write("enter order ID: ");
                 int.TryParse(Console.ReadLine(), out orderId);
-                Console.WriteLine(test.Order.TrackOrder(orderId));
+
+                try
+                {
+                    Console.WriteLine(test.Order.TrackOrder(orderId));
+                }
+                catch (NotExistsException e) { Console.WriteLine(e); }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
                 break;
 
             default:

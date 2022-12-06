@@ -97,3 +97,59 @@ public class InvalidAmountException : Exception
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
+
+[Serializable]
+public class InvalidNameException : Exception
+{
+    public InvalidNameException() : base("invalid name") { }
+    public InvalidNameException(string message) : base(message) { }
+    public InvalidNameException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidNameException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
+public class InvalidPriceException : Exception
+{
+    public InvalidPriceException() : base("invalid price") { }
+    public InvalidPriceException(string message) : base(message) { }
+    public InvalidPriceException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidPriceException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
+public class InvalidInStockException : Exception
+{
+    public InvalidInStockException() : base("invalid in stock") { }
+    public InvalidInStockException(string message) : base(message) { }
+    public InvalidInStockException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidInStockException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+
+[Serializable]
+public class InvalidAddressException : Exception
+{
+    public InvalidAddressException() : base("invalid address") { }
+    public InvalidAddressException(string message) : base(message) { }
+    public InvalidAddressException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidAddressException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
+public class CanNotDeleteProductException : Exception
+{
+    public CanNotDeleteProductException() : base("invalid address") { }
+    public CanNotDeleteProductException(string message) : base(message) { }
+    public CanNotDeleteProductException(string message, Exception inner) : base(message, inner) { }
+    protected CanNotDeleteProductException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
