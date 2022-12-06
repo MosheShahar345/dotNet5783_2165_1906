@@ -310,6 +310,8 @@ internal class Program
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (OrderIsAlreadyShippedException e) { Console.WriteLine(e); }
+                catch (OrderIsAlreadyDeliveredException e) { Console.WriteLine(e); }
                 break;
 
             case 'd':
@@ -322,6 +324,8 @@ internal class Program
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
                 catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (OrderHasNotShippedException e) { Console.WriteLine(e); }
+                catch (OrderIsAlreadyDeliveredException e) { Console.WriteLine(e); }
                 break;
 
             case 'e':

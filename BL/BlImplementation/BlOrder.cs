@@ -1,6 +1,7 @@
 ﻿using BO;
 using Dal;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 
@@ -44,7 +45,7 @@ internal class BlOrder : BlApi.IOrder
     }
 	public BO.Order GetOrder(int orderId)
 	{
-        if (orderId <= 0)
+        if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
 
 		List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
@@ -101,6 +102,7 @@ internal class BlOrder : BlApi.IOrder
 					ProductID = item.ProductID,
 					Amount = item.Amount,
 				};
+				s += item.Price;
 				bOrderItem.Add(orderitem);
 			}
 		}
@@ -121,12 +123,21 @@ internal class BlOrder : BlApi.IOrder
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-		if (dOrder.ShipDate == DateTime.MinValue)
+        if (dOrder.DeliveryDate != null)
+            throw new OrderIsAlreadyDeliveredException();
+
+
+        if (dOrder.ShipDate != null)
+            throw new OrderIsAlreadyShippedException();
+
+        if (dOrder.ShipDate == DateTime.MinValue)
 		{
 			dOrder.ShipDate = DateTime.Now;
             bOrder.ShipDate = DateTime.Now;
         }
+
 		Dal.Order.Update(dOrder);
+
 		return bOrder;
 	}
 	public BO.Order UpdateOrderDelivery(int orderId)
@@ -140,21 +151,29 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             dOrder = Dal.Order.GetById(orderId);
-            bOrder = GetOrder(orderId);
+			bOrder = GetOrder(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
+        if (dOrder.DeliveryDate != null)
+            throw new OrderIsAlreadyDeliveredException();
+
+        if (dOrder.ShipDate == null)
+            throw new OrderHasNotShippedException();
+
         if (dOrder.DeliveryDate == DateTime.MinValue)
         {
-            dOrder.DeliveryDate = DateTime.Now;
-            bOrder.DeliveryDate = DateTime.Now;
+			dOrder.ShipDate = DateTime.Now;
+			bOrder.ShipDate = DateTime.Now;
         }
-        Dal.Order.Update(dOrder);
+
+		Dal.Order.Update(dOrder);
+
         return bOrder;
     }
 	public BO.OrderTracking TrackOrder(int orderId)
 	{
-        if (orderId <= 0)
+        if (orderId < 0)
             throw new BO.InvalidInputException();
 
         DO.Order dOrder = new DO.Order();
@@ -164,8 +183,8 @@ internal class BlOrder : BlApi.IOrder
             dOrder = Dal.Order.GetById(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
-		
-		BO.OrderTracking orderTracking = new BO.OrderTracking();
+      
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
         orderTracking.ID = orderId;
 		orderTracking.Status = GetStatus(dOrder);
 

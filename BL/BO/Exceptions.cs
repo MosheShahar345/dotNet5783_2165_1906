@@ -55,6 +55,17 @@ public class OrderIsAlreadyDeliveredException : Exception
 }
 
 [Serializable]
+public class OrderHasNotShippedException : Exception
+{
+    public OrderHasNotShippedException() : base("the order has not shipped") { }
+    public OrderHasNotShippedException(string message) : base(message) { }
+    public OrderHasNotShippedException(string message, Exception inner) : base(message, inner) { }
+    protected OrderHasNotShippedException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
 public class NotExistsException : Exception
 {
     public NotExistsException() : base("not exists") { }
@@ -146,7 +157,7 @@ public class InvalidAddressException : Exception
 [Serializable]
 public class CanNotDeleteProductException : Exception
 {
-    public CanNotDeleteProductException() : base("invalid address") { }
+    public CanNotDeleteProductException() : base("can not delete product") { }
     public CanNotDeleteProductException(string message) : base(message) { }
     public CanNotDeleteProductException(string message, Exception inner) : base(message, inner) { }
     protected CanNotDeleteProductException(
