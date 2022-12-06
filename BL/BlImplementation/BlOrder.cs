@@ -8,6 +8,12 @@ namespace BlImplementation;
 internal class BlOrder : BlApi.IOrder
 {
     private IDal Dal = new DalList();
+
+    /// <summary>
+    /// returns BO list with all the orders from DO 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderForList()
     {
         List<DO.Order> orders = new List<DO.Order>();
@@ -43,7 +49,16 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return ordersForList;
     }
-	public BO.Order GetOrder(int orderId)
+
+    
+    /// <summary>
+    /// gets id to find a order in the DO and returns a BO order
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    public BO.Order GetOrder(int orderId)
 	{
         if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
@@ -77,6 +92,13 @@ internal class BlOrder : BlApi.IOrder
         };
         return bOrder;
     }
+
+    /// <summary>
+    /// gets a DO order to find what is status
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    
 	private BO.OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate > DateTime.MinValue)
@@ -85,7 +107,14 @@ internal class BlOrder : BlApi.IOrder
 			return BO.OrderStatus.Sent;
 		return BO.OrderStatus.Confirmed;
 	}
-	private(List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
+    ///// <summary>
+    ///// gets id to find a order in the DO and returns a BO order
+    ///// </summary>
+    ///// <param name="orderId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    ///// <exception cref="BO.NotExistsException"></exception> 
+	private (List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
 	{
 		List<BO.OrderItem> bOrderItem = new List<BO.OrderItem>();
 		double s = 0;
@@ -109,7 +138,16 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return (bOrderItem, s);
 	}
-	public BO.Order UpdateOrderShipping(int orderId)
+    /// <summary>
+    /// gets a order and Updates the ship time
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.OrderIsAlreadyDeliveredException"></exception>
+    /// <exception cref="BO.OrderIsAlreadyShippedException"></exception>
+    /// <exception cref="BO.OrderHasNotShippedException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    public BO.Order UpdateOrderShipping(int orderId)
 	{
 		if (orderId < 0)
 			throw new BO.IdIsLessThanZeroException();
@@ -141,7 +179,15 @@ internal class BlOrder : BlApi.IOrder
 
 		return bOrder;
 	}
-	public BO.Order UpdateOrderDelivery(int orderId)
+    /// <summary>
+    /// gets a order and Updates the delivery time
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.OrderIsAlreadyDeliveredException"></exception>
+    /// <exception cref="BO.OrderHasNotShippedException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    public BO.Order UpdateOrderDelivery(int orderId)
 	{
         if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
@@ -172,7 +218,12 @@ internal class BlOrder : BlApi.IOrder
 
         return bOrder;
     }
-	public BO.OrderTracking TrackOrder(int orderId)
+    /// <summary>
+    /// gets a order id and returns an order with its status
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="BO.InvalidInputException"></exception>
+    public BO.OrderTracking TrackOrder(int orderId)
 	{
         if (orderId < 0)
             throw new BO.InvalidInputException();
