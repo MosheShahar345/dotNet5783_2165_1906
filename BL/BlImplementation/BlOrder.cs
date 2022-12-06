@@ -101,8 +101,9 @@ internal class BlOrder : BlApi.IOrder
 					Price = item.Price,
 					ProductID = item.ProductID,
 					Amount = item.Amount,
+					TotalPrice = item.Price * item.Amount
 				};
-				s += item.Price;
+				s += orderitem.TotalPrice;
 				bOrderItem.Add(orderitem);
 			}
 		}
