@@ -12,13 +12,13 @@ public class IdIsLessThanZeroException : Exception
 }
 
 [Serializable]
-public class NotEnoughRoomInStockException : Exception
+public class NotEnoughInStockException : Exception
 {
-    public NotEnoughRoomInStockException() : base("not enough product in stock") { }
+    public NotEnoughInStockException() : base("not enough in stock") { }
 
-    public NotEnoughRoomInStockException(string message) : base(message) { }
-    public NotEnoughRoomInStockException(string message, Exception inner) : base(message, inner) { }
-    protected NotEnoughRoomInStockException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    public NotEnoughInStockException(string message) : base(message) { }
+    public NotEnoughInStockException(string message, Exception inner) : base(message, inner) { }
+    protected NotEnoughInStockException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
 
 [Serializable]
@@ -44,12 +44,12 @@ public class OrderIsAlreadyShippedException : Exception
 
 
 [Serializable]
-public class OrderIsAlreadyDeliverdException : Exception
+public class OrderIsAlreadyDeliveredException : Exception
 {
-    public OrderIsAlreadyDeliverdException() : base("the order has already deliverd") { }
-    public OrderIsAlreadyDeliverdException(string message) : base(message) { }
-    public OrderIsAlreadyDeliverdException(string message, Exception inner) : base(message, inner) { }
-    protected OrderIsAlreadyDeliverdException(
+    public OrderIsAlreadyDeliveredException() : base("the order has already delivered") { }
+    public OrderIsAlreadyDeliveredException(string message) : base(message) { }
+    public OrderIsAlreadyDeliveredException(string message, Exception inner) : base(message, inner) { }
+    protected OrderIsAlreadyDeliveredException(
       System.Runtime.Serialization.SerializationInfo info,
       System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
@@ -68,7 +68,7 @@ public class NotExistsException : Exception
 [Serializable]
 public class InvalidEmailException : Exception
 {
-    public InvalidEmailException() : base("invalid email exception") { }
+    public InvalidEmailException() : base("invalid email") { }
     public InvalidEmailException(string message) : base(message) { }
     public InvalidEmailException(string message, Exception inner) : base(message, inner) { }
     protected InvalidEmailException(
@@ -83,6 +83,17 @@ public class AlreadyExistsException : Exception
     public AlreadyExistsException(string message) : base(message) { }
     public AlreadyExistsException(string message, Exception inner) : base(message, inner) { }
     protected AlreadyExistsException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
+public class InvalidAmountException : Exception
+{
+    public InvalidAmountException() : base("invalid amount") { }
+    public InvalidAmountException(string message) : base(message) { }
+    public InvalidAmountException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidAmountException(
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }

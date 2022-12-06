@@ -82,7 +82,7 @@ internal class BlProduct : BlApi.IProduct
                 Amount = cart.Items.Find(it => it.ProductID == productId).Amount
             };
         }
-        catch (Exception e)
+        catch (BO.NotExistsException e)
         {
             throw new BO.NotExistsException("",e);
         }

@@ -65,21 +65,31 @@ internal class Program
                 {
                     test.Cart.AddPToCart(cart, idProduct);
                 }
-                catch (NotEnoughRoomInStockException e) { Console.WriteLine(e); }
+                catch (NotEnoughInStockException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case 'b':
                 int productId, newAmount;
-                Console.Write("product ID: ");
-
-                int.TryParse(Console.ReadLine(), out productId);
                 OrderItem orderitem = new OrderItem();
-                orderitem = cart.Items.Find(it => it.ProductID == productId);
-                Console.WriteLine(orderitem);
-                Console.Write("enter the new amount of products: ");
 
+                Console.Write("product ID: ");
+                int.TryParse(Console.ReadLine(), out productId);
+                
+                orderitem = cart.Items.Find(it => it.ProductID == productId);
+
+                Console.WriteLine(orderitem);
+
+                Console.Write("enter the new amount of products: ");
                 int.TryParse(Console.ReadLine(), out newAmount);
-                test.Cart.UpdateAmount(cart, productId, newAmount);
+
+                try
+                {
+                    test.Cart.UpdateAmount(cart, productId, newAmount);
+                }
+                catch (IdIsLessThanZeroException e) { Console.WriteLine(e); }
+                catch (InvalidAmountException e) { Console.WriteLine(e); }
+                catch (NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case 'c':
@@ -129,7 +139,7 @@ internal class Program
                 {
                     Console.WriteLine(test.Product.GetProduct(ID));
                 }
-                catch (DO.DoesNotExistException e) { Console.WriteLine(e); }
+                catch (DO.NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case 'c':
@@ -139,7 +149,7 @@ internal class Program
                 {
                     Console.WriteLine(test.Product.GetProductCustomer(ID, cart));
                 }
-                catch (DO.DoesNotExistException e) { Console.WriteLine(e); }
+                catch (DO.NotExistsException e) { Console.WriteLine(e); }
                 break;
 
             case 'd':

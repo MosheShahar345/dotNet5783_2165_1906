@@ -19,7 +19,7 @@ internal class DalProduct : IProduct
             {
                 GetById(product.ID);
             }
-            catch (DoesNotExistException)
+            catch (NotExistsException)
             {
                 DataSource.Products.Add(product);
                 return product.ID;
@@ -39,7 +39,7 @@ internal class DalProduct : IProduct
             {
                 GetById(id);
             }
-            catch (DoesNotExistException)
+            catch (NotExistsException)
             {
                 inStock = true;
             }
@@ -66,7 +66,7 @@ internal class DalProduct : IProduct
             } 
         }
         if (!flag) 
-            throw new DoesNotExistException("product dose not exist");
+            throw new NotExistsException("product dose not exist");
     }
     /// <summary>
     /// updateing an existing product
@@ -83,7 +83,7 @@ internal class DalProduct : IProduct
             }
         }
         if (!flag)
-            throw new DoesNotExistException("product dose not exist");
+            throw new NotExistsException("product dose not exist");
     }
     /// <summary>
     /// receives a id and returns his product
@@ -95,7 +95,7 @@ internal class DalProduct : IProduct
             if (item.ID == productID)
                 return item;
         }
-        throw new DoesNotExistException("product dose not exist");//Throws an exception if the product does not exist
+        throw new NotExistsException("product dose not exist");//Throws an exception if the product does not exist
     }
     /// <summary>
     /// returns the array of products

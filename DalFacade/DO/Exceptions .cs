@@ -1,8 +1,8 @@
 ﻿namespace DO;
 
-public class DoesNotExistException : Exception
+public class NotExistsException : Exception
 {
-    public DoesNotExistException(string message) : base(message) { }
+    public NotExistsException(string message) : base(message) { }
 }
 
 public class AlreadyExistsException : Exception

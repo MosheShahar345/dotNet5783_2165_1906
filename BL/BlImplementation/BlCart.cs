@@ -12,44 +12,42 @@ internal class BlCart : BlApi.ICart
 
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
-        DO.Product product;
-        List<DO.OrderItem> orderitems = new();
+        if (productId < 0)
+            throw new IdIsLessThanZeroException("ID is less than zero");
 
-        try
-        {
-            product = Dal.Product.GetById(productId);
-        }
-        catch (Exception e)
-        {
-            throw new BO.NotExistsException("", e);
-        }
+        DO.Product product;
+        BO.OrderItem orderItem;
+        //List<DO.OrderItem> orderItems = new();
 
         if (cart.Items == null)
         {
             cart.Items = new();
         }
 
-        foreach (var item in cart.Items)
+        orderItem = cart.Items.Find(it => it.ProductID == productId);
+
+        try
         {
-            if (productId == item.ProductID)
-            {
-                if (product.InStock > item.Amount + 1)
-                {
-                    item.Amount++;
-                    item.TotalPrice += item.Price;
-                    cart.TotalPrice += item.Price;
-
-                    return cart;
-                }
-
-                throw new BO.NotEnoughRoomInStockException(product.Name);
-            }
+            product = Dal.Product.GetById(productId);
+        }
+        catch (BO.NotExistsException e)
+        {
+            throw new BO.NotExistsException("", e);
         }
 
-        if (product.InStock > 0)
+        if (orderItem != null)
+        {
+            if (product.InStock > orderItem.Amount + 1)
+            {
+                orderItem.Amount++;
+                orderItem.TotalPrice += orderItem.Price;
+                cart.TotalPrice += orderItem.Price;
+            }
+        }
+        else if (product.InStock > 0)
         {
             cart.Items.Add(new BO.OrderItem
-            {   
+            {
                 ID = 0,
                 Name = product.Name,
                 ProductID = product.ID,
@@ -57,64 +55,137 @@ internal class BlCart : BlApi.ICart
                 Amount = 1,
                 TotalPrice = product.Price
             });
-
-            return cart;
         }
+        else
+        {
+            throw new BO.NotEnoughInStockException(
+                $"product with name: {product.Name} not enough in stock");
+        }
+        return cart;
 
-        throw new BO.NotEnoughRoomInStockException(
-            $"product with name: {product.Name} not enough in stock");
+        //foreach (var item in cart.Items)
+        //{
+        //    if (productId == item.ProductID)
+        //    {
+        //        if (product.InStock > item.Amount + 1)
+        //        {
+        //            item.Amount++;
+        //            item.TotalPrice += item.Price;
+        //            cart.TotalPrice += item.Price;
+
+        //            return cart;
+        //        }
+        //        else
+        //        {
+        //            throw new BO.NotEnoughInStockException(product.Name);
+        //        }
+        //    }
+        //}
+
+        //if (product.InStock > 0)
+        //{
+        //    cart.Items.Add(new BO.OrderItem
+        //    {   
+        //        ID = 0,
+        //        Name = product.Name,
+        //        ProductID = product.ID,
+        //        Price = product.Price,
+        //        Amount = 1,
+        //        TotalPrice = product.Price
+        //    });
+
+        //    return cart;
+        //}
+
+        //throw new BO.NotEnoughInStockException(
+        //    $"product with name: {product.Name} not enough in stock");
     }
 
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int nAmount)
     {
-        if (productId <= 0 || nAmount < 0)
-            throw new InvalidInputException();
+        if (productId < 0)
+            throw new IdIsLessThanZeroException("ID is less than zero");
+
+        if (nAmount < 0)
+            throw new InvalidAmountException("amount is less than zero");
 
         DO.Product product = new DO.Product();
         BO.OrderItem orderItem;
 
         try
         {
-            orderItem = cart.Items.Find(it => it.ID == productId);
-        }
-        catch (Exception e)
-        {
-            throw new BO.NotExistsException("", e);
-        }
-
-        if (orderItem?.Amount == nAmount) { return cart;}
-
-        try
-        {
             product = Dal.Product.GetById(productId);
         }
-        catch (Exception e)
+        catch (BO.NotExistsException e)
         {
             throw new BO.NotExistsException("", e);
         }
 
-        if (orderItem != null)
+        orderItem = cart.Items?.Find(it => productId == it.ProductID) ??
+                    throw new BO.NotExistsException("not exists");
+
+        if (nAmount == orderItem.Amount) { return cart; }
+
+        if (nAmount > orderItem.Amount)
         {
-
-            if (nAmount > orderItem?.Amount)
+            if (product.InStock >= orderItem.Amount + nAmount)
             {
-                AddPToCart(cart, productId);
-            }
-
-            else if (nAmount < orderItem?.Amount)
-            {
-                orderItem.Amount = nAmount;
-                cart.TotalPrice -= orderItem.TotalPrice;
-                orderItem.TotalPrice = orderItem.Price * nAmount;
+                orderItem.Amount += nAmount;
+                orderItem.TotalPrice += orderItem.Price * nAmount;
                 cart.TotalPrice += orderItem.TotalPrice;
             }
-
-            else if (nAmount == 0)
+            else
             {
-                cart.TotalPrice -= orderItem.TotalPrice;
-                cart.Items.Remove(orderItem);
+                throw new NotEnoughInStockException("not enough in stock");
             }
         }
+
+        else if (nAmount != 0 && nAmount < orderItem.Amount)
+        {
+            orderItem.Amount -= nAmount;
+            orderItem.TotalPrice -= orderItem.Price * nAmount;
+            cart.TotalPrice -= orderItem.TotalPrice;
+        }
+
+        else
+        {
+            cart.TotalPrice -= orderItem.TotalPrice;
+            cart.Items.Remove(orderItem);
+        }
+
+        //foreach (var item in cart.Items)
+        //{
+        //    if (item.ProductID == productId)
+        //    {
+        //        if (nAmount == item.Amount) { return cart; }
+
+        //        if (nAmount > item.Amount)
+        //        {
+        //            if (product.InStock >= item.Amount + nAmount)
+        //            {
+        //                item.Amount += nAmount;
+        //                item.TotalPrice += item.Price * nAmount;
+        //                cart.TotalPrice += item.TotalPrice;
+        //            }
+        //            else
+        //            {
+        //                throw new NotEnoughInStockException("not enough in stock");
+        //            }
+        //        }
+        //        else if (nAmount != 0 && nAmount < item.Amount)
+        //        {
+        //            item.Amount -= nAmount;
+        //            item.TotalPrice -= item.Price * nAmount;
+        //            cart.TotalPrice -= item.TotalPrice;
+        //        }
+        //        else
+        //        {
+        //            cart.TotalPrice -= item.TotalPrice;
+        //            cart.Items.Remove(item);
+        //            return cart;
+        //        }
+        //    }
+        //}
 
         return cart;
     }

@@ -37,7 +37,7 @@ internal class DalOrder : IOrder
             }
         }
         if (!flag)
-            throw new DoesNotExistException("order dose not exist");
+            throw new NotExistsException("order dose not exist");
     }
     /// <summary>
     /// updateing an existing order
@@ -54,7 +54,7 @@ internal class DalOrder : IOrder
             }
         }
         if (!flag)
-            throw new DoesNotExistException("order dose not exist");
+            throw new NotExistsException("order dose not exist");
     }
     /// <summary>
     /// receives a id and returns his order
@@ -66,7 +66,7 @@ internal class DalOrder : IOrder
             if (item.ID == orderID)
                 return item;
         }
-        throw new DoesNotExistException("order dose not exist");//Throws an exception if the order does not exist
+        throw new NotExistsException("order dose not exist");//Throws an exception if the order does not exist
     }
     /// <summary>
     /// returns the array of orders

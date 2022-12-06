@@ -4,7 +4,7 @@ using Dal;
 using DalApi;
 using System;
 using System.Reflection.Metadata.Ecma335;
-using static BO.NotEnoughRoomInStockException;
+using static BO.NotEnoughInStockException;
 
 namespace BlImplementation;
 

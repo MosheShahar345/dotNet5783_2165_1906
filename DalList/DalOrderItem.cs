@@ -40,7 +40,7 @@ internal class DalOrderItem : IOrderItem
             }
         }
         if (!flag)
-            throw new DoesNotExistException("order item dose not exist");
+            throw new NotExistsException("order item dose not exist");
     }
     /// <summary>
     /// updateing an existing order item
@@ -57,7 +57,7 @@ internal class DalOrderItem : IOrderItem
             }
         }
         if (!flag)
-            throw new DoesNotExistException("order item dose not exist");
+            throw new NotExistsException("order item dose not exist");
     }
     /// <summary>
     /// receives a id and returns his order item
@@ -68,7 +68,7 @@ internal class DalOrderItem : IOrderItem
         orderItem = DataSource.OrderItems.FirstOrDefault(item => item.ID == orderItemID);
         if(orderItem.ID != orderItemID)
         {
-            throw new DoesNotExistException("order item dose not exist");//Throws an exception if the order does not exist
+            throw new NotExistsException("order item dose not exist");//Throws an exception if the order does not exist
         }
         return orderItem;
     }
@@ -95,7 +95,7 @@ internal class DalOrderItem : IOrderItem
             if(item.ProductID == productID && item.OrderID == orderID)
                 return item;
         }
-        throw new DoesNotExistException("order item dose not exist");
+        throw new NotExistsException("order item dose not exist");
     }
     public List<OrderItem> GetOrderItem(int orderId)
     {
