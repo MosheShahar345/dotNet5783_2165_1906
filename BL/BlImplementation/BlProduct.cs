@@ -5,8 +5,13 @@ namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = new DalList(); // to access DO entities
 
+    /// <summary>
+    /// returns BO list with all the products from DO 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.ProductForList> GetProductForList()
     {
         List<DO.Product> products = new List<DO.Product>();
@@ -32,6 +37,13 @@ internal class BlProduct : BlApi.IProduct
         return productForList;
     }
 
+    /// <summary>
+    /// gets id to find a product in the store and returns it
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
     public BO.Product GetProductForAdmin(int productId)
     {
         if (productId < 0)
@@ -58,6 +70,15 @@ internal class BlProduct : BlApi.IProduct
         };
         return bProduct;
     }
+
+    /// <summary>
+    /// gets cart and id to find a product in the cart and returns it
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
     public BO.ProductItem GetProductForCustomer(int productId, BO.Cart cart)
     {
         if (productId < 0)
@@ -91,6 +112,15 @@ internal class BlProduct : BlApi.IProduct
         return bProductItem;
     }
 
+    /// <summary>
+    /// gets product and add it to Dal
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.InvalidNameException"></exception>
+    /// <exception cref="BO.InvalidPriceException"></exception>
+    /// <exception cref="BO.InvalidInStockException"></exception>
+    /// <exception cref="BO.AlreadyExistsException"></exception>
     public void AddProductAdmin(BO.Product product)
     {
         if(product.ID < 0)
@@ -124,6 +154,13 @@ internal class BlProduct : BlApi.IProduct
         }
     }
 
+    /// <summary>
+    /// gets product and delete it from Dal
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    /// <exception cref="BO.CanNotDeleteProductException"></exception>
     public void DeleteProductAdmin(int productId)
     {
         if (productId < 0)
@@ -150,6 +187,15 @@ internal class BlProduct : BlApi.IProduct
         Dal.Product.Delete(productId);
     }
 
+    /// <summary>
+    /// gets a new product and updates the old product in Dal
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.InvalidNameException"></exception>
+    /// <exception cref="BO.InvalidPriceException"></exception>
+    /// <exception cref="BO.InvalidInStockException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
     public void UpdateProductAdmin(BO.Product product)
     {
         if (product.ID < 0)
