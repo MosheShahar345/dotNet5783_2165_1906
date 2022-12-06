@@ -15,5 +15,19 @@ public class OrderTracking
     /// <summary>
     /// order progress
     /// </summary>
-    public List<Tuple<DateTime, string>> Log  { get; set; }
+    public List<Tuple<DateTime, string>>? Log { get; set; }
+
+    public override string ToString()
+    {
+        Console.WriteLine();
+        Console.WriteLine($"\t\tID: {ID}" +
+                          $"\n\t\tStatus: {Status}");
+
+        foreach (var item in Log)
+        {
+            Console.WriteLine("\t\t{0} \n \t\t{1}", item.Item1, item.Item2);
+        }
+
+        return "";
+    }
 }

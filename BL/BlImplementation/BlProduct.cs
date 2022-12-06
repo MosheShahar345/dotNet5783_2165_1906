@@ -93,7 +93,7 @@ internal class BlProduct : BlApi.IProduct
 
     public void AddProductAdmin(BO.Product product)
     {
-        if(product.ID < 100000 || product.ID > 999999)
+        if(product.ID < 0)
             throw new BO.IdIsLessThanZeroException();
 
         if (product.Name == null) 
@@ -152,7 +152,7 @@ internal class BlProduct : BlApi.IProduct
 
     public void UpdateProductAdmin(BO.Product product)
     {
-        if (product.ID < 100000 || product.ID > 999999)
+        if (product.ID < 0)
             throw new BO.IdIsLessThanZeroException();
 
         if (product.Name == null)

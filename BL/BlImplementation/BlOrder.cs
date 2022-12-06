@@ -188,10 +188,10 @@ internal class BlOrder : BlApi.IOrder
         orderTracking.ID = orderId;
 		orderTracking.Status = GetStatus(dOrder);
 
-        Tuple<DateTime, string>? tuple = new Tuple<DateTime, string>(
-            (DateTime)dOrder.OrderDate, orderTracking.Status.ToString());
+        orderTracking.Log = new List<Tuple<DateTime, string>>();
 
-		orderTracking.Log.Add(tuple);
+        orderTracking.Log.Add(new Tuple<DateTime, string>(
+            (DateTime)dOrder.OrderDate, orderTracking.Status.ToString()));
 
 		return orderTracking;
     }
