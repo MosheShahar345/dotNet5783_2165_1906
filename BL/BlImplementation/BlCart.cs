@@ -8,6 +8,15 @@ internal class BlCart : BlApi.ICart
 {
     private IDal Dal = new DalList(); // to access DO entities
 
+    /// <summary>
+    /// gets cart and id adds a product that matches the id and returns the cart 
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    /// <exception cref="BO.NotEnoughInStockException"></exception>
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
         if (productId < 0)
@@ -62,6 +71,18 @@ internal class BlCart : BlApi.ICart
         return cart;
     }
 
+    /// <summary>
+    /// gets cart id and new amount updates a product that matches the id
+    /// to have the new given amount and returns the cart 
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productId"></param>
+    /// <param name="nAmount"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IdIsLessThanZeroException"></exception>
+    /// <exception cref="BO.InvalidAmountException"></exception>
+    /// <exception cref="BO.NotExistsException"></exception>
+    /// <exception cref="BO.NotEnoughInStockException"></exception>
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int nAmount)
     {
         if (productId < 0)
@@ -117,6 +138,16 @@ internal class BlCart : BlApi.ICart
 
         return cart;
     }
+
+    /// <summary>
+    /// confirm the order in the cart and finishes the purchase
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <exception cref="BO.NotExistsException"></exception>
+    /// <exception cref="BO.InvalidAddressException"></exception>
+    /// <exception cref="BO.InvalidNameException"></exception>
+    /// <exception cref="BO.InvalidEmailException"></exception>
+    /// <exception cref="BO.AlreadyExistsException"></exception>
     public void ConfirmationOrder(BO.Cart cart)
     {
         if (!cart.Items.Any())
