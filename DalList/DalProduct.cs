@@ -3,14 +3,14 @@ using DO;
 
 namespace Dal;
 
-/// <summary>
-/// A class with basic product functions
-/// </summary>
 internal class DalProduct : IProduct
 {
     /// <summary>
-    /// Adding a product to the product list
+    /// adding a product to the product list and making sure id is uniq
     /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    /// <exception cref="AlreadyExistsException"></exception>
     public int Add(Product product)
     {
         if (product.ID != 0)
@@ -53,41 +53,45 @@ internal class DalProduct : IProduct
     /// <summary>
     /// deletes an existing product
     /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotExistsException"></exception>
     public void Delete(int id)
     {
-        bool flag = false;
-
-        for (int i = 0; i < DataSource.Products.Count; i++)//Checks if such a product exists according to ID
-        {
-            if (id == DataSource.Products[i].ID)
-            {
-                DataSource.Products.RemoveAt(i);
-                flag = true;
-            } 
-        }
-        if (!flag) 
-            throw new NotExistsException("product dose not exist");
-    }
-    /// <summary>
-    /// updateing an existing product
-    /// </summary>
-    public void Update(Product product)
-    {
-        bool flag = false;
         for (int i = 0; i < DataSource.Products.Count; i++)
         {
-            if (DataSource.Products[i].ID == product.ID)//Searching by id which product to update
+            if (id == DataSource.Products[i].ID) // checks if exists according to ID
+            {
+                DataSource.Products.RemoveAt(i);
+                return;
+            } 
+        }
+        throw new NotExistsException("product dose not exist");
+    }
+
+    /// <summary>
+    /// updating an existing product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="NotExistsException"></exception>
+    public void Update(Product product)
+    {
+        for (int i = 0; i < DataSource.Products.Count; i++)
+        {
+            if (DataSource.Products[i].ID == product.ID) // searching by id which product to update
             {
                 DataSource.Products[i] = product;
-                flag = true;
+                return;
             }
         }
-        if (!flag)
-            throw new NotExistsException("product dose not exist");
+        throw new NotExistsException("product dose not exist");
     }
+
     /// <summary>
-    /// receives a id and returns his product
+    /// receives an id and returns its product
     /// </summary>
+    /// <param name="productID"></param>
+    /// <returns></returns>
+    /// <exception cref="NotExistsException"></exception>
     public Product GetById(int productID)
     {
         foreach (var item in DataSource.Products)
@@ -95,11 +99,15 @@ internal class DalProduct : IProduct
             if (item.ID == productID)
                 return item;
         }
-        throw new NotExistsException("product dose not exist");//Throws an exception if the product does not exist
+
+        // throws an exception if the product does not exist
+        throw new NotExistsException("product dose not exist");
     }
+
     /// <summary>
-    /// returns the array of products
+    /// returns list of all products
     /// </summary>
+    /// <returns></returns>
     public IEnumerable<Product> GetAll()
     {
         List<Product> products = new List<Product>();

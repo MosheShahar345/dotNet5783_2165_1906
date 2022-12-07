@@ -50,7 +50,6 @@ internal class BlOrder : BlApi.IOrder
 		return ordersForList;
     }
 
-    
     /// <summary>
     /// gets id to find a order in the DO and returns a BO order
     /// </summary>
@@ -98,8 +97,7 @@ internal class BlOrder : BlApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    
-	private BO.OrderStatus GetStatus(DO.Order o)
+    private BO.OrderStatus GetStatus(DO.Order o)
 	{
 		if (o.DeliveryDate > DateTime.MinValue)
 			return BO.OrderStatus.Delivered;
@@ -107,8 +105,9 @@ internal class BlOrder : BlApi.IOrder
 			return BO.OrderStatus.Sent;
 		return BO.OrderStatus.Confirmed;
 	}
+
     ///// <summary>
-    ///// gets id to find a order in the DO and returns a BO order
+    ///// gets id to find an order in Dal and returns a BO order
     ///// </summary>
     ///// <param name="orderId"></param>
     ///// <returns></returns>
@@ -138,8 +137,9 @@ internal class BlOrder : BlApi.IOrder
 		}
 		return (bOrderItem, s);
 	}
+
     /// <summary>
-    /// gets a order and Updates the ship time
+    /// gets an order Updates the ship time and returns updated BO order
     /// </summary>
     /// <param name="order"></param>
     /// <exception cref="BO.IdIsLessThanZeroException"></exception>
@@ -179,6 +179,7 @@ internal class BlOrder : BlApi.IOrder
 
 		return bOrder;
 	}
+
     /// <summary>
     /// gets a order and Updates the delivery time
     /// </summary>
@@ -218,6 +219,7 @@ internal class BlOrder : BlApi.IOrder
 
         return bOrder;
     }
+
     /// <summary>
     /// gets a order id and returns an order with its status
     /// </summary>

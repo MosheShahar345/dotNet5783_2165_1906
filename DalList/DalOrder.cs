@@ -3,62 +3,68 @@ using DO;
 using System.Linq;
 
 namespace Dal;
-/// <summary>
-/// A class with basic orders functions
-/// </summary>
+
 internal class DalOrder : IOrder
 {
     /// <summary>
-    /// Adding an order to the order array
+    /// adding an order to the order list
     /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    /// <exception cref="AlreadyExistsException"></exception>
     public int Add(Order order)
     {
         for (int i = 0;i < DataSource.Orders.Count; i++)
         {
-            if (DataSource.Orders[i].ID == order.ID)// A check uf the order is already exists
+            if (DataSource.Orders[i].ID == order.ID) // check if the order is already exists
                 throw new AlreadyExistsException("order already exist");
         }
-        DataSource.Orders.Add(order);//if it does not exist, it is inserted into the array
+        DataSource.Orders.Add(order); // if it does not exist, add to list
         return order.ID;
     }
+
     /// <summary>
     /// deletes an existing order
     /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotExistsException"></exception>
     public void Delete(int id)
     {
-        bool flag = false;
-
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
-            if (id == DataSource.Orders[i].ID)//Checks if such a order exists according to ID
+            if (id == DataSource.Orders[i].ID) // checks if exists according to ID
             {
                 DataSource.Orders.RemoveAt(i);
-                flag = true; // deleting successfully don't throw an exception
+                return; // deleting successfully don't throw an exception
             }
         }
-        if (!flag)
-            throw new NotExistsException("order dose not exist");
+        throw new NotExistsException("order dose not exist");
     }
+
     /// <summary>
-    /// updateing an existing order
+    /// updating an existing order
     /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="NotExistsException"></exception>
     public void Update(Order order)
     {
-        bool flag = false;
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
-            if (DataSource.Orders[i].ID == order.ID)//Searching by id which order to update
+            if (DataSource.Orders[i].ID == order.ID) // searching by id which order to update
             {
                 DataSource.Orders[i] = order;
-                flag = true;
+                return;
             }
         }
-        if (!flag)
-            throw new NotExistsException("order dose not exist");
+        throw new NotExistsException("order dose not exist");
     }
+
     /// <summary>
-    /// receives a id and returns his order
+    /// receives an id and returns its order
     /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns></returns>
+    /// <exception cref="NotExistsException"></exception>
     public Order GetById(int orderID)
     {
         foreach (var item in DataSource.Orders)
@@ -66,11 +72,15 @@ internal class DalOrder : IOrder
             if (item.ID == orderID)
                 return item;
         }
-        throw new NotExistsException("order dose not exist");//Throws an exception if the order does not exist
+
+        // throws an exception if the order does not exist
+        throw new NotExistsException("order dose not exist");
     }
+
     /// <summary>
-    /// returns the array of orders
+    /// returns list of all orders
     /// </summary>
+    /// <returns></returns>
     public IEnumerable<Order> GetAll()
     {
         List<Order> orders = new List<Order>();

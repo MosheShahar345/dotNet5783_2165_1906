@@ -348,7 +348,7 @@ internal class Program
 
     public static void PrintStartMenu()
     {
-        Console.WriteLine("enter your choice:" +
+        Console.WriteLine("\nenter your choice:" +
                           "\n 0. Exit. " +
                           "\n 1. Cart. " +
                           "\n 2. Product. " +
