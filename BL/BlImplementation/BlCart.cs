@@ -56,10 +56,10 @@ internal class BlCart : BlApi.ICart
             {
                 ID = 0,
                 Name = product?.Name,
-                ProductID = product?.ID ?? 0,
-                Price = product?.Price ?? 0,
+                ProductID = (int)(product?.ID)!,
+                Price = (int)(product?.Price)!,
                 Amount = 1,
-                TotalPrice = product?.Price ?? 0
+                TotalPrice = (int)(product?.Price)! 
             });
         }
         else
@@ -161,7 +161,7 @@ internal class BlCart : BlApi.ICart
         if (!new EmailAddressAttribute().IsValid(cart.Email))
             throw new BO.InvalidEmailException();
 
-        DO.Order? dOrder = new DO.Order()
+        DO.Order dOrder = new DO.Order()
         {
             CustomerName = cart.Name,
             CustomerAddress = cart.Address,
@@ -186,7 +186,7 @@ internal class BlCart : BlApi.ICart
         {
             DO.OrderItem dOrderItem = new DO.OrderItem()
             {
-                ID = item.ID,
+                ID = item!.ID,
                 ProductID = item.ProductID,
                 OrderID = OrderId,
                 Price = item.Price,
@@ -203,12 +203,12 @@ internal class BlCart : BlApi.ICart
             }
         }
 
-        DO.Product? product = new DO.Product();
+        DO.Product product = new DO.Product();
 
         foreach (var item in cart.Items)
         {
-            product = Dal.Product.GetById(item?.ProductID);
-            product?.InStock -= item?.Amount;
+            product = (DO.Product)Dal.Product.GetById(item!.ProductID)!;
+            product.InStock -= item.Amount;
             Dal.Product.Update(product);
         }
     }

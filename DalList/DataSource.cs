@@ -101,10 +101,10 @@ internal static class DataSource
             for (int j = 0; j < Rand.Next(1,5);j++)
             {
                 orderItem.ID = Config.GetOrderItemID();
-                orderItem.OrderID = Orders[i]?.ID ?? 0;
+                orderItem.OrderID = (int)(Orders[i]?.ID)!;
                 Product? product = Products[Rand.Next(0, Products.Count)];
-                orderItem.ProductID = product?.ID ?? 0;
-                orderItem.Price = product?.Price ?? 0;
+                orderItem.ProductID = (int)(product?.ID)!;
+                orderItem.Price = (double)(product?.Price)!;
                 orderItem.Amount = Rand.Next(1,10);
                 OrderItems.Add(orderItem);
             }

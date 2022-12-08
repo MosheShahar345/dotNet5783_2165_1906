@@ -71,7 +71,7 @@ public class Order
                           $"\t\tDelivery Date: {DeliveryDate}\n" +
                           $"\t\tTotal Price: {TotalPrice}\n " );
 
-        foreach (var item in Items)
+        foreach (var item in Items!)
         {
             Console.WriteLine(item);
         }

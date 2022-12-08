@@ -79,7 +79,7 @@ internal class Program
                 Console.Write("product ID: ");
                 int.TryParse(Console.ReadLine(), out productId);
 
-                orderitem = cart.Items.Find(it => it.ProductID == productId)!;
+                orderitem = cart.Items!.Find(it => it!.ProductID == productId)!;
 
                 Console.WriteLine(orderitem);
 

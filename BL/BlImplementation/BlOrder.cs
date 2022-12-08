@@ -77,7 +77,7 @@ internal class BlOrder : BlApi.IOrder
 
 		BO.Order bOrder = new BO.Order()
 		{
-			ID = dOrder?.ID ?? 0,
+			ID = (int)(dOrder?.ID)!,
 			CustomerName = dOrder?.CustomerName,
 			CustomerEmail = dOrder?.CustomerEmail,
 			CustomerAddress = dOrder?.CustomerAddress,
@@ -123,11 +123,11 @@ internal class BlOrder : BlApi.IOrder
 			{
 				BO.OrderItem orderitem = new BO.OrderItem()
 				{
-					ID = item?.ID ?? 0,
+					ID = (int)(item?.ID)!,
 					Name = Dal?.Product.GetById((int)(item?.ProductID)!)?.Name,
-					Price = item?.Price ?? 0,
-					ProductID = item?.ProductID ?? 0,
-					Amount = item?.Amount ?? 0,
+					Price = (double)(item?.Price)!,
+					ProductID = (int)(item?.ProductID)!,
+					Amount = (int)(item?.Amount)!,
 					TotalPrice = (int)(item?.Price)! * (int)(item?.Amount)!
 				};
 				s += orderitem.TotalPrice;

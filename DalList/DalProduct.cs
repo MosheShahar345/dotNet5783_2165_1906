@@ -112,19 +112,16 @@ internal class DalProduct : IProduct
     {
         if (func == null)
         {
-            List<Product?> products = new List<Product?>();
-            foreach (var item in DataSource.Products)
-            {
-                products.Add(item);
-            }
-            return products;
+            var list = from item in DataSource.Products
+                       select item;
+            return list;
         }
-        List<Product?> products1 = new List<Product?>();
-        foreach (var item in DataSource.Products)
+        else
         {
-            if(func(item))
-                products1.Add(item);
+            var list = from item in DataSource.Products
+                       where(func(item))
+                       select item;
+            return list;
         }
-        return products1;
     }   
 }

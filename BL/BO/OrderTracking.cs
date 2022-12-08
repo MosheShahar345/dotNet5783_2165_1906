@@ -27,7 +27,7 @@ public class OrderTracking
         Console.WriteLine($"\t\tID: {ID}" +
                           $"\n\t\tStatus: {Status}");
 
-        foreach (var item in Log)
+        foreach (var item in Log!)
         {
             Console.WriteLine("\t\t{0} \n \t\t{1}", item.Item1, item.Item2);
         }

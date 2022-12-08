@@ -27,14 +27,14 @@ internal class BlProduct : BlApi.IProduct
         {
             BO.ProductForList? tempproduct = new BO.ProductForList()
             {
-                ID = item?.ID ?? 0,
+                ID = (int)(item?.ID)!,
                 Name= item?.Name,
-                Price= item?.Price ?? 0,
+                Price= (double)(item?.Price)!,
                 Category = (BO.Category)item?.Category!
             };
             productForList.Add(tempproduct);
         }
-        return productForList;
+        return productForList!;
     }
 
     /// <summary>
@@ -62,9 +62,9 @@ internal class BlProduct : BlApi.IProduct
 
         BO.Product bProduct = new BO.Product()
         {
-            ID = dProduct?.ID ?? 0,
+            ID = (int)(dProduct?.ID)!,
             Name = dProduct?.Name,
-            Price = dProduct?.Price ?? 0,
+            Price = (double)(dProduct?.Price)!,
             Category = (BO.Category)dProduct?.Category!,
             InStock = dProduct?.InStock ?? 0,
         };
@@ -88,7 +88,7 @@ internal class BlProduct : BlApi.IProduct
         BO.ProductItem bProductItem;
         BO.OrderItem bOrderItem;
 
-        bOrderItem = cart.Items?.Find(it => it.ProductID == productId)??
+        bOrderItem = cart.Items?.Find(it => it!.ProductID == productId)??
                      throw new BO.NotExistsException();
 
         try
@@ -96,9 +96,9 @@ internal class BlProduct : BlApi.IProduct
             dProduct = Dal.Product.GetById(productId);
             bProductItem = new BO.ProductItem()
             {
-                ID = dProduct?.ID ?? 0,
+                ID = (int)dProduct?.ID!,
                 Name = dProduct?.Name,
-                Price = dProduct?.Price ?? 0,
+                Price = (int)dProduct?.Price!,
                 Category = (BO.Category)dProduct?.Category!,
                 InStock = dProduct?.InStock > 0 ? true : false,
                 Amount = bOrderItem.Amount
@@ -141,7 +141,7 @@ internal class BlProduct : BlApi.IProduct
             Name = product.Name,
             Price = product.Price,
             InStock = product.InStock,
-            Category = (DO.Category)product.Category
+            Category = (DO.Category)product.Category!
         };
      
         try
@@ -216,7 +216,7 @@ internal class BlProduct : BlApi.IProduct
             Name = product.Name,
             Price = product.Price,
             InStock = product.InStock,
-            Category = (DO.Category)product.Category
+            Category = (DO.Category)product.Category!
         };
 
         try
