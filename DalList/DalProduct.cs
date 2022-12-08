@@ -108,7 +108,7 @@ internal class DalProduct : IProduct
     /// returns list of all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func)
     {
         if (func == null)
         {

@@ -15,12 +15,12 @@ internal class BlOrder : BlApi.IOrder
     /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderForList()
     {
-        IEnumerable<DO.Order> orders = Dal.Order.GetAll();
-        List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
+        IEnumerable<DO.Order?> orders = Dal.Order.GetAll();
+        List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         try
         {
-            orders = (List<DO.Order>)Dal.Order.GetAll();
+            orders = (List<DO.Order?>)Dal.Order.GetAll();
         }
         catch (DO.NotExistsException e)
         {
@@ -31,22 +31,22 @@ internal class BlOrder : BlApi.IOrder
 		{
 			BO.OrderForList temporder = new BO.OrderForList()
 			{
-				ID = item.ID,
-				CustomerName = item.CustomerName,
+				ID = (int)(item?.ID)!,
+				CustomerName = item?.CustomerName,
 				Status = GetStatus(item)
             };
 
-			IEnumerable<DO.OrderItem> orderitems = Dal.OrderItem.GetAll(it => item.ID == it.ID)!;
+			IEnumerable<DO.OrderItem?> orderitems = Dal?.OrderItem.GetAll(it => item?.ID == it?.ID)!;
 
 			foreach (var it in orderitems)
 			{
-				temporder.AmountOfItems += it.Amount;
-				temporder.TotalPrice += it.Price * it.Amount;
+				temporder.AmountOfItems += (int)(it?.Amount)!;
+				temporder.TotalPrice += (int)(it?.Price)! * (int)(it?.Amount)!;
 			}
 
 			ordersForList.Add(temporder);
 		}
-		return ordersForList;
+		return ordersForList!;
     }
 
     /// <summary>
@@ -124,11 +124,11 @@ internal class BlOrder : BlApi.IOrder
 				BO.OrderItem orderitem = new BO.OrderItem()
 				{
 					ID = item?.ID ?? 0,
-					Name = Dal?.Product.GetById(item?.ProductID)?.Name,
+					Name = Dal?.Product.GetById((int)(item?.ProductID)!)?.Name,
 					Price = item?.Price ?? 0,
 					ProductID = item?.ProductID ?? 0,
 					Amount = item?.Amount ?? 0,
-					TotalPrice = item?.Price * item?.Amount
+					TotalPrice = (int)(item?.Price)! * (int)(item?.Amount)!
 				};
 				s += orderitem.TotalPrice;
 				bOrderItem.Add(orderitem);
@@ -151,24 +151,24 @@ internal class BlOrder : BlApi.IOrder
 		if (orderId < 0)
 			throw new BO.IdIsLessThanZeroException();
 
-		DO.Order? dOrder = new DO.Order();
+		DO.Order dOrder = new DO.Order();
 		BO.Order bOrder = new BO.Order();
 
         try
         {
-            dOrder = Dal.Order.GetById(orderId);
+            dOrder = (DO.Order)Dal.Order.GetById(orderId)!;
             bOrder = GetOrder(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        if (dOrder?.DeliveryDate != null)
+        if (dOrder.DeliveryDate != null)
             throw new OrderIsAlreadyDeliveredException();
 
 
-        if (dOrder?.ShipDate != null)
+        if (dOrder.ShipDate != null)
             throw new OrderIsAlreadyShippedException();
 
-        if (dOrder?.ShipDate == DateTime.MinValue)
+        if (dOrder.ShipDate == DateTime.MinValue)
 		{
 			dOrder.ShipDate = DateTime.Now;
             bOrder.ShipDate = DateTime.Now;
@@ -192,25 +192,25 @@ internal class BlOrder : BlApi.IOrder
         if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        DO.Order? dOrder = new DO.Order();
+        DO.Order dOrder = new DO.Order();
         BO.Order bOrder = new BO.Order();
 
         try
         {
-            dOrder = Dal.Order.GetById(orderId);
+            dOrder = (DO.Order)Dal.Order.GetById(orderId)!;
 			bOrder = GetOrder(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        if (dOrder?.DeliveryDate != null)
+        if (dOrder.DeliveryDate != null)
             throw new OrderIsAlreadyDeliveredException();
 
-        if (dOrder?.ShipDate == null)
+        if (dOrder.ShipDate == null)
             throw new OrderHasNotShippedException();
 
-        if (dOrder?.DeliveryDate == DateTime.MinValue)
+        if (dOrder.DeliveryDate == DateTime.MinValue)
         {
-			dOrder?.ShipDate = DateTime.Now;
+			dOrder.ShipDate = DateTime.Now;
 			bOrder.ShipDate = DateTime.Now;
         }
 
