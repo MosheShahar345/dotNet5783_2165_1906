@@ -1,7 +1,6 @@
 ﻿using BO;
 using Dal;
 using DalApi;
-using DO;
 
 namespace BlImplementation;
 
@@ -16,7 +15,7 @@ internal class BlOrder : BlApi.IOrder
     /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderForList()
     {
-        List<DO.Order> orders = new List<DO.Order>();
+        IEnumerable<DO.Order> orders = Dal.Order.GetAll();
         List<BO.OrderForList> ordersForList = new List<BO.OrderForList>();
 
         try
@@ -37,12 +36,12 @@ internal class BlOrder : BlApi.IOrder
 				Status = GetStatus(item)
             };
 
-			List<DO.OrderItem?> orderitems = Dal.OrderItem.GetOrderItem(item.ID)!;
+			IEnumerable<DO.OrderItem> orderitems = Dal.OrderItem.GetAll(it => item.ID == it.ID)!;
 
 			foreach (var it in orderitems)
 			{
 				temporder.AmountOfItems += it.Amount;
-				temporder.TotalPrice += it?.Price * it.Amount;
+				temporder.TotalPrice += it.Price * it.Amount;
 			}
 
 			ordersForList.Add(temporder);
