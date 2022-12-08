@@ -12,15 +12,15 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderItem"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
-    public int Add(OrderItem orderItem)
+    public int? Add(OrderItem? orderItem)
     {
         for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
-            if (DataSource.OrderItems[i].ID == orderItem.ID) // check if the order item is already exists
+            if (DataSource.OrderItems[i]?.ID == orderItem?.ID) // check if the order item is already exists
                 throw new AlreadyExistsException("order item already exist");
         }
         DataSource.OrderItems.Add(orderItem); // if it does not exist add to list
-        return orderItem.ID;
+        return orderItem?.ID;
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ internal class DalOrderItem : IOrderItem
     {
         for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
-            if (id == DataSource.OrderItems[i].ID) // checks if exists according to ID
+            if (id == DataSource.OrderItems[i]?.ID) // checks if exists according to ID
             {
                 DataSource.OrderItems.RemoveAt(i);
                 return; // deleting successfully don't throw an exception
@@ -46,11 +46,11 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="NotExistsException"></exception>
-    public void Update(OrderItem orderItem)
+    public void Update(OrderItem? orderItem)
     {
         for (int i = 0; i < DataSource.OrderItems.Count; i++)
         {
-            if (DataSource.OrderItems[i].ID == orderItem.ID) // searching by id which order to update
+            if (DataSource.OrderItems[i]?.ID == orderItem?.ID) // searching by id which order to update
             {
                 DataSource.OrderItems[i] = orderItem;
                 return;
@@ -65,11 +65,11 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderItemID"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public OrderItem GetById(int orderItemID)
+    public OrderItem? GetById(int? orderItemID)
     {
-        OrderItem orderItem;
-        orderItem = DataSource.OrderItems.FirstOrDefault(item => item.ID == orderItemID);
-        if(orderItem.ID != orderItemID)
+        OrderItem? orderItem;
+        orderItem = DataSource.OrderItems.FirstOrDefault(item => item?.ID == orderItemID);
+        if(orderItem?.ID != orderItemID)
         {
             // throws an exception if the order does not exist
             throw new NotExistsException("order item dose not exist");
@@ -81,14 +81,24 @@ internal class DalOrderItem : IOrderItem
     /// returns list of all order items
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func)
     {
-        List<OrderItem> orderitems = new List<OrderItem>();
+        if (func == null)
+        {
+            List<OrderItem?> orderItem = new List<OrderItem?>();
+            foreach (var item in DataSource.OrderItems)
+            {
+                orderItem.Add(item);
+            }
+            return orderItem;
+        }
+        List<OrderItem?> orderItem1 = new List<OrderItem?>();
         foreach (var item in DataSource.OrderItems)
         {
-            orderitems.Add(item);
+            if (func(item))
+                orderItem1.Add(item);
         }
-        return orderitems;
+        return orderItem1;
     }
 
     /// <summary>
@@ -98,11 +108,11 @@ internal class DalOrderItem : IOrderItem
     /// <param name="productID"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public OrderItem GetByIds(int orderID ,int productID )
+    public OrderItem? GetByIds(int orderID ,int productID )
     {
         foreach(var item in DataSource.OrderItems)
         {
-            if(item.ProductID == productID && item.OrderID == orderID)
+            if(item?.ProductID == productID && item?.OrderID == orderID)
                 return item;
         }
         throw new NotExistsException("order item dose not exist");
@@ -113,12 +123,12 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    public List<OrderItem> GetOrderItem(int orderId)
+    public List<OrderItem?> GetOrderItem(int orderId)
     {
-        List<OrderItem> orderitems = new List<OrderItem>();
+        List<OrderItem?> orderitems = new List<OrderItem?>();
         foreach (var item in DataSource.OrderItems)
         {
-            if (item.OrderID == orderId)
+            if (item?.OrderID == orderId)
                 orderitems.Add(item);
         }
         return orderitems;

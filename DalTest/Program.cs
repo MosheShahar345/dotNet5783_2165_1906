@@ -18,7 +18,7 @@ namespace DalTest
             do
             {
                 PrintStartMenu();
-                choice = int.Parse(Console.ReadLine());
+                choice = int.Parse(Console.ReadLine()!);
                 StartChoose option = (StartChoose)choice;
 
                 switch (option)
@@ -90,7 +90,7 @@ namespace DalTest
                             Price = price,
                             Amount = amount
                         };
-                        test.OrderItem.Add(orderitem);
+                        test?.OrderItem.Add(orderitem);
                     }
                     catch (Exception str)
                     {
@@ -113,7 +113,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<DO.OrderItem> orderItems = test.OrderItem.GetAll();
+                    IEnumerable<DO.OrderItem?> orderItems = test.OrderItem.GetAll();
                     foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
@@ -128,8 +128,8 @@ namespace DalTest
                         orderitem = test.OrderItem.GetById(ID);
                         Console.WriteLine(orderitem);
                         Console.WriteLine("enter: price, amount ");
-                        orderitem.Price = int.Parse(Console.ReadLine());
-                        orderitem.Amount = int.Parse(Console.ReadLine());
+                        orderitem.Price = int.Parse(Console.ReadLine()!);
+                        orderitem.Amount = int.Parse(Console.ReadLine()!);
                         test.OrderItem.Update(orderitem);
                     }
                     catch (Exception str)
@@ -179,7 +179,7 @@ namespace DalTest
                                       "customer email, " +
                                       "customer address");
 
-                    order.ID = int.Parse(Console.ReadLine());
+                    order.ID = int.Parse(Console.ReadLine()!);
                     order.CustomerName = Console.ReadLine();
                     order.CustomerEmail = Console.ReadLine();
                     order.CustomerAddress = Console.ReadLine();
@@ -222,7 +222,7 @@ namespace DalTest
 
                 case 'd':
                     Console.WriteLine("enter order ID");
-                    order.ID = int.Parse(Console.ReadLine());
+                    order.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
                         order = test.Order.GetById(order.ID);
@@ -244,7 +244,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Order> orders = test.Order.GetAll();
+                    IEnumerable<Order?> orders = test.Order.GetAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -276,11 +276,11 @@ namespace DalTest
                     Console.WriteLine("enter: product ID, name, " +
                                       "category, price, in stock ");
 
-                    product.ID = int.Parse(Console.ReadLine()); ;
+                    product.ID = int.Parse(Console.ReadLine()!); ;
                     product.Name = Console.ReadLine();
                     product.Category = (Category)Convert.ToInt32(Console.ReadLine());
-                    product.Price = double.Parse(Console.ReadLine());
-                    product.InStock = int.Parse(Console.ReadLine());
+                    product.Price = double.Parse(Console.ReadLine()!);
+                    product.InStock = int.Parse(Console.ReadLine()!);
                     try
                     {
                         test.Product.Add(product);
@@ -320,7 +320,7 @@ namespace DalTest
 
                 case 'd':
                     Console.WriteLine("enter product ID");
-                    product.ID = int.Parse(Console.ReadLine());
+                    product.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
                         product = test.Product.GetById(product.ID);
@@ -340,7 +340,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Product> products = test.Product.GetAll();
+                    IEnumerable<Product?> products = test.Product.GetAll();
            
                     foreach (var item in products)
                     {

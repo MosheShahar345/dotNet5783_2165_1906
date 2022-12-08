@@ -16,7 +16,7 @@ public interface IOrder
     /// gets a list of orders from DO to BO
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.OrderForList> GetOrderForList();
+    public IEnumerable<BO.OrderForList?> GetOrderForList();
 
     /// <summary>
     /// updates the shipping date of an order 

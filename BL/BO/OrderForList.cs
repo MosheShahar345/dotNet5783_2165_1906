@@ -15,7 +15,7 @@ public class OrderForList
     /// <summary>
     /// order status (CONFIRMED/SENT/DELIVERED)
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// amount of items in order

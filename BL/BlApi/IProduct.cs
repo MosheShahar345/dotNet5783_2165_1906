@@ -7,7 +7,7 @@ public interface IProduct
     /// gets list of products from DO to BO
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList> GetProductForList();
+    public IEnumerable<BO.ProductForList?> GetProductForList();
 
     /// <summary>
     /// for admin gets product by id from DO to BO

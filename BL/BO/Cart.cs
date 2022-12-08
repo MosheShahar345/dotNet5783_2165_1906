@@ -20,7 +20,7 @@ public class Cart
     /// <summary>
     /// items in cart
     /// </summary>
-    public List<OrderItem> Items { get; set;}
+    public List<OrderItem?>? Items { get; set;}
 
     /// <summary>
     /// total price for the customer to pay

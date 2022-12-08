@@ -30,9 +30,9 @@ internal static class DataSource
     }
 
     static readonly Random Rand = new(DateTime.Now.Millisecond);
-    internal static List<Product> Products = new List<Product>();
-    internal static List<Order> Orders = new List<Order>();
-    internal static List<OrderItem> OrderItems = new List<OrderItem>();
+    internal static List<Product?> Products = new List<Product?>();
+    internal static List<Order?> Orders = new List<Order?>();
+    internal static List<OrderItem?> OrderItems = new List<OrderItem?>();
 
     /// <summary>
     ///  Order creator
@@ -101,11 +101,10 @@ internal static class DataSource
             for (int j = 0; j < Rand.Next(1,5);j++)
             {
                 orderItem.ID = Config.GetOrderItemID();
-                orderItem.OrderID = Orders[i].ID;
-                
-                Product product = Products[Rand.Next(0,Products.Count)];
-                orderItem.ProductID = product.ID;
-                orderItem.Price = product.Price;
+                orderItem.OrderID = Orders[i]?.ID ?? 0;
+                Product? product = Products[Rand.Next(0, Products.Count)];
+                orderItem.ProductID = product?.ID ?? 0;
+                orderItem.Price = product?.Price ?? 0;
                 orderItem.Amount = Rand.Next(1,10);
                 OrderItems.Add(orderItem);
             }

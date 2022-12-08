@@ -14,8 +14,8 @@ internal class BlProduct : BlApi.IProduct
     /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.ProductForList> GetProductForList()
     {
-        List<DO.Product> products = new List<DO.Product>();
-        List<BO.ProductForList> productForList = new List<BO.ProductForList>();
+        List<DO.Product?> products = new List<DO.Product?>();
+        List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
 
         try
         {
@@ -25,12 +25,12 @@ internal class BlProduct : BlApi.IProduct
 
         foreach (var item in products)
         {
-            BO.ProductForList tempproduct = new BO.ProductForList()
+            BO.ProductForList? tempproduct = new BO.ProductForList()
             {
-                ID = item.ID,
-                Name= item.Name,
-                Price= item.Price,
-                Category = (BO.Category)item.Category
+                ID = item?.ID ?? 0,
+                Name= item?.Name,
+                Price= item?.Price ?? 0,
+                Category = (BO.Category)item?.Category!
             };
             productForList.Add(tempproduct);
         }
@@ -49,7 +49,7 @@ internal class BlProduct : BlApi.IProduct
         if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        DO.Product dProduct = new DO.Product();
+        DO.Product? dProduct = new DO.Product();
 
         try
         {
@@ -62,11 +62,11 @@ internal class BlProduct : BlApi.IProduct
 
         BO.Product bProduct = new BO.Product()
         {
-            ID = dProduct.ID,
-            Name = dProduct.Name,
-            Price = dProduct.Price,
-            Category = (BO.Category)dProduct.Category,
-            InStock = dProduct.InStock,
+            ID = dProduct?.ID ?? 0,
+            Name = dProduct?.Name,
+            Price = dProduct?.Price ?? 0,
+            Category = (BO.Category)dProduct?.Category!,
+            InStock = dProduct?.InStock ?? 0,
         };
         return bProduct;
     }
@@ -84,7 +84,7 @@ internal class BlProduct : BlApi.IProduct
         if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        DO.Product dProduct = new DO.Product();
+        DO.Product? dProduct = new DO.Product();
         BO.ProductItem bProductItem;
         BO.OrderItem bOrderItem;
 
@@ -96,11 +96,11 @@ internal class BlProduct : BlApi.IProduct
             dProduct = Dal.Product.GetById(productId);
             bProductItem = new BO.ProductItem()
             {
-                ID = dProduct.ID,
-                Name = dProduct.Name,
-                Price = dProduct.Price,
-                Category = (BO.Category)dProduct.Category,
-                InStock = dProduct.InStock > 0 ? true : false,
+                ID = dProduct?.ID ?? 0,
+                Name = dProduct?.Name,
+                Price = dProduct?.Price ?? 0,
+                Category = (BO.Category)dProduct?.Category!,
+                InStock = dProduct?.InStock > 0 ? true : false,
                 Amount = bOrderItem.Amount
             };
         }

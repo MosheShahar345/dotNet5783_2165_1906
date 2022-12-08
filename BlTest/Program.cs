@@ -10,7 +10,7 @@ internal class Program
 
     static int Main(string[] args)
     {
-        cart.Items = new List<OrderItem>();
+        cart.Items = new List<OrderItem?>()!;
         int choice;
 
         do
@@ -79,7 +79,7 @@ internal class Program
                 Console.Write("product ID: ");
                 int.TryParse(Console.ReadLine(), out productId);
 
-                orderitem = cart.Items.Find(it => it.ProductID == productId);
+                orderitem = cart.Items.Find(it => it.ProductID == productId)!;
 
                 Console.WriteLine(orderitem);
 
@@ -141,11 +141,11 @@ internal class Program
         switch (choice)
         {
             case 'a':
-                List<BO.ProductForList> products = new List<BO.ProductForList>();
+                List<BO.ProductForList?> products = new List<BO.ProductForList?>()!;
 
                 try
                 {
-                    products = test.Product.GetProductForList().ToList();
+                    products = test.Product.GetProductForList().ToList()!;
                 }
                 catch (NotExistsException e) { Console.WriteLine(e); }
 
@@ -177,13 +177,13 @@ internal class Program
             case 'd':
                 Product product = new Product();
                 Console.Write("enter product ID: ");
-                product.ID = int.Parse(Console.ReadLine());
+                product.ID = int.Parse(Console.ReadLine()!);
 
                 Console.Write("enter name of product: ");
                 product.Name = Console.ReadLine();
 
                 Console.Write("enter price of a product: ");
-                product.Price = int.Parse(Console.ReadLine());
+                product.Price = int.Parse(Console.ReadLine()!);
 
                 Console.WriteLine("select a product category" +
                                   "\n 0. Suits." +
@@ -196,7 +196,7 @@ internal class Program
                 product.Category = (Category)ichoice;
 
                 Console.Write("enter the quantity of the product in stock: ");
-                product.InStock = int.Parse(Console.ReadLine());
+                product.InStock = int.Parse(Console.ReadLine()!);
                 try
                 {
                     test.Product.AddProductAdmin(product);
@@ -239,7 +239,7 @@ internal class Program
                 product.Name = Console.ReadLine();
 
                 Console.Write("enter price of a product: ");
-                product.Price = int.Parse(Console.ReadLine());
+                product.Price = int.Parse(Console.ReadLine()!);
 
                 Console.WriteLine("select a category" +
                                   "\n 0. Suit." +
@@ -252,7 +252,7 @@ internal class Program
                 product.Category = (Category)ichoice;
 
                 Console.Write("enter the quantity of the product in stock: ");
-                product.InStock = int.Parse(Console.ReadLine());
+                product.InStock = int.Parse(Console.ReadLine()!);
                 try
                 {
                     test.Product.UpdateProductAdmin(product);
@@ -285,7 +285,7 @@ internal class Program
         switch (choice)
         {
             case 'a':
-                List<OrderForList> orders = test.Order.GetOrderForList().ToList();
+                List<OrderForList> orders = test.Order.GetOrderForList().ToList()!;
                 orders.ForEach(order => Console.WriteLine(order));
                 break;
 

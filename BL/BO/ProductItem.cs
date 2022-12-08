@@ -15,7 +15,7 @@ public class ProductItem
     /// <summary>
     /// category of product
     /// </summary>
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
 
     /// <summary>
     /// price of product

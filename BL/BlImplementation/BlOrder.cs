@@ -37,12 +37,12 @@ internal class BlOrder : BlApi.IOrder
 				Status = GetStatus(item)
             };
 
-			List<DO.OrderItem> orderitems = Dal.OrderItem.GetOrderItem(item.ID);
+			List<DO.OrderItem?> orderitems = Dal.OrderItem.GetOrderItem(item.ID)!;
 
 			foreach (var it in orderitems)
 			{
 				temporder.AmountOfItems += it.Amount;
-				temporder.TotalPrice += it.Price * it.Amount;
+				temporder.TotalPrice += it?.Price * it.Amount;
 			}
 
 			ordersForList.Add(temporder);
@@ -62,8 +62,8 @@ internal class BlOrder : BlApi.IOrder
         if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-		List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
-		DO.Order dOrder = new DO.Order();
+		List<DO.OrderItem?> orderItems = new List<DO.OrderItem?>();
+		DO.Order? dOrder = new DO.Order();
 
         try
         {
@@ -78,16 +78,16 @@ internal class BlOrder : BlApi.IOrder
 
 		BO.Order bOrder = new BO.Order()
 		{
-			ID = dOrder.ID,
-			CustomerName = dOrder.CustomerName,
-			CustomerEmail = dOrder.CustomerEmail,
-			CustomerAddress = dOrder.CustomerAddress,
+			ID = dOrder?.ID ?? 0,
+			CustomerName = dOrder?.CustomerName,
+			CustomerEmail = dOrder?.CustomerEmail,
+			CustomerAddress = dOrder?.CustomerAddress,
 			Status = GetStatus(dOrder),
-			OrderDate = dOrder.OrderDate,
-			ShipDate = dOrder.ShipDate,
-			DeliveryDate = dOrder.DeliveryDate,
-			Items = DoBoConvert(orderItems, dOrder.ID).Item1,
-		    TotalPrice = DoBoConvert(orderItems, dOrder.ID).Item2
+			OrderDate = dOrder?.OrderDate,
+			ShipDate = dOrder?.ShipDate,
+			DeliveryDate = dOrder?.DeliveryDate,
+			Items = DoBoConvert(orderItems, dOrder?.ID).Item1!,
+		    TotalPrice = DoBoConvert(orderItems, dOrder?.ID).Item2
         };
         return bOrder;
     }
@@ -97,11 +97,11 @@ internal class BlOrder : BlApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    private BO.OrderStatus GetStatus(DO.Order o)
+    private BO.OrderStatus GetStatus(DO.Order? o)
 	{
-		if (o.DeliveryDate > DateTime.MinValue)
+		if (o?.DeliveryDate > DateTime.MinValue)
 			return BO.OrderStatus.Delivered;
-		if (o.ShipDate > DateTime.MinValue)
+		if (o?.ShipDate > DateTime.MinValue)
 			return BO.OrderStatus.Sent;
 		return BO.OrderStatus.Confirmed;
 	}
@@ -113,23 +113,23 @@ internal class BlOrder : BlApi.IOrder
     ///// <returns></returns>
     ///// <exception cref="BO.IdIsLessThanZeroException"></exception>
     ///// <exception cref="BO.NotExistsException"></exception> 
-	private (List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem> orderItem, int dOrderID)
+	private (List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem?> orderItem, int? dOrderID)
 	{
 		List<BO.OrderItem> bOrderItem = new List<BO.OrderItem>();
 		double s = 0;
 
 		foreach (var item in orderItem)
 		{
-			if (item.OrderID == dOrderID)
+			if (item?.OrderID == dOrderID)
 			{
 				BO.OrderItem orderitem = new BO.OrderItem()
 				{
-					ID = item.ID,
-					Name = Dal.Product.GetById(item.ProductID).Name,
-					Price = item.Price,
-					ProductID = item.ProductID,
-					Amount = item.Amount,
-					TotalPrice = item.Price * item.Amount
+					ID = item?.ID ?? 0,
+					Name = Dal?.Product.GetById(item?.ProductID)?.Name,
+					Price = item?.Price ?? 0,
+					ProductID = item?.ProductID ?? 0,
+					Amount = item?.Amount ?? 0,
+					TotalPrice = item?.Price * item?.Amount
 				};
 				s += orderitem.TotalPrice;
 				bOrderItem.Add(orderitem);
@@ -152,7 +152,7 @@ internal class BlOrder : BlApi.IOrder
 		if (orderId < 0)
 			throw new BO.IdIsLessThanZeroException();
 
-		DO.Order dOrder = new DO.Order();
+		DO.Order? dOrder = new DO.Order();
 		BO.Order bOrder = new BO.Order();
 
         try
@@ -162,20 +162,20 @@ internal class BlOrder : BlApi.IOrder
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        if (dOrder.DeliveryDate != null)
+        if (dOrder?.DeliveryDate != null)
             throw new OrderIsAlreadyDeliveredException();
 
 
-        if (dOrder.ShipDate != null)
+        if (dOrder?.ShipDate != null)
             throw new OrderIsAlreadyShippedException();
 
-        if (dOrder.ShipDate == DateTime.MinValue)
+        if (dOrder?.ShipDate == DateTime.MinValue)
 		{
 			dOrder.ShipDate = DateTime.Now;
             bOrder.ShipDate = DateTime.Now;
         }
 
-		Dal.Order.Update(dOrder);
+        Dal.Order.Update(dOrder);
 
 		return bOrder;
 	}
@@ -193,7 +193,7 @@ internal class BlOrder : BlApi.IOrder
         if (orderId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        DO.Order dOrder = new DO.Order();
+        DO.Order? dOrder = new DO.Order();
         BO.Order bOrder = new BO.Order();
 
         try
@@ -203,15 +203,15 @@ internal class BlOrder : BlApi.IOrder
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        if (dOrder.DeliveryDate != null)
+        if (dOrder?.DeliveryDate != null)
             throw new OrderIsAlreadyDeliveredException();
 
-        if (dOrder.ShipDate == null)
+        if (dOrder?.ShipDate == null)
             throw new OrderHasNotShippedException();
 
-        if (dOrder.DeliveryDate == DateTime.MinValue)
+        if (dOrder?.DeliveryDate == DateTime.MinValue)
         {
-			dOrder.ShipDate = DateTime.Now;
+			dOrder?.ShipDate = DateTime.Now;
 			bOrder.ShipDate = DateTime.Now;
         }
 
@@ -230,7 +230,7 @@ internal class BlOrder : BlApi.IOrder
         if (orderId < 0)
             throw new BO.InvalidInputException();
 
-        DO.Order dOrder = new DO.Order();
+        DO.Order? dOrder = new DO.Order();
 
         try
         {
@@ -245,8 +245,8 @@ internal class BlOrder : BlApi.IOrder
         orderTracking.Log = new List<Tuple<DateTime, string>>();
 
         orderTracking.Log.Add(new Tuple<DateTime, string>(
-            (DateTime)dOrder.OrderDate, orderTracking.Status.ToString()));
+            (DateTime)dOrder?.OrderDate!, orderTracking?.Status.ToString()!));
 
-		return orderTracking;
+		return orderTracking!;
     }
 }

@@ -22,7 +22,7 @@ internal class BlCart : BlApi.ICart
         if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        DO.Product product;
+        DO.Product? product;
         BO.OrderItem orderItem;
         
         if (cart.Items == null)
@@ -30,7 +30,7 @@ internal class BlCart : BlApi.ICart
             cart.Items = new();
         }
 
-        orderItem = cart.Items.Find(it => it.ProductID == productId);
+        orderItem = cart.Items.Find(it => it?.ProductID == productId)!;
 
         try
         {
@@ -43,29 +43,29 @@ internal class BlCart : BlApi.ICart
 
         if (orderItem != null)
         {
-            if (product.InStock > orderItem.Amount + 1)
+            if (product?.InStock > orderItem.Amount + 1)
             {
                 orderItem.Amount++;
                 orderItem.TotalPrice += orderItem.Price;
                 cart.TotalPrice += orderItem.Price;
             }
         }
-        else if (product.InStock > 0)
+        else if (product?.InStock > 0)
         {
             cart.Items.Add(new BO.OrderItem
             {
                 ID = 0,
-                Name = product.Name,
-                ProductID = product.ID,
-                Price = product.Price,
+                Name = product?.Name,
+                ProductID = product?.ID ?? 0,
+                Price = product?.Price ?? 0,
                 Amount = 1,
-                TotalPrice = product.Price
+                TotalPrice = product?.Price ?? 0
             });
         }
         else
         {
             throw new BO.NotEnoughInStockException(
-                $"product with name: {product.Name} not enough in stock");
+                $"product with name: {product?.Name} not enough in stock");
         }
 
         return cart;
@@ -91,7 +91,7 @@ internal class BlCart : BlApi.ICart
         if (nAmount < 0)
             throw new BO.InvalidAmountException();
 
-        DO.Product product = new DO.Product();
+        DO.Product? product = new DO.Product();
         BO.OrderItem orderItem;
 
         try
@@ -103,14 +103,14 @@ internal class BlCart : BlApi.ICart
             throw new BO.NotExistsException("", e);
         }
 
-        orderItem = cart.Items?.Find(it => productId == it.ProductID) ??
+        orderItem = cart.Items?.Find(it => productId == it?.ProductID) ??
                     throw new BO.NotExistsException();
 
         if (nAmount == orderItem.Amount) { return cart; }
 
         if (nAmount > orderItem.Amount)
         {
-            if (product.InStock >= orderItem.Amount + nAmount)
+            if (product?.InStock >= orderItem.Amount + nAmount)
             {
                 orderItem.Amount += nAmount;
                 orderItem.TotalPrice += orderItem.Price * nAmount;
@@ -119,7 +119,7 @@ internal class BlCart : BlApi.ICart
             else
             {
                 throw new BO.NotEnoughInStockException(
-                    $"product with name: {product.Name} not enough in stock");
+                    $"product with name: {product?.Name} not enough in stock");
             }
         }
 
@@ -150,8 +150,7 @@ internal class BlCart : BlApi.ICart
     /// <exception cref="BO.AlreadyExistsException"></exception>
     public void ConfirmationOrder(BO.Cart cart)
     {
-        if (!cart.Items.Any())
-            throw new BO.NotExistsException();
+        _ = cart?.Items ?? throw new BO.NotExistsException();
 
         if (cart.Address == null)
             throw new BO.InvalidAddressException();
@@ -162,7 +161,7 @@ internal class BlCart : BlApi.ICart
         if (!new EmailAddressAttribute().IsValid(cart.Email))
             throw new BO.InvalidEmailException();
 
-        DO.Order dOrder = new DO.Order()
+        DO.Order? dOrder = new DO.Order()
         {
             CustomerName = cart.Name,
             CustomerAddress = cart.Address,
@@ -204,12 +203,12 @@ internal class BlCart : BlApi.ICart
             }
         }
 
-        DO.Product product = new DO.Product();
+        DO.Product? product = new DO.Product();
 
         foreach (var item in cart.Items)
         {
-            product = Dal.Product.GetById(item.ProductID);
-            product.InStock -= item.Amount;
+            product = Dal.Product.GetById(item?.ProductID);
+            product?.InStock -= item?.Amount;
             Dal.Product.Update(product);
         }
     }

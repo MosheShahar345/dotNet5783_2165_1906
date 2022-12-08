@@ -12,15 +12,15 @@ internal class DalOrder : IOrder
     /// <param name="order"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
-    public int Add(Order order)
+    public int? Add(Order? order)
     {
         for (int i = 0;i < DataSource.Orders.Count; i++)
         {
-            if (DataSource.Orders[i].ID == order.ID) // check if the order is already exists
+            if (DataSource.Orders[i]?.ID == order?.ID) // check if the order is already exists
                 throw new AlreadyExistsException("order already exist");
         }
         DataSource.Orders.Add(order); // if it does not exist, add to list
-        return order.ID;
+        return order?.ID;
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ internal class DalOrder : IOrder
     {
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
-            if (id == DataSource.Orders[i].ID) // checks if exists according to ID
+            if (id == DataSource.Orders[i]?.ID) // checks if exists according to ID
             {
                 DataSource.Orders.RemoveAt(i);
                 return; // deleting successfully don't throw an exception
@@ -46,11 +46,11 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <exception cref="NotExistsException"></exception>
-    public void Update(Order order)
+    public void Update(Order? order)
     {
         for (int i = 0; i < DataSource.Orders.Count; i++)
         {
-            if (DataSource.Orders[i].ID == order.ID) // searching by id which order to update
+            if (DataSource.Orders[i]?.ID == order?.ID) // searching by id which order to update
             {
                 DataSource.Orders[i] = order;
                 return;
@@ -65,11 +65,11 @@ internal class DalOrder : IOrder
     /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public Order GetById(int orderID)
+    public Order? GetById(int? orderID)
     {
         foreach (var item in DataSource.Orders)
         {
-            if (item.ID == orderID)
+            if (item?.ID == orderID)
                 return item;
         }
 
@@ -81,13 +81,23 @@ internal class DalOrder : IOrder
     /// returns list of all orders
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func)
     {
-        List<Order> orders = new List<Order>();
+        if (func == null)
+        {
+            List<Order?> order = new List<Order?>();
+            foreach (var item in DataSource.Orders)
+            {
+                order.Add(item);
+            }
+            return order;
+        }
+        List<Order?> order1 = new List<Order?>();
         foreach (var item in DataSource.Orders)
         {
-            orders.Add(item);
+            if (func(item))
+                order1.Add(item);
         }
-        return orders;
+        return order1;
     }
 }

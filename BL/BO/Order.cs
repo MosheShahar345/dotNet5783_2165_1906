@@ -27,7 +27,7 @@ public class Order
     /// <summary>
     /// order status (CONFIRMED/SENT/DELIVERED)
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// order date
@@ -47,7 +47,7 @@ public class Order
     /// <summary>
     /// list of order items
     /// </summary>
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem?>? Items { get; set; }
 
     /// <summary>
     /// total price for the customer to pay

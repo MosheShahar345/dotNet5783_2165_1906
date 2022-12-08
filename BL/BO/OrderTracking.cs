@@ -10,7 +10,7 @@ public class OrderTracking
     /// <summary>
     /// status of order
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// order progress

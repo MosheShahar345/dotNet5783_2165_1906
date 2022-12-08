@@ -11,21 +11,21 @@ internal class DalProduct : IProduct
     /// <param name="product"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
-    public int Add(Product product)
+    public int? Add(Product? product)
     {
-        if (product.ID != 0)
+        if (product?.ID != 0)
         {
             try
             {
-                GetById(product.ID);
+                GetById(product?.ID);
             }
             catch (NotExistsException)
             {
                 DataSource.Products.Add(product);
-                return product.ID;
+                return product?.ID;
             }
             
-            throw new AlreadyExistsException($"product with ID: {product.ID} already exists");
+            throw new AlreadyExistsException($"product with ID: {product?.ID} already exists");
         }
 
         bool inStock = false;
@@ -45,9 +45,9 @@ internal class DalProduct : IProduct
             }
         }
 
-        product.ID = id;
+        product?.ID = id;
         DataSource.Products.Add(product);
-        return product.ID;  
+        return product?.ID;  
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ internal class DalProduct : IProduct
     {
         for (int i = 0; i < DataSource.Products.Count; i++)
         {
-            if (id == DataSource.Products[i].ID) // checks if exists according to ID
+            if (id == DataSource.Products[i]?.ID) // checks if exists according to ID
             {
                 DataSource.Products.RemoveAt(i);
                 return;
@@ -73,11 +73,11 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="product"></param>
     /// <exception cref="NotExistsException"></exception>
-    public void Update(Product product)
+    public void Update(Product? product)
     {
         for (int i = 0; i < DataSource.Products.Count; i++)
         {
-            if (DataSource.Products[i].ID == product.ID) // searching by id which product to update
+            if (DataSource.Products[i]?.ID == product?.ID) // searching by id which product to update
             {
                 DataSource.Products[i] = product;
                 return;
@@ -92,11 +92,11 @@ internal class DalProduct : IProduct
     /// <param name="productID"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public Product GetById(int productID)
+    public Product? GetById(int? productID)
     {
         foreach (var item in DataSource.Products)
         {
-            if (item.ID == productID)
+            if (item?.ID == productID)
                 return item;
         }
 
@@ -108,13 +108,23 @@ internal class DalProduct : IProduct
     /// returns list of all products
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? func = null)
     {
-        List<Product> products = new List<Product>();
+        if (func == null)
+        {
+            List<Product?> products = new List<Product?>();
+            foreach (var item in DataSource.Products)
+            {
+                products.Add(item);
+            }
+            return products;
+        }
+        List<Product?> products1 = new List<Product?>();
         foreach (var item in DataSource.Products)
         {
-            products.Add(item);
+            if(func(item))
+                products1.Add(item);
         }
-        return products;
-    }
+        return products1;
+    }   
 }
