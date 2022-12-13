@@ -53,7 +53,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            dProduct = Dal.Product.GetById(productId);
+            dProduct = Dal.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -93,7 +93,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            dProduct = Dal.Product.GetById(productId);
+            dProduct = Dal.Product.GetEntity(it => it?.ID == productId);
             bProductItem = new BO.ProductItem()
             {
                 ID = (int)dProduct?.ID!,
@@ -167,11 +167,11 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.IdIsLessThanZeroException();
 
         List<DO.OrderItem> orderItems= new List<DO.OrderItem>();
-        orderItems = (List<DO.OrderItem>)Dal.OrderItem.GetAll();
+        orderItems = (List<DO.OrderItem>)Dal.OrderItem.GetAll(); 
 
         try
         {
-            Dal.Product.GetById(productId);
+            Dal.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {

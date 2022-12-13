@@ -15,12 +15,12 @@ internal class BlOrder : BlApi.IOrder
     /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.OrderForList> GetOrderForList()
     {
-        IEnumerable<DO.Order?> orders = Dal.Order.GetAll();
+        IEnumerable<DO.Order?> orders = Dal.Order.GetAll().ToList();
         List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         try
         {
-            orders = (List<DO.Order?>)Dal.Order.GetAll();
+            orders = Dal.Order.GetAll().ToList();
         }
         catch (DO.NotExistsException e)
         {
@@ -66,7 +66,7 @@ internal class BlOrder : BlApi.IOrder
 
         try
         {
-            dOrder = Dal.Order.GetById(orderId);
+            dOrder = Dal.Order.GetEntity(it => it?.ID == orderId);
         }
         catch (DO.NotExistsException e)
         {
@@ -124,7 +124,7 @@ internal class BlOrder : BlApi.IOrder
 				BO.OrderItem orderitem = new BO.OrderItem()
 				{
 					ID = (int)(item?.ID)!,
-					Name = Dal?.Product.GetById((int)(item?.ProductID)!)?.Name,
+					Name = Dal?.Product.GetEntity(it => it?.ID == item?.ProductID)?.Name,
 					Price = (double)(item?.Price)!,
 					ProductID = (int)(item?.ProductID)!,
 					Amount = (int)(item?.Amount)!,
@@ -156,7 +156,7 @@ internal class BlOrder : BlApi.IOrder
 
         try
         {
-            dOrder = (DO.Order)Dal.Order.GetById(orderId)!;
+            dOrder = (DO.Order)Dal.Order.GetEntity(it => it?.ID == orderId)!;
             bOrder = GetOrder(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
@@ -197,7 +197,7 @@ internal class BlOrder : BlApi.IOrder
 
         try
         {
-            dOrder = (DO.Order)Dal.Order.GetById(orderId)!;
+            dOrder = (DO.Order)Dal.Order.GetEntity(it => it?.ID == orderId)!;
 			bOrder = GetOrder(orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
@@ -208,7 +208,7 @@ internal class BlOrder : BlApi.IOrder
         if (dOrder.ShipDate == null)
             throw new OrderHasNotShippedException();
 
-        if (dOrder.DeliveryDate == DateTime.MinValue)
+        if (dOrder.DeliveryDate == null)
         {
 			dOrder.ShipDate = DateTime.Now;
 			bOrder.ShipDate = DateTime.Now;
@@ -233,7 +233,7 @@ internal class BlOrder : BlApi.IOrder
 
         try
         {
-            dOrder = Dal.Order.GetById(orderId);
+            dOrder = Dal.Order.GetEntity(it => it?.ID == orderId);
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
       

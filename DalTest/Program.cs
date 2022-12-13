@@ -103,7 +103,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        orderitem = test.OrderItem.GetById(ID);
+                        orderitem = (OrderItem)test.OrderItem.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(orderitem);
                     }
                     catch (Exception str)
@@ -125,7 +125,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        orderitem = test.OrderItem.GetById(ID);
+                        orderitem = (OrderItem)test.OrderItem.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(orderitem);
                         Console.WriteLine("enter: price, amount ");
                         orderitem.Price = int.Parse(Console.ReadLine()!);
@@ -211,7 +211,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        order = test.Order.GetById(ID);
+                        order = (Order)test.Order.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(order);
                     }
                     catch (Exception str)
@@ -225,7 +225,7 @@ namespace DalTest
                     order.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        order = test.Order.GetById(order.ID);
+                        order = (Order)test.Order.GetEntity(it => it?.ID == order.ID)!;
                         Console.WriteLine(order);
                         Console.WriteLine("enter: customer name, " +
                                           "customer email, " +
@@ -309,7 +309,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        product = test.Product.GetById(ID);
+                        product = (Product)test.Product.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(product);
                     }
                     catch (Exception str)
@@ -323,13 +323,13 @@ namespace DalTest
                     product.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        product = test.Product.GetById(product.ID);
+                        product = (Product)test.Product.GetEntity(x => x?.ID == product.ID)!;
                         Console.WriteLine(product);
                         Console.WriteLine("enter: name, category, price, in-stock");
                         product.Name = Console.ReadLine();
                         product.Category = (Category)Convert.ToInt32(Console.ReadLine());
-                        product.Price = double.Parse(Console.ReadLine());
-                        product.InStock = int.Parse(Console.ReadLine());
+                        product.Price = double.Parse(Console.ReadLine()!);
+                        product.InStock = int.Parse(Console.ReadLine()!);
                         test.Product.Update(product);
                     }
                     catch (Exception str)

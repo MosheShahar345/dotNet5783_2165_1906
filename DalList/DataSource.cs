@@ -79,7 +79,7 @@ internal static class DataSource
             }
 
             if (i >= 16)
-                order.ShipDate = DateTime.MinValue;
+                order.ShipDate = null;
 
             if (i < 10)//Makes sure that 60 percent that about 60% of orders shipped will have a delivery date
             {

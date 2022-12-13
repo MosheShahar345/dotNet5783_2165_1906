@@ -34,7 +34,7 @@ internal class BlCart : BlApi.ICart
 
         try
         {
-            product = Dal.Product.GetById(productId);
+            product = Dal.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -96,7 +96,7 @@ internal class BlCart : BlApi.ICart
 
         try
         {
-            product = Dal.Product.GetById(productId);
+            product = Dal.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -167,8 +167,8 @@ internal class BlCart : BlApi.ICart
             CustomerAddress = cart.Address,
             CustomerEmail = cart.Email,
             OrderDate = DateTime.Now,
-            ShipDate = DateTime.MinValue,
-            DeliveryDate = DateTime.MinValue
+            ShipDate = null,
+            DeliveryDate = null
         };
 
         int OrderId;
@@ -207,8 +207,8 @@ internal class BlCart : BlApi.ICart
 
         foreach (var item in cart.Items)
         {
-            product = (DO.Product)Dal.Product.GetById(item!.ProductID)!;
-            product.InStock -= item.Amount;
+            product = (DO.Product)Dal.Product.GetEntity(it => it?.ID == item!.ProductID)!;
+            product.InStock -= item!.Amount;
             Dal.Product.Update(product);
         }
     }

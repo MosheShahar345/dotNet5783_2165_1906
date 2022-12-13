@@ -16,9 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{D9B5EC87-BBE5-432A-9450-BC845E9139C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{90D8CB35-224D-4FA1-A846-06048DF5C528}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{90D8CB35-224D-4FA1-A846-06048DF5C528}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlTest", "BlTest\BlTest.csproj", "{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{F18088CA-E8E1-4107-8AD1-4491BB17DCE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F18088CA-E8E1-4107-8AD1-4491BB17DCE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F18088CA-E8E1-4107-8AD1-4491BB17DCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F18088CA-E8E1-4107-8AD1-4491BB17DCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F18088CA-E8E1-4107-8AD1-4491BB17DCE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -60,21 +60,21 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    /// receives an id and returns its order item
+    /// receives a filter and returns order-item that matchs the condition
     /// </summary>
-    /// <param name="orderItemID"></param>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public OrderItem? GetById(int orderItemID)
+    public OrderItem? GetEntity(Func<OrderItem?, bool>? func)
     {
-        OrderItem? orderItem;
-        orderItem = DataSource.OrderItems.FirstOrDefault(item => item?.ID == orderItemID);
-        if(orderItem?.ID != orderItemID)
+        foreach (var item in DataSource.OrderItems)
         {
-            // throws an exception if the order does not exist
-            throw new NotExistsException("order item dose not exist");
+            if (func!(item))
+                return item;
         }
-        return orderItem;
+
+        // throws an exception if the order does not exist
+        throw new NotExistsException("order item dose not exist");
     }
 
     /// <summary>
@@ -85,20 +85,17 @@ internal class DalOrderItem : IOrderItem
     {
         if (func == null)
         {
-            List<OrderItem?> orderItem = new List<OrderItem?>();
-            foreach (var item in DataSource.OrderItems)
-            {
-                orderItem.Add(item);
-            }
-            return orderItem;
+            var list = from item in DataSource.OrderItems
+                       select item;
+            return list;
         }
-        List<OrderItem?> orderItem1 = new List<OrderItem?>();
-        foreach (var item in DataSource.OrderItems)
+        else
         {
-            if (func(item))
-                orderItem1.Add(item);
+            var list = from item in DataSource.OrderItems
+                       where (func(item))
+                       select item;
+            return list;
         }
-        return orderItem1;
     }
 
     /// <summary>
@@ -123,7 +120,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    public List<OrderItem?> GetOrderItem(int orderId)
+    public List<OrderItem?> GetOrderItems(int orderId)
     {
         List<OrderItem?> orderitems = new List<OrderItem?>();
         foreach (var item in DataSource.OrderItems)

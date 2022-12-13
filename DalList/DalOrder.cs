@@ -60,16 +60,16 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// receives an id and returns its order
+    /// receives a filter and returns order that matchs the condition
     /// </summary>
-    /// <param name="orderID"></param>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public Order? GetById(int orderID)
+    public Order? GetEntity(Func<Order?, bool>? func)
     {
         foreach (var item in DataSource.Orders)
         {
-            if (item?.ID == orderID)
+            if (func!(item))
                 return item;
         }
 
@@ -85,19 +85,16 @@ internal class DalOrder : IOrder
     {
         if (func == null)
         {
-            List<Order?> order = new List<Order?>();
-            foreach (var item in DataSource.Orders)
-            {
-                order.Add(item);
-            }
-            return order;
+            var list = from item in DataSource.Orders
+                       select item;
+            return list;
         }
-        List<Order?> order1 = new List<Order?>();
-        foreach (var item in DataSource.Orders)
+        else
         {
-            if (func(item))
-                order1.Add(item);
+            var list = from item in DataSource.Orders
+                       where (func(item))
+                       select item;
+            return list;
         }
-        return order1;
     }
 }

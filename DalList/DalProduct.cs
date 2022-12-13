@@ -17,7 +17,7 @@ internal class DalProduct : IProduct
         {
             try
             {
-                GetById(product.ID);
+                GetEntity(it => it?.ID == product.ID);
             }
             catch (NotExistsException)
             {
@@ -37,7 +37,7 @@ internal class DalProduct : IProduct
 
             try
             {
-                GetById(id);
+                GetEntity(it => it?.ID == id);
             }
             catch (NotExistsException)
             {
@@ -87,16 +87,16 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    /// receives an id and returns its product
+    /// receives a filter and returns product that matchs the condition
     /// </summary>
-    /// <param name="productID"></param>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
-    public Product? GetById(int productID)
+    public Product? GetEntity(Func<Product?, bool>? func)
     {
         foreach (var item in DataSource.Products)
         {
-            if (item?.ID == productID)
+            if (func!(item))
                 return item;
         }
 
