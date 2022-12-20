@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BlImplementation;
 using BO;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,9 +72,9 @@ namespace PL.PLProduct
                 };
 
                 if (AddAndUpdateProductButton.Content.ToString() == "Add")
-                    bl?.Product.AddProductAdmin(product);
+                    bl.Product.AddProductAdmin(product);
                 else
-                    bl?.Product.UpdateProductAdmin(product);
+                    bl.Product.UpdateProductAdmin(product);
 
                 new ProductListWindow().Show();
                 Close();
@@ -83,7 +84,7 @@ namespace PL.PLProduct
             catch (IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }
             catch (InvalidNameException) { MessageBox.Show("Invalid name"); }
             catch (InvalidInStockException) { MessageBox.Show("In Stock is lass than 0"); }
-            catch (AlreadyExistsException) { MessageBox.Show("Already exists"); }
+            catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists"); }
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)

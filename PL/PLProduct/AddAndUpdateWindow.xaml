@@ -46,10 +46,12 @@
             RenderTransformOrigin="0.483,0.269"/>
 
         <ComboBox
-            x:Name="CategoryComboBox" 
+            x:Name="CategoryComboBox"
+            IsEditable="True"
+            IsReadOnly="True"
             HorizontalAlignment="Center" 
             Margin="0,83,0,0" 
-            Text="All"
+            Text="None"
             VerticalAlignment="Top" 
             Width="200" 
             RenderTransformOrigin="0.052,-2.59" 
@@ -74,7 +76,8 @@
             x:Name="NameBox" 
             HorizontalAlignment="Center" 
             Margin="0,123,0,0" 
-            TextWrapping="Wrap" Text="" 
+            TextWrapping="Wrap" 
+            Text="" 
             VerticalAlignment="Top" 
             Width="200" 
             RenderTransformOrigin="0.052,-2.59" 
@@ -96,10 +99,11 @@
             RenderTransformOrigin="0.483,0.269"/>
 
         <TextBox
-            x:Name="PriceBox" 
+            x:Name="PriceBox"
             HorizontalAlignment="Center" 
             Margin="0,163,0,0" 
-            TextWrapping="Wrap" Text="" 
+            TextWrapping="Wrap" 
+            Text="0" 
             VerticalAlignment="Top" 
             Width="200" 
             RenderTransformOrigin="0.052,-2.59" 
@@ -124,7 +128,8 @@
             x:Name="InStockBox" 
             HorizontalAlignment="Center" 
             Margin="0,203,0,0" 
-            TextWrapping="Wrap" Text="" 
+            TextWrapping="Wrap"
+            Text="0" 
             VerticalAlignment="Top" 
             Width="200" 
             RenderTransformOrigin="0.052,-2.59" 

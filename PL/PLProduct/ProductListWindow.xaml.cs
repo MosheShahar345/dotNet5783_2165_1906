@@ -34,8 +34,8 @@ public partial class ProductListWindow : Window
 
     private void ProductListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        var x = (BO.ProductForList)((ListView)sender).Items[((ListView)sender).SelectedIndex];
-        new AddAndUpdateWindow(x.ID).Show();
+        int Id = ((BO.ProductForList)ProductListView.SelectedItem).ID;
+        new AddAndUpdateWindow(Id).Show();
         Close();
     }
 
