@@ -57,9 +57,9 @@ namespace PL.PLProduct
                     throw new BO.FieldIsEmptyException("Category field is empty");
                 if (NameBox.Text == "")
                     throw new BO.FieldIsEmptyException("Name field is empty");
-                if (PriceBox.Text == "")
+                if (PriceBox.Text == "" || PriceBox.Text == 0.ToString())
                     throw new BO.FieldIsEmptyException("Price field is empty");
-                if (InStockBox.Text == "")
+                if (InStockBox.Text == "" || InStockBox.Text == 0.ToString())
                     throw new BO.FieldIsEmptyException("In Stock field is empty");
 
                 BO.Product product = new BO.Product()

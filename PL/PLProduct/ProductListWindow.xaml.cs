@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BlImplementation;
+using BO;
 
 namespace PL.PLProduct;
 
