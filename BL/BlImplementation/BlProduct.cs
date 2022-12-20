@@ -10,9 +10,10 @@ internal class BlProduct : BlApi.IProduct
     /// <summary>
     /// returns BO list with all the products from DO 
     /// </summary>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="BO.NotExistsException"></exception>
-    public IEnumerable<BO.ProductForList> GetProductForList()
+    public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func)
     {
         List<DO.Product?> products = new List<DO.Product?>();
         List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
@@ -28,12 +29,19 @@ internal class BlProduct : BlApi.IProduct
             BO.ProductForList? tempproduct = new BO.ProductForList()
             {
                 ID = (int)(item?.ID)!,
-                Name= item?.Name,
-                Price= (double)(item?.Price)!,
+                Name = item?.Name,
+                Price = (double)(item?.Price)!,
                 Category = (BO.Category)item?.Category!
             };
             productForList.Add(tempproduct);
         }
+
+        if (func != null)
+        {
+            var list = from item in productForList where func(item) select item;
+            return (IEnumerable<BO.ProductForList>)list;
+        }
+
         return productForList!;
     }
 

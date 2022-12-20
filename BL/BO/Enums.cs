@@ -6,7 +6,8 @@ public enum Category
     Pants,
     Shirts,
     Ties,
-    Cufflinks
+    Cufflinks,
+    All
 }
 
 public enum OrderStatus

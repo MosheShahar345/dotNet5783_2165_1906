@@ -6,8 +6,9 @@ public interface IProduct
     /// <summary>
     /// gets list of products from DO to BO
     /// </summary>
+    /// <param name="func"></param>
     /// <returns></returns>
-    public IEnumerable<BO.ProductForList?> GetProductForList();
+    public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func = null);
 
     /// <summary>
     /// for admin gets product by id from DO to BO

@@ -121,7 +121,7 @@ namespace DalTest
                     break;
 
                 case 'd':
-                    Console.WriteLine("enter:order item ID");
+                    Console.WriteLine("enter: order item ID");
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {

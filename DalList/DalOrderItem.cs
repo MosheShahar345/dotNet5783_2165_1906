@@ -97,37 +97,4 @@ internal class DalOrderItem : IOrderItem
             return list;
         }
     }
-
-    /// <summary>
-    /// returns list of order items if the product id and the order id is equal
-    /// </summary>
-    /// <param name="orderID"></param>
-    /// <param name="productID"></param>
-    /// <returns></returns>
-    /// <exception cref="NotExistsException"></exception>
-    public OrderItem? GetByIds(int orderID ,int productID )
-    {
-        foreach(var item in DataSource.OrderItems)
-        {
-            if(item?.ProductID == productID && item?.OrderID == orderID)
-                return item;
-        }
-        throw new NotExistsException("order item dose not exist");
-    }
-
-    /// <summary>
-    /// returns list of all order items if order id is match
-    /// </summary>
-    /// <param name="orderId"></param>
-    /// <returns></returns>
-    public List<OrderItem?> GetOrderItems(int orderId)
-    {
-        List<OrderItem?> orderitems = new List<OrderItem?>();
-        foreach (var item in DataSource.OrderItems)
-        {
-            if (item?.OrderID == orderId)
-                orderitems.Add(item ?? throw new Exception());
-        }
-        return orderitems;
-    }
 }

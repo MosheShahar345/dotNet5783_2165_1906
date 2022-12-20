@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlApi;
+using BlImplementation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +12,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PL.PLProduct;
 
 namespace PL
 {
@@ -20,9 +22,16 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IBl bl = new Bl();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ShowProductListButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductListWindow().Show();
+            Close();
         }
     }
 }

@@ -164,3 +164,14 @@ public class CanNotDeleteProductException : Exception
         System.Runtime.Serialization.SerializationInfo info,
         System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
+
+[Serializable]
+public class FieldIsEmptyException : Exception
+{
+    public FieldIsEmptyException() : base("field is empty") { }
+    public FieldIsEmptyException(string message) : base(message) { }
+    public FieldIsEmptyException(string message, Exception inner) : base(message, inner) { }
+    protected FieldIsEmptyException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+}
