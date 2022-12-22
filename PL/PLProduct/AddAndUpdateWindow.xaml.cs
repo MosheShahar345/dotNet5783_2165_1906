@@ -1,7 +1,6 @@
 ﻿using BlApi;
 using BlImplementation;
 using BO;
-using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,10 @@ namespace PL.PLProduct
         public AddAndUpdateWindow()
         {
             InitializeComponent();
-            CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            for (int i = 0; i < 5; i++)
+                CategoryComboBox.Items.Add($"{(BO.Category)i}");
+            CategoryComboBox.Text = "None";
             AddAndUpdateProductButton.Content = "Add";
         }
 
@@ -65,7 +67,7 @@ namespace PL.PLProduct
                 BO.Product product = new BO.Product()
                 {
                     ID = int.Parse(IdBox.Text),
-                    Category = (BO.Category)CategoryComboBox.SelectedItem,
+                    Category = (BO.Category)CategoryComboBox.SelectedIndex,
                     Price = double.Parse(PriceBox.Text),
                     Name = NameBox.Text,
                     InStock = int.Parse(InStockBox.Text)
@@ -84,7 +86,7 @@ namespace PL.PLProduct
             catch (IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }
             catch (InvalidNameException) { MessageBox.Show("Invalid name"); }
             catch (InvalidInStockException) { MessageBox.Show("In Stock is lass than 0"); }
-            catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists"); }
+            catch (AlreadyExistsException) { MessageBox.Show("Already exists"); }
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
