@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/b1d5f9289d9e2c5876956406199cdcab.jpg"/>
+        </Grid.Background>
         <Button 
             Content="Start" 
             Name="Button" 
