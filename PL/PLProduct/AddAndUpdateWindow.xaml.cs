@@ -1,7 +1,4 @@
-﻿using BlApi;
-using BlImplementation;
-using BO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,12 +19,11 @@ namespace PL.PLProduct
     /// </summary>
     public partial class AddAndUpdateWindow : Window
     {
-        private IBl bl = new Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
 
         public AddAndUpdateWindow()
         {
             InitializeComponent();
-            //CategoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             for (int i = 0; i < 5; i++)
                 CategoryComboBox.Items.Add($"{(BO.Category)i}");
             CategoryComboBox.Text = "None";
@@ -55,7 +51,7 @@ namespace PL.PLProduct
             {
                 if (IdBox.Text == "")
                     throw new BO.FieldIsEmptyException("Id field is empty");
-                if (CategoryComboBox.Text == "")
+                if (CategoryComboBox.Text == "" || CategoryComboBox.Text == "None")
                     throw new BO.FieldIsEmptyException("Category field is empty");
                 if (NameBox.Text == "")
                     throw new BO.FieldIsEmptyException("Name field is empty");
@@ -74,19 +70,19 @@ namespace PL.PLProduct
                 };
 
                 if (AddAndUpdateProductButton.Content.ToString() == "Add")
-                    bl.Product.AddProductAdmin(product);
+                    bl?.Product.AddProductAdmin(product);
                 else
-                    bl.Product.UpdateProductAdmin(product);
+                    bl?.Product.UpdateProductAdmin(product);
 
                 new ProductListWindow().Show();
                 Close();
             }
-            catch (FieldIsEmptyException) { MessageBox.Show("Field is empty"); }
-            catch (InvalidPriceException) { MessageBox.Show("Price is lass than 0"); }
-            catch (IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }
-            catch (InvalidNameException) { MessageBox.Show("Invalid name"); }
-            catch (InvalidInStockException) { MessageBox.Show("In Stock is lass than 0"); }
-            catch (AlreadyExistsException) { MessageBox.Show("Already exists"); }
+            catch (BO.FieldIsEmptyException) { MessageBox.Show("Field is empty"); }
+            catch (BO.InvalidPriceException) { MessageBox.Show("Price is lass than 0"); }
+            catch (BO.IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }
+            catch (BO.InvalidNameException) { MessageBox.Show("Invalid name"); }
+            catch (BO.InvalidInStockException) { MessageBox.Show("In Stock is lass than 0"); }
+            catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists"); }
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)

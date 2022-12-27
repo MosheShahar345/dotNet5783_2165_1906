@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Dal;
 using DalApi;
 
 namespace BlImplementation;
 
 internal class BlCart : BlApi.ICart
 {
-    private IDal Dal = new DalList(); // to access DO entities
+    DalApi.IDal? dal = DalApi.Factory.Get(); // to access DO entities
 
     /// <summary>
     /// gets cart and id adds a product that matches the id and returns the cart 
@@ -34,7 +33,7 @@ internal class BlCart : BlApi.ICart
 
         try
         {
-            product = Dal.Product.GetEntity(it => it?.ID == productId);
+            product = dal?.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -96,7 +95,7 @@ internal class BlCart : BlApi.ICart
 
         try
         {
-            product = Dal.Product.GetEntity(it => it?.ID == productId);
+            product = dal?.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -175,7 +174,7 @@ internal class BlCart : BlApi.ICart
 
         try
         {
-            OrderId = Dal.Order.Add(dOrder);
+            OrderId = dal!.Order.Add(dOrder);
         }
         catch (DO.AlreadyExistsException e)
         {
@@ -195,7 +194,7 @@ internal class BlCart : BlApi.ICart
 
             try
             {
-                Dal.OrderItem.Add(dOrderItem);
+                dal?.OrderItem.Add(dOrderItem);
             }
             catch (DO.AlreadyExistsException e)
             {
@@ -207,9 +206,9 @@ internal class BlCart : BlApi.ICart
 
         foreach (var item in cart.Items)
         {
-            product = (DO.Product)Dal.Product.GetEntity(it => it?.ID == item!.ProductID)!;
+            product = (DO.Product)dal?.Product.GetEntity(it => it?.ID == item!.ProductID)!;
             product.InStock -= item!.Amount;
-            Dal.Product.Update(product);
+            dal?.Product.Update(product);
         }
     }
 }

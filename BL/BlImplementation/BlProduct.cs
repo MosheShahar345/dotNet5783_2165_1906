@@ -1,11 +1,9 @@
-﻿using Dal;
-using DalApi;
-
+﻿using DalApi;
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
 {
-    private IDal Dal = new DalList(); // to access DO entities
+    DalApi.IDal? dal = DalApi.Factory.Get(); // to access DO entities
 
     /// <summary>
     /// returns BO list with all the products from DO 
@@ -15,12 +13,12 @@ internal class BlProduct : BlApi.IProduct
     /// <exception cref="BO.NotExistsException"></exception>
     public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func)
     {
-        List<DO.Product?> products = new List<DO.Product?>();
+        List<DO.Product?>? products = new List<DO.Product?>();
         List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
 
         try
         {
-            products = Dal.Product.GetAll().ToList();
+            products = dal?.Product.GetAll().ToList();
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
@@ -61,7 +59,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            dProduct = Dal.Product.GetEntity(it => it?.ID == productId);
+            dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -101,7 +99,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            dProduct = Dal.Product.GetEntity(it => it?.ID == productId);
+            dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
             bProductItem = new BO.ProductItem()
             {
                 ID = (int)dProduct?.ID!,
@@ -154,7 +152,7 @@ internal class BlProduct : BlApi.IProduct
      
         try
         {
-            Dal.Product.Add(dProduct);
+            dal?.Product.Add(dProduct);
         }
         catch (DO.AlreadyExistsException e)
         {
@@ -175,11 +173,11 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.IdIsLessThanZeroException();
 
         List<DO.OrderItem> orderItems= new List<DO.OrderItem>();
-        orderItems = (List<DO.OrderItem>)Dal.OrderItem.GetAll(); 
+        orderItems = (List<DO.OrderItem>)dal?.OrderItem.GetAll()!; 
 
         try
         {
-            Dal.Product.GetEntity(it => it?.ID == productId);
+            dal?.Product.GetEntity(it => it?.ID == productId);
         }
         catch (DO.NotExistsException e)
         {
@@ -192,7 +190,7 @@ internal class BlProduct : BlApi.IProduct
                 throw new BO.CanNotDeleteProductException();
         }
 
-        Dal.Product.Delete(productId);
+        dal?.Product.Delete(productId);
     }
 
     /// <summary>
@@ -229,7 +227,7 @@ internal class BlProduct : BlApi.IProduct
 
         try
         {
-            Dal.Product.Update(dProduct);
+            dal?.Product.Update(dProduct);
         }
         catch (DO.NotExistsException e)
         {

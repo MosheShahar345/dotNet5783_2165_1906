@@ -13,8 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BlApi;
-using BlImplementation;
 using BO;
 
 namespace PL.PLProduct;
@@ -24,7 +22,7 @@ namespace PL.PLProduct;
     /// </summary>
 public partial class ProductListWindow : Window
 {
-    private IBl bl = new Bl();
+    BlApi.IBl? bl = BlApi.Factory.Get();
 
     public ProductListWindow()
     {

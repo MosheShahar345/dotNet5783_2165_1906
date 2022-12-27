@@ -1,21 +1,21 @@
 ﻿using BlApi;
 namespace BlImplementation;
 
-public sealed class Bl : IBl
+internal sealed class Bl : IBl
 {
     /// <summary>
     /// property for cart
     /// </summary>
-    public ICart Cart => new BlCart();
+    public ICart Cart { get; } = new BlCart();
 
     /// <summary>
     /// property for order
     /// </summary>
-    public IOrder Order => new BlOrder();
+    public IOrder Order { get; } = new BlOrder();
 
     /// <summary>
     /// property for product
     /// </summary>
-    public IProduct Product => new BlProduct();
+    public IProduct Product { get; } = new BlProduct();
 }
 
