@@ -18,13 +18,12 @@ internal static class DataSource
         /// <summary>
         ///  Increases the order code by one
         /// </summary>
-        public static int GetOrderID() => IdOfOrder++;
+        public static int GetOrderId() => IdOfOrder++;
 
         /// <summary>
         ///  Increases the order item code by one
         /// </summary>
-        public static int GetOrderItemID() => IdOfOrderItem++;
-
+        public static int GetOrderItemId() => IdOfOrderItem++;
 
         internal static Random Num = new Random();
     }
@@ -54,7 +53,7 @@ internal static class DataSource
             "Rachel@.com", "Joey@.com", "Chandler@.com", "Phoebe@.com", "Luca@.com"
         };
 
-        string[] Adresses =
+        string[] Addresses =
         {
             "86th St Bridge", "145th St Bridge", "Abingdon Square", "Abraham Kazan St",
             "Abraham PI", "Absecon Rd", "Beach St", "Bear Rd", "Beaver St", "Beekman PI",
@@ -62,18 +61,18 @@ internal static class DataSource
             "Canal St", "Carder Rd", "Cherry St", "Cliff St", "Cinton St"
         };
 
-        for(int i = 0; i < 20; i++)//A loop that runs 20 times and fills in all the details of the customer
+        Enumerable.Range(0, 20).ToList().ForEach(i => 
         {
             Order order = new Order()
             {
-                ID = Config.GetOrderID(),           
+                ID = Config.GetOrderId(),
                 CustomerName = Names[i],
                 CustomerEmail = Emails[i],
-                CustomerAddress = Adresses[i],
-                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)//Makes sure that the creation of the order is before the creation of the program
+                CustomerAddress = Addresses[i],
+                OrderDate = DateTime.Now - new TimeSpan(Rand.Next(20, 25), 0, 0, 0)
             };
 
-            if(i < 16)//Makes sure that 80 percent of the orders the date will be after the date of Create order
+            if (i < 16)
             {
                 order.ShipDate = order.OrderDate + new TimeSpan(Rand.Next(3, 5), 0, 0, 0);
             }
@@ -81,35 +80,35 @@ internal static class DataSource
             if (i >= 16)
                 order.ShipDate = null;
 
-            if (i < 10)//Makes sure that 60 percent that about 60% of orders shipped will have a delivery date
+            if (i < 10)
             {
-                order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1,2), 0, 0, 0);
+                order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 2), 0, 0, 0);
             }
 
             Orders.Add(order);
-        }
-   }
+        });
+    }
+
     /// <summary>
     ///  Order item creator
     /// </summary>
     private static void CreateOrderItems()
     {
         OrderItem orderItem = new OrderItem();
-
-        for (int i = 0; i < Orders.Count;i++)
+        Orders.ToList().ForEach(o =>
         {
-            for (int j = 0; j < Rand.Next(1,5);j++)
+            Enumerable.Range(0, Rand.Next(1, 5)).ToList().ForEach(i =>
             {
-                orderItem.ID = Config.GetOrderItemID();
-                orderItem.OrderID = (int)(Orders[i]?.ID)!;
-                Product? product = Products[Rand.Next(0, Products.Count)];
-                orderItem.ProductID = (int)(product?.ID)!;
-                orderItem.Price = (double)(product?.Price)!;
-                orderItem.Amount = Rand.Next(1,10);
+                orderItem.ID = Config.GetOrderItemId();
+                orderItem.OrderID = (int)(o?.ID)!;
+                orderItem.ProductID = (int)(Products[Rand.Next(0, Products.Count)]?.ID)!;
+                orderItem.Price = (double)(Products[Rand.Next(0, Products.Count)]?.Price)!;
+                orderItem.Amount = Rand.Next(1, 10);
                 OrderItems.Add(orderItem);
-            }
-        }
+            });
+        });
     }
+
     /// <summary>
     ///  Product creator
     /// </summary>
@@ -130,22 +129,23 @@ internal static class DataSource
         };
 
         double[] Price = { 800, 450, 220, 300, 120, 115, 80, 60, 180, 350 };
-
+        
         int[] InStock = { 10, 15, 28, 12, 13, 18, 21, 22, 23, 24 };
-
-        for(int i = 0; i < 10; i++) //creates 10 products
+        
+        Enumerable.Range(0, 10).ToList().ForEach(i =>
         {
-            Product product = new Product
-            { 
+            Product product = new Product 
+            {
                 ID = Rand.Next(100000, 99999999),
                 Name = Names[i],
                 Category = Categories[i],
                 Price = Price[i],
-                InStock = (i < 9) ? InStock[i] : 0 //Makes sure that 5 percent of the products are out of stock
+                InStock = (i < 9) ? InStock[i] : 0
             };
-            Products.Add(product) ;
-        }
+            Products.Add(product);
+       });
     }
+
     /// <summary>
     ///  The s_Initialize method will schedule the method of adding objects
     ///  to the entity arrays in the correct order according to the dependencies

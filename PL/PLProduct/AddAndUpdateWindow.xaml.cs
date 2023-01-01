@@ -77,6 +77,7 @@ namespace PL.PLProduct
                 new ProductListWindow().Show();
                 Close();
             }
+            catch (FormatException) { MessageBox.Show("invalid format"); }
             catch (BO.FieldIsEmptyException) { MessageBox.Show("Field is empty"); }
             catch (BO.InvalidPriceException) { MessageBox.Show("Price is lass than 0"); }
             catch (BO.IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }

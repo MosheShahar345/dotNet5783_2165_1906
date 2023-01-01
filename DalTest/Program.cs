@@ -1,16 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using DalApi;
-using DO;
-using Dal;
-
+﻿using DO;
 
 namespace DalTest
 {
     internal class Program
     {
-        private static IDal test = new DalList();
-        
+        private static DalApi.IDal? test = DalApi.Factory.Get();
+
         static int Main(string[] args)
         {
             int choice;
@@ -103,7 +98,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        orderitem = (OrderItem)test.OrderItem.GetEntity(it => it?.ID == ID)!;
+                        orderitem = (OrderItem)test?.OrderItem.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(orderitem);
                     }
                     catch (Exception str)
@@ -113,7 +108,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<DO.OrderItem?> orderItems = test.OrderItem.GetAll();
+                    IEnumerable<DO.OrderItem?> orderItems = test?.OrderItem.GetAll()!;
                     foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
@@ -125,7 +120,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        orderitem = (OrderItem)test.OrderItem.GetEntity(it => it?.ID == ID)!;
+                        orderitem = (OrderItem)test?.OrderItem.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(orderitem);
                         Console.WriteLine("enter: price, amount ");
                         orderitem.Price = int.Parse(Console.ReadLine()!);
@@ -143,7 +138,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        test.OrderItem.Delete(ID);
+                        test?.OrderItem.Delete(ID);
                     }
                     catch (Exception str)
                     {
@@ -185,7 +180,7 @@ namespace DalTest
                     order.CustomerAddress = Console.ReadLine();
                     try
                     {
-                        test.Order.Add(order);
+                        test?.Order.Add(order);
                     }
                     catch (Exception str)
                     {
@@ -198,7 +193,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        test.Order.Delete(ID);
+                        test?.Order.Delete(ID);
                     }
                     catch (Exception str)
                     {
@@ -211,7 +206,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        order = (Order)test.Order.GetEntity(it => it?.ID == ID)!;
+                        order = (Order)test?.Order.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(order);
                     }
                     catch (Exception str)
@@ -225,7 +220,7 @@ namespace DalTest
                     order.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        order = (Order)test.Order.GetEntity(it => it?.ID == order.ID)!;
+                        order = (Order)test?.Order.GetEntity(it => it?.ID == order.ID)!;
                         Console.WriteLine(order);
                         Console.WriteLine("enter: customer name, " +
                                           "customer email, " +
@@ -244,7 +239,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Order?> orders = test.Order.GetAll();
+                    IEnumerable<Order?> orders = test?.Order.GetAll()!;
                     foreach (var item in orders)
                     {
                         Console.WriteLine(item);
@@ -283,7 +278,7 @@ namespace DalTest
                     product.InStock = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        test.Product.Add(product);
+                        test?.Product.Add(product);
                     }
                     catch (Exception str)
                     {
@@ -296,7 +291,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        test.Product.Delete(ID);
+                        test?.Product.Delete(ID);
                     }
                     catch (Exception str)
                     {
@@ -309,7 +304,7 @@ namespace DalTest
                     int.TryParse(Console.ReadLine(), out ID);
                     try
                     {
-                        product = (Product)test.Product.GetEntity(it => it?.ID == ID)!;
+                        product = (Product)test?.Product.GetEntity(it => it?.ID == ID)!;
                         Console.WriteLine(product);
                     }
                     catch (Exception str)
@@ -323,7 +318,7 @@ namespace DalTest
                     product.ID = int.Parse(Console.ReadLine()!);
                     try
                     {
-                        product = (Product)test.Product.GetEntity(x => x?.ID == product.ID)!;
+                        product = (Product)test?.Product.GetEntity(x => x?.ID == product.ID)!;
                         Console.WriteLine(product);
                         Console.WriteLine("enter: name, category, price, in-stock");
                         product.Name = Console.ReadLine();
@@ -340,7 +335,7 @@ namespace DalTest
                     break;
 
                 case 'c':
-                    IEnumerable<Product?> products = test.Product.GetAll();
+                    IEnumerable<Product?> products = test?.Product.GetAll()!;
            
                     foreach (var item in products)
                     {

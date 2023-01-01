@@ -4,18 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
 
     <Grid x:Name="MainGrid">
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="UpGrid" 
+        <StackPanel  HorizontalAlignment="Stretch" 
+                     Height="auto" 
+                     Grid.Row="0"
+                     VerticalAlignment="Stretch" 
+                     Width="auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <ComboBox
+                x:Name="CategorySelector"
+                Width="400"
+                Height="auto"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" 
+                HorizontalAlignment="Right"
+                FontSize="15"
+                FontWeight="Bold"
+                SelectedIndex="5"
+                SelectionChanged="CategorySelector_OnSelectionChanged"
+                IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
+                ItemsSource="{Binding ShortStringList}"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+        </StackPanel>
+
+        <!--<Grid x:Name="UpGrid" 
               HorizontalAlignment="Stretch" 
               Height="auto" 
               Grid.Row="0"
@@ -31,7 +59,7 @@
                 SelectedIndex="5"
                 x:Name="CategorySelector" 
                 Foreground="Black"
-                ToolTip= "Select A Category"
+                ToolTip= "Select a category"
                 Grid.Column="1" 
                 SelectionChanged="CategorySelector_OnSelectionChanged" 
                 FontSize="20"
@@ -41,7 +69,7 @@
                 HorizontalAlignment="Left" 
                 Width="400"/>
 
-        </Grid>
+        </Grid>-->
 
         <Label 
             Grid.Row="0"
@@ -96,7 +124,8 @@
             HorizontalAlignment="Right" 
             Margin="5" 
             Padding="5"
-            Click="AddButton_OnClick">
+            Click="AddButton_OnClick"
+            FontWeight="Bold">
         </Button>
 
     </Grid>

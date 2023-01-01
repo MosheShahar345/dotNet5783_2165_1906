@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.PLProduct"
         mc:Ignorable="d"
-        Title="AddAndUpdateWindow" Height="450" Width="750">
-
-    <Grid x:Name="AddGrid" Background="#FF7A7A7A">
+        Title="AddAndUpdateWindow" Height="400" Width="700">
+        
+    <Grid x:Name="AddGrid" Background="LightGray">
         <Label
             Content="Id:"
-            HorizontalAlignment="Left"
-            Margin="168,43,0,0"
-            Width="Auto"
+            HorizontalAlignment="Center"
+            Margin="-160,43,160,0"
+            Width="80"
             Height="Auto"
             VerticalAlignment="Top"
             FontWeight="Bold"
@@ -26,18 +26,23 @@
             Margin="0,43,0,0" 
             TextWrapping="Wrap" Text="" 
             VerticalAlignment="Top" 
+            VerticalContentAlignment="Center"
             Width="200" 
-            RenderTransformOrigin="0.052,-2.59" 
             Height="32" 
             FontSize="16"
-            Foreground="Black"
-            />
+            Foreground="Black">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
 
         <Label
             Content="Category:"
-            HorizontalAlignment="Left"
-            Margin="168,83,0,0"
-            Width="Auto"
+            HorizontalAlignment="Center"
+            Margin="-160,83,160,0"
+            Width="80"
             Height="Auto"
             VerticalAlignment="Top"
             FontWeight="Bold"
@@ -53,23 +58,28 @@
             Margin="0,83,0,0" 
             VerticalAlignment="Top" 
             Width="200" 
-            RenderTransformOrigin="0.052,-2.59" 
+            VerticalContentAlignment="Center"
             Height="32" 
             FontSize="16"
-            Foreground="Black"
-        />
+            Foreground="Black">
+            <ComboBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </ComboBox.Resources>
+        </ComboBox>
 
         <Label
             Content="Name:"
-            HorizontalAlignment="Left"
-            Margin="168,123,0,0"
-            Width="Auto"
+            HorizontalAlignment="Center"
+            Margin="-160,123,160,0"
+            Width="80"
             Height="Auto"
             VerticalAlignment="Top"
             FontWeight="Bold"
             FontSize="14"
             Foreground="Black"
-            RenderTransformOrigin="0.483,0.269"/>
+           />
 
         <TextBox
             x:Name="NameBox" 
@@ -78,23 +88,29 @@
             TextWrapping="Wrap" 
             VerticalAlignment="Top" 
             Width="200" 
+            VerticalContentAlignment="Center"
             RenderTransformOrigin="0.052,-2.59" 
             Height="32" 
             FontSize="16"
-            Foreground="Black"
-        />
+            Foreground="Black">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
 
         <Label
             Content="Price:"
-            HorizontalAlignment="Left"
-            Margin="168,163,0,0"
-            Width="Auto"
+            HorizontalAlignment="Center"
+            Margin="-160,163,160,0"
+            Width="80"
             Height="Auto"
             VerticalAlignment="Top"
             FontWeight="Bold"
             FontSize="14"
             Foreground="Black"
-            RenderTransformOrigin="0.483,0.269"/>
+            />
 
         <TextBox
             x:Name="PriceBox"
@@ -104,17 +120,22 @@
             Text="0" 
             VerticalAlignment="Top" 
             Width="200" 
-            RenderTransformOrigin="0.052,-2.59" 
+            VerticalContentAlignment="Center"
             Height="32" 
             FontSize="16"
-            Foreground="Black"
-        />
+            Foreground="Black">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
 
         <Label
             Content="In Stock:"
-            HorizontalAlignment="Left"
-            Margin="168,203,0,0"
-            Width="Auto"
+            HorizontalAlignment="Center"
+            Margin="-160,203,160,0"
+            Width="80"
             Height="Auto"
             VerticalAlignment="Top"
             FontWeight="Bold"
@@ -130,36 +151,57 @@
             Text="0" 
             VerticalAlignment="Top" 
             Width="200" 
+            VerticalContentAlignment="Center"
             RenderTransformOrigin="0.052,-2.59" 
             Height="32" 
             FontSize="16"
-            Foreground="Black"
-        />
+            Foreground="Black">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
 
         <Button
             x:Name="AddAndUpdateProductButton"
             Grid.Row="0" 
             HorizontalAlignment="Center" 
-            VerticalContentAlignment="Center" 
-            Margin="0,100,0,0"
-            Height="26"
-            Width="52"
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="0,260,0,0"
+            Height="25"
+            Width="87"
             FontWeight="Bold"
-            Click="AddAndUpdateProductButton_OnClick"
-        />
+            Click="AddAndUpdateProductButton_OnClick">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
         <Button
             x:Name="Back"
             Content="Back"
             Grid.Row="0" 
-            HorizontalAlignment="Left" 
-            VerticalContentAlignment="Center" 
-            Margin="100,255,0,0"
-            Height="26"
-            Width="52"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="10,300,368,0"
+            Height="25"
+            Width="87"
             FontWeight="Bold"
-            Click="BackButton_OnClick"
-        />
+            Click="BackButton_OnClick">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
+    <!--RenderTransformOrigin="0.483,0.269"-->
 </Window>

@@ -14,12 +14,10 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AlreadyExistsException"></exception>
     public int Add(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.OrderItems.Count; i++)
-        {
-            if (DataSource.OrderItems[i]?.ID == orderItem.ID) // check if the order item is already exists
-                throw new AlreadyExistsException("order item already exist");
-        }
-        DataSource.OrderItems.Add(orderItem); // if it does not exist add to list
+        if (DataSource.OrderItems.Any(x => x?.ID == orderItem.ID))
+            throw new AlreadyExistsException("order item already exists");
+
+        DataSource.OrderItems.Add(orderItem);
         return orderItem.ID;
     }
 
@@ -30,16 +28,12 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotExistsException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.OrderItems.Count; i++)
-        {
-            if (id == DataSource.OrderItems[i]?.ID) // checks if exists according to ID
-            {
-                DataSource.OrderItems.RemoveAt(i);
-                return; // deleting successfully don't throw an exception
-            }
-        }
-        throw new NotExistsException("order item dose not exist");
+        OrderItem? orderItem = DataSource.OrderItems.FirstOrDefault(x => x?.ID == id)
+            ?? throw new NotExistsException("order item does not exist");
+        
+        DataSource.OrderItems.Remove(orderItem);
     }
+
 
     /// <summary>
     /// updating an existing order item
@@ -48,33 +42,29 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotExistsException"></exception>
     public void Update(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.OrderItems.Count; i++)
+        int index = DataSource.OrderItems.IndexOf(DataSource.OrderItems.FirstOrDefault(o => o?.ID == orderItem.ID));
+        if (index != -1) // if was found update the order item
         {
-            if (DataSource.OrderItems[i]?.ID == orderItem.ID) // searching by id which order to update
-            {
-                DataSource.OrderItems[i] = orderItem;
-                return;
-            }
+            DataSource.OrderItems[index] = orderItem;
         }
-        throw new NotExistsException("order item dose not exist");
+        else
+        {
+            throw new NotExistsException("order item does not exist");
+        }
     }
 
     /// <summary>
-    /// receives a filter and returns order-item that matchs the condition
+    /// receives a filter and returns order-item that matches the condition
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
     public OrderItem? GetEntity(Func<OrderItem?, bool>? func)
     {
-        foreach (var item in DataSource.OrderItems)
-        {
-            if (func!(item))
-                return item;
-        }
+        OrderItem? result = DataSource.OrderItems.FirstOrDefault(func!) ?? 
+            throw new NotExistsException("order dose not exist");
 
-        // throws an exception if the order does not exist
-        throw new NotExistsException("order item dose not exist");
+        return result;
     }
 
     /// <summary>

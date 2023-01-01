@@ -181,7 +181,7 @@ internal class BlCart : BlApi.ICart
             throw new BO.AlreadyExistsException("", e);
         }
 
-        foreach (var item in cart.Items)
+        cart.Items.ForEach(item =>
         {
             DO.OrderItem dOrderItem = new DO.OrderItem()
             {
@@ -200,15 +200,15 @@ internal class BlCart : BlApi.ICart
             {
                 throw new BO.AlreadyExistsException("", e);
             }
-        }
+        });
 
         DO.Product product = new DO.Product();
 
-        foreach (var item in cart.Items)
+        cart.Items.ForEach(item =>
         {
             product = (DO.Product)dal?.Product.GetEntity(it => it?.ID == item!.ProductID)!;
             product.InStock -= item!.Amount;
             dal?.Product.Update(product);
-        }
+        });
     }
 }

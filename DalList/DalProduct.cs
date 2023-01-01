@@ -57,15 +57,10 @@ internal class DalProduct : IProduct
     /// <exception cref="NotExistsException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Products.Count; i++)
-        {
-            if (id == DataSource.Products[i]?.ID) // checks if exists according to ID
-            {
-                DataSource.Products.RemoveAt(i);
-                return;
-            } 
-        }
-        throw new NotExistsException("product dose not exist");
+        Product? productToDelete = DataSource.Products.FirstOrDefault(product => id == product?.ID) ??
+                                   throw new NotExistsException("product does not exist");
+
+        DataSource.Products.Remove(productToDelete);
     }
 
     /// <summary>
@@ -75,33 +70,29 @@ internal class DalProduct : IProduct
     /// <exception cref="NotExistsException"></exception>
     public void Update(Product product)
     {
-        for (int i = 0; i < DataSource.Products.Count; i++)
+        int index = DataSource.Products.IndexOf(DataSource.Products.FirstOrDefault(o => o?.ID == product.ID));
+        if (index != -1) // if was found update the product
         {
-            if (DataSource.Products[i]?.ID == product.ID) // searching by id which product to update
-            {
-                DataSource.Products[i] = product;
-                return;
-            }
+            DataSource.Products[index] = product;
         }
-        throw new NotExistsException("product dose not exist");
+        else
+        {
+            throw new NotExistsException("product does not exist");
+        }
     }
 
     /// <summary>
-    /// receives a filter and returns product that matchs the condition
+    /// receives a filter and returns product that matches the condition
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
     public Product? GetEntity(Func<Product?, bool>? func)
     {
-        foreach (var item in DataSource.Products)
-        {
-            if (func!(item))
-                return item;
-        }
+        Product? result = DataSource.Products.FirstOrDefault(func!) ??
+                          throw new NotExistsException("product dose not exist");
 
-        // throws an exception if the product does not exist
-        throw new NotExistsException("product dose not exist");
+        return result;
     }
 
     /// <summary>

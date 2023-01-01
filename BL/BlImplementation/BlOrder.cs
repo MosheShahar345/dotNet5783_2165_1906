@@ -1,5 +1,4 @@
-﻿using BO;
-using DalApi;
+﻿using DalApi;
 
 namespace BlImplementation;
 
@@ -15,7 +14,7 @@ internal class BlOrder : BlApi.IOrder
     public IEnumerable<BO.OrderForList> GetOrderForList()
     {
         IEnumerable<DO.Order?> orders = dal?.Order.GetAll().ToList()!;
-        List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
+        //List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         try
         {
@@ -26,26 +25,25 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.NotExistsException("", e);
         }
 
-		foreach (var item in orders)
-		{
-			BO.OrderForList temporder = new BO.OrderForList()
-			{
-				ID = (int)(item?.ID)!,
-				CustomerName = item?.CustomerName,
-				Status = GetStatus(item)
+        var ordersForList = orders.Select(item =>
+        {
+            BO.OrderForList tempOrder = new BO.OrderForList()
+            {
+                ID = (int)(item?.ID)!,
+                CustomerName = item?.CustomerName,
+                Status = GetStatus(item)
             };
 
-			IEnumerable<DO.OrderItem?> orderitems = dal?.OrderItem.GetAll(it => item?.ID == it?.ID)!;
+            IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetAll(it => item?.ID == it?.ID)!;
 
-			foreach (var it in orderitems)
-			{
-				temporder.AmountOfItems += (int)(it?.Amount)!;
-				temporder.TotalPrice += (int)(it?.Price)! * (int)(it?.Amount)!;
-			}
+            tempOrder.AmountOfItems = orderItems.Sum(it => (int)(it?.Amount)!);
+            tempOrder.TotalPrice = orderItems.Sum(it => (int)(it?.Price)! * (int)(it?.Amount)!);
 
-			ordersForList.Add(temporder);
-		}
-		return ordersForList!;
+            return tempOrder;
+
+        }).ToList();
+
+        return ordersForList;
     }
 
     /// <summary>
@@ -113,27 +111,22 @@ internal class BlOrder : BlApi.IOrder
     ///// <exception cref="BO.NotExistsException"></exception> 
 	private (List<BO.OrderItem>, double) DoBoConvert(List<DO.OrderItem?> orderItem, int? dOrderID)
 	{
-		List<BO.OrderItem> bOrderItem = new List<BO.OrderItem>();
-		double s = 0;
+        List<BO.OrderItem> bOrderItem = orderItem
+            .Where(item => item?.OrderID == dOrderID)
+            .Select(item => new BO.OrderItem
+            {
+                ID = (int)(item?.ID)!,
+                Name = dal?.Product.GetEntity(it => it?.ID == item?.ProductID)?.Name,
+                Price = (double)(item?.Price)!,
+                ProductID = (int)(item?.ProductID)!,
+                Amount = (int)(item?.Amount)!,
+                TotalPrice = (int)(item?.Price)! * (int)(item?.Amount)!
+            })
+            .ToList();
 
-		foreach (var item in orderItem)
-		{
-			if (item?.OrderID == dOrderID)
-			{
-				BO.OrderItem orderitem = new BO.OrderItem()
-				{
-					ID = (int)(item?.ID)!,
-					Name = dal?.Product.GetEntity(it => it?.ID == item?.ProductID)?.Name,
-					Price = (double)(item?.Price)!,
-					ProductID = (int)(item?.ProductID)!,
-					Amount = (int)(item?.Amount)!,
-					TotalPrice = (int)(item?.Price)! * (int)(item?.Amount)!
-				};
-				s += orderitem.TotalPrice;
-				bOrderItem.Add(orderitem);
-			}
-		}
-		return (bOrderItem, s);
+        double s = bOrderItem.Sum(item => item.TotalPrice);
+
+        return (bOrderItem, s);
 	}
 
     /// <summary>
@@ -161,11 +154,11 @@ internal class BlOrder : BlApi.IOrder
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
         if (dOrder.DeliveryDate != null)
-            throw new OrderIsAlreadyDeliveredException();
+            throw new BO.OrderIsAlreadyDeliveredException();
 
 
         if (dOrder.ShipDate != null)
-            throw new OrderIsAlreadyShippedException();
+            throw new BO.OrderIsAlreadyShippedException();
 
         if (dOrder.ShipDate == DateTime.MinValue)
 		{
@@ -202,10 +195,10 @@ internal class BlOrder : BlApi.IOrder
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
         if (dOrder.DeliveryDate != null)
-            throw new OrderIsAlreadyDeliveredException();
+            throw new BO.OrderIsAlreadyDeliveredException();
 
         if (dOrder.ShipDate == null)
-            throw new OrderHasNotShippedException();
+            throw new BO.OrderHasNotShippedException();
 
         if (dOrder.DeliveryDate == null)
         {

@@ -14,7 +14,7 @@ internal class BlProduct : BlApi.IProduct
     public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func)
     {
         List<DO.Product?>? products = new List<DO.Product?>();
-        List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
+        //List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
 
         try
         {
@@ -22,17 +22,13 @@ internal class BlProduct : BlApi.IProduct
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        foreach (var item in products)
+        List<BO.ProductForList?> productForList = products!.Select(item => new BO.ProductForList
         {
-            BO.ProductForList? tempproduct = new BO.ProductForList()
-            {
-                ID = (int)(item?.ID)!,
-                Name = item?.Name,
-                Price = (double)(item?.Price)!,
-                Category = (BO.Category)item?.Category!
-            };
-            productForList.Add(tempproduct);
-        }
+            ID = (int)(item?.ID)!,
+            Name = item?.Name,
+            Price = (double)(item?.Price)!,
+            Category = (BO.Category)item?.Category!
+        }).ToList()!;
 
         if (func != null)
         {
@@ -172,8 +168,7 @@ internal class BlProduct : BlApi.IProduct
         if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        List<DO.OrderItem> orderItems= new List<DO.OrderItem>();
-        orderItems = (List<DO.OrderItem>)dal?.OrderItem.GetAll()!; 
+        IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetAll()!; 
 
         try
         {
@@ -184,11 +179,11 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.NotExistsException("", e);
         }
 
-        foreach (var item in orderItems)
+        if (orderItems.Any(item => item?.ProductID == productId))
         {
-            if (item.ProductID == productId)
-                throw new BO.CanNotDeleteProductException();
+            throw new BO.CanNotDeleteProductException();
         }
+
 
         dal?.Product.Delete(productId);
     }

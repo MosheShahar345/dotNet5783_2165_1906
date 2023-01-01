@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO;
 
 namespace PL.PLProduct;
 
@@ -33,20 +32,36 @@ public partial class ProductListWindow : Window
 
     private void ProductListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        int Id = ((BO.ProductForList)ProductListView.SelectedItem).ID;
-        new AddAndUpdateWindow(Id).Show();
-        Close();
+        int Id;
+        try
+        {
+            Id = ((BO.ProductForList)ProductListView.SelectedItem)?.ID 
+                 ?? throw new BO.NotExistsException();
+
+            new AddAndUpdateWindow(Id).Show();
+            Close();
+        }
+        catch (BO.NotExistsException)
+        {
+            new ProductListWindow().Show();
+            Close();
+        }
     }
 
     private void CategorySelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductListView.ItemsSource = CategorySelector.SelectedItem.ToString() == "All" ? bl.Product.GetProductForList() 
-            : bl.Product.GetProductForList(it => it?.Category.ToString() == CategorySelector.SelectedItem.ToString());
+        ProductListView.ItemsSource = CategorySelector.SelectedItem.ToString() == "All" ? bl?.Product.GetProductForList() 
+            : bl?.Product.GetProductForList(it => it?.Category.ToString() == CategorySelector.SelectedItem.ToString());
     }
 
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AddAndUpdateWindow().Show();
         Close();
+    }
+
+    private void ClearOutlinedComboBox_Click(object sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }
