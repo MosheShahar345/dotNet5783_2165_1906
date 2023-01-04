@@ -12,21 +12,57 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="/b1d5f9289d9e2c5876956406199cdcab.jpg"/>
-        </Grid.Background>
+        Title="MainWindow" Height="450" Width="850">
+
+    <Grid Background="Black">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
         <Button 
-            Content="Start" 
-            Name="Button" 
-            Click="ShowProductListButton_Click" 
-            ToolTip="To The Shop"
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="Admin" 
+            Name="AdminButton" 
+            Click="AdminButton_OnClick" 
+            ToolTip="To admin section"
             HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
+            VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Margin="0,0,0,20"
+            Margin="80,50,0,20"
+            Height="25"
+            Width="87"
+            FontWeight="Bold"
+        />
+
+        <Button 
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="Cart" 
+            Name="CartButton" 
+            Click="CartButton_OnClick"
+            ToolTip="To the cart"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="80,140,0,20"
             Height="25"
             Width="87"
             FontWeight="Bold"

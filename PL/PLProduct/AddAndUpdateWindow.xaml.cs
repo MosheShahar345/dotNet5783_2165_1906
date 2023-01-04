@@ -74,7 +74,7 @@ namespace PL.PLProduct
                 else
                     bl?.Product.UpdateProductAdmin(product);
 
-                new ProductListWindow().Show();
+                new AdminWindow().Show();
                 Close();
             }
             catch (FormatException) { MessageBox.Show("invalid format"); }
@@ -88,7 +88,7 @@ namespace PL.PLProduct
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().Show();
+            new AdminWindow().Show();
             Close();
         }
     }

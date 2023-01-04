@@ -14,7 +14,8 @@ public enum OrderStatus
 {
     Confirmed,
     Sent,
-    Delivered
+    Delivered,
+    All
 }
 
 public enum StartChoose

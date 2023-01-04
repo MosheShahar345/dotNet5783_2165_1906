@@ -42,4 +42,6 @@ public interface IProduct
     /// </summary>
     /// <param name="product"></param>
     public void UpdateProductAdmin(BO.Product product);
+
+    public IEnumerable<BO.ProductItem?> GetCatalog();
 }

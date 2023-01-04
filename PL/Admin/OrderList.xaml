@@ -1,0 +1,149 @@
+﻿<Page x:Class="PL.Admin.OrderList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL.Admin"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      Title="OrderList"
+      d:DesignHeight="640" d:DesignWidth="850"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel  HorizontalAlignment="Stretch" 
+                     Height="auto" 
+                     Grid.Row="0"
+                     VerticalAlignment="Stretch" 
+                     Width="auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <ComboBox
+                x:Name="CategorySelector"
+                Width="400"
+                Height="auto"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center" 
+                HorizontalAlignment="Right"
+                FontSize="15"
+                FontWeight="Bold"
+                SelectedIndex="3"
+                Background="MediumPurple"
+                SelectionChanged="CategorySelector_OnSelectionChanged"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+        </StackPanel>
+
+        <Label 
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="Status:" 
+            HorizontalAlignment="Left"
+            FontSize="20"
+            FontStyle="Oblique"
+            Foreground="MediumPurple"
+            FontWeight="Bold"
+            VerticalContentAlignment="Center">
+        </Label>
+
+        <ListView 
+            Foreground="MediumPurple"
+            FontWeight="Bold"
+            FontSize="14"
+            x:Name="OrderListView"
+            Grid.Row="1"
+            MouseDoubleClick="ProductListView_OnMouseDoubleClick"
+            ItemsSource="{Binding Orders}">
+
+            <ListView.ItemContainerStyle>
+                <Style
+                    TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=ID}"
+                        Header="Id"
+                        Width="170"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=CustomerName}"
+                        Header="Customer Name" 
+                        Width="170"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=Status}"
+                        Header="Status" 
+                        Width="170"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=AmountOfItems}"
+                        Header="Amount Of Items"
+                        Width="170"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=TotalPrice}"
+                        Header="Total Price"
+                        Width="170"
+                    />
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style
+                            TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Background" Value="MediumPurple"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid
+            Grid.Row="2" 
+            Width="Auto"
+            >
+            <Button
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.Value="-1"
+                Style="{StaticResource MaterialDesignRaisedButton}" 
+                Content="{materialDesign:PackIcon Cart}"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Margin="0,0,10,10"
+                Padding="5"
+                Height="40"
+                Width="50" Click="Button_Click"
+                />
+        </Grid>
+
+        <Button
+            x:Name="Back"
+            Content="Back"
+            Grid.Row="2" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Bottom"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="10, 0,0,10"
+            Padding="5"
+            Height="auto"
+            Width="auto"
+            FontWeight="Bold"
+            Click="BackButton_OnClick">
+        </Button>
+
+    </Grid>
+</Page>

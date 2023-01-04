@@ -15,8 +15,9 @@ public interface IOrder
     /// <summary>
     /// gets a list of orders from DO to BO
     /// </summary>
+    /// <param name="func"></param>
     /// <returns></returns>
-    public IEnumerable<BO.OrderForList?> GetOrderForList();
+    public IEnumerable<BO.OrderForList?> GetOrderForList(Func<BO.OrderForList?, bool>? func = null);
 
     /// <summary>
     /// updates the shipping date of an order 

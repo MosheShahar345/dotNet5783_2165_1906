@@ -14,7 +14,6 @@ internal class BlProduct : BlApi.IProduct
     public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func)
     {
         List<DO.Product?>? products = new List<DO.Product?>();
-        //List<BO.ProductForList?> productForList = new List<BO.ProductForList?>();
 
         try
         {
@@ -184,7 +183,6 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.CanNotDeleteProductException();
         }
 
-
         dal?.Product.Delete(productId);
     }
 
@@ -228,5 +226,21 @@ internal class BlProduct : BlApi.IProduct
         {
             throw new BO.NotExistsException("", e);
         }
+    }
+
+    public IEnumerable<BO.ProductItem?> GetCatalog()
+    {
+        var listOfProductItems = from item in dal?.Product.GetAll()
+            select new BO.ProductItem()
+            {
+                ID = (int)item?.ID!,
+                Name = item?.Name,
+                Price = (double)item?.Price!,
+                Category = (BO.Category)item?.Category!,
+                InStock = item?.InStock > 0 ? true : false,
+                Amount = 0
+            };
+
+        return listOfProductItems;
     }
 }

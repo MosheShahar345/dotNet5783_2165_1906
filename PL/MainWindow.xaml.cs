@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PL.Admin;
 using PL.PLProduct;
 
 namespace PL
@@ -26,10 +27,16 @@ namespace PL
             InitializeComponent();
         }
 
-        private void ShowProductListButton_Click(object sender, RoutedEventArgs e)
+        private void AdminButton_OnClick(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().Show();
+            new AdminWindow().Show();
             Close();
+        }
+
+
+        private void CartButton_OnClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

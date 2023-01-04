@@ -1,4 +1,6 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
+using System;
 
 namespace BlImplementation;
 
@@ -11,10 +13,9 @@ internal class BlOrder : BlApi.IOrder
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BO.NotExistsException"></exception>
-    public IEnumerable<BO.OrderForList> GetOrderForList()
+    public IEnumerable<BO.OrderForList?> GetOrderForList(Func<BO.OrderForList?, bool>? func)
     {
         IEnumerable<DO.Order?> orders = dal?.Order.GetAll().ToList()!;
-        //List<BO.OrderForList?> ordersForList = new List<BO.OrderForList?>();
 
         try
         {
@@ -25,25 +26,27 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.NotExistsException("", e);
         }
 
-        var ordersForList = orders.Select(item =>
-        {
-            BO.OrderForList tempOrder = new BO.OrderForList()
+        var orderForList = from item in orders
+            let amount = dal?.OrderItem.GetAll(i =>
+                i?.OrderID == item?.ID).Sum(i => i?.Amount)
+            let totalPrice = dal?.OrderItem.GetAll(i =>
+                i?.OrderID == item?.ID).Sum(i => i?.Price * i?.Amount)
+            select new BO.OrderForList
             {
                 ID = (int)(item?.ID)!,
                 CustomerName = item?.CustomerName,
-                Status = GetStatus(item)
+                Status = GetStatus(item),
+                AmountOfItems = (int)amount,
+                TotalPrice = (double)totalPrice
             };
 
-            IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetAll(it => item?.ID == it?.ID)!;
+        if (func != null)
+        {
+            var list = from item in orderForList where func(item) select item;
+            return (IEnumerable<BO.OrderForList>)list;
+        }
 
-            tempOrder.AmountOfItems = orderItems.Sum(it => (int)(it?.Amount)!);
-            tempOrder.TotalPrice = orderItems.Sum(it => (int)(it?.Price)! * (int)(it?.Amount)!);
-
-            return tempOrder;
-
-        }).ToList();
-
-        return ordersForList;
+        return orderForList;
     }
 
     /// <summary>
