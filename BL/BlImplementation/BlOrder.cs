@@ -98,9 +98,9 @@ internal class BlOrder : BlApi.IOrder
     /// <returns></returns>
     private BO.OrderStatus GetStatus(DO.Order? o)
 	{
-		if (o?.DeliveryDate > DateTime.MinValue)
+		if (o?.DeliveryDate != null)
 			return BO.OrderStatus.Delivered;
-		if (o?.ShipDate > DateTime.MinValue)
+		if (o?.ShipDate != null)
 			return BO.OrderStatus.Sent;
 		return BO.OrderStatus.Confirmed;
 	}
@@ -153,25 +153,25 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = (DO.Order)dal?.Order.GetEntity(it => it?.ID == orderId)!;
             bOrder = GetOrder(orderId);
+
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        if (dOrder.DeliveryDate != null)
-            throw new BO.OrderIsAlreadyDeliveredException();
+        //if (dOrder.DeliveryDate != null)
+        //    throw new BO.OrderIsAlreadyDeliveredException();
 
+        //if (dOrder.ShipDate != null)
+        //    throw new BO.OrderIsAlreadyShippedException();
 
-        if (dOrder.ShipDate != null)
-            throw new BO.OrderIsAlreadyShippedException();
-
-        if (dOrder.ShipDate == DateTime.MinValue)
+        if (dOrder.ShipDate == null)
 		{
-			dOrder.ShipDate = DateTime.Now;
+            dOrder.ShipDate = DateTime.Now;
             bOrder.ShipDate = DateTime.Now;
+            bOrder.Status = GetStatus(dOrder);
+            dal?.Order.Update(dOrder);
         }
 
-        dal?.Order.Update(dOrder);
-
-		return bOrder;
+        return bOrder;
 	}
 
     /// <summary>
@@ -203,13 +203,14 @@ internal class BlOrder : BlApi.IOrder
         if (dOrder.ShipDate == null)
             throw new BO.OrderHasNotShippedException();
 
-        if (dOrder.DeliveryDate == null)
+        if (dOrder.DeliveryDate == null && dOrder.ShipDate != null)
         {
-			dOrder.ShipDate = DateTime.Now;
-			bOrder.ShipDate = DateTime.Now;
+			dOrder.DeliveryDate = DateTime.Now;
+			bOrder.DeliveryDate = DateTime.Now;
+            dal?.Order.Update(dOrder);
+            bOrder.Status = GetStatus(dOrder);
         }
 
-		dal?.Order.Update(dOrder);
 
         return bOrder;
     }

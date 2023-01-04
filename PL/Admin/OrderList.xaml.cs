@@ -1,7 +1,7 @@
-﻿using BO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BO;
 
 namespace PL.Admin
 {
@@ -24,11 +25,12 @@ namespace PL.Admin
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
 
+
         public ObservableCollection<BO.OrderForList?> Orders { get; set; }
 
         public OrderList()
         {
-            Orders = new ObservableCollection<OrderForList?>(bl.Order.GetOrderForList());
+            Orders = new ObservableCollection<BO.OrderForList?>(bl.Order.GetOrderForList());
             InitializeComponent();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
         }
@@ -41,17 +43,37 @@ namespace PL.Admin
 
         private void ProductListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
+            var Id = (int)((BO.OrderForList)OrderListView.SelectedItem)?.ID!;
+            new OrderItemWindow(Id).Show();
+            (Window.GetWindow(this)!).Close();
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
+            (Window.GetWindow(this)!).Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            new MainWindow().Show();
+            (Window.GetWindow(this)!).Close();
+        }
+
+        private void UpdateShipping_OnClick(object sender, RoutedEventArgs e)
+        {
+            var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
+            bl?.Order.UpdateOrderShipping(id);
+            Orders = new ObservableCollection<BO.OrderForList?>(bl!.Order.GetOrderForList());
+            this.NavigationService!.Refresh();
+        }
+
+        private void UpdateDelivery_OnClick(object sender, RoutedEventArgs e)
+        {
+            var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
+            bl?.Order.UpdateOrderDelivery(id);
+            Orders = new ObservableCollection<BO.OrderForList?>(bl!.Order.GetOrderForList());
+            this.NavigationService!.Refresh();
         }
     }
 }

@@ -43,11 +43,13 @@ namespace PL.Admin
                 Id = ((BO.ProductForList)ProductListView.SelectedItem)?.ID
                      ?? throw new BO.NotExistsException();
 
-                new AddAndUpdateWindow(Id).Show();
+                new AddAndUpdateWindow(Id).Show(); 
+                (Window.GetWindow(this)!).Close();
             }
             catch (BO.NotExistsException)
             {
                 new AdminWindow().Show();
+                (Window.GetWindow(this)!).Close();
             }
         }
 
@@ -60,11 +62,13 @@ namespace PL.Admin
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             new AddAndUpdateWindow().Show();
+            (Window.GetWindow(this)!).Close();
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
             new MainWindow().Show();
+            (Window.GetWindow(this)!).Close();
         }
     }
 }

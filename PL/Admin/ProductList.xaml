@@ -10,7 +10,7 @@
       d:DesignHeight="640" d:DesignWidth="850"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Background="{DynamicResource MaterialDesignDarkBackground}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

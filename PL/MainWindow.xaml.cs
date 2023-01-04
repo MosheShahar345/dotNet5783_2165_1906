@@ -38,5 +38,15 @@ namespace PL
         {
 
         }
+
+        private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void LogInButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

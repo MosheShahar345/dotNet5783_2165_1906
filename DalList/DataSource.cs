@@ -84,6 +84,10 @@ internal static class DataSource
             {
                 order.DeliveryDate = order.ShipDate + new TimeSpan(Rand.Next(1, 2), 0, 0, 0);
             }
+            else
+            {
+                order.DeliveryDate = null;
+            }
 
             Orders.Add(order);
         });

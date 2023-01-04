@@ -1,0 +1,92 @@
+﻿<Window x:Class="PL.Admin.OrderItemWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Admin"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="OrderItemWindow" 
+        Height="640" Width="850"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView 
+            Foreground="MediumPurple"
+            FontWeight="Bold"
+            FontSize="14"
+            x:Name="OrderItemListView"
+            Grid.Row="1"
+            ItemsSource="{Binding OrderItems}">
+
+            <ListView.ItemContainerStyle>
+                <Style
+                    TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=ID}"
+                        Header="Id"
+                        Width="142.6"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=Name}"
+                        Header="Name" 
+                        Width="142.6"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=ProductID}"
+                        Header="Product Id" 
+                        Width="142.6"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=Price}"
+                        Header="Price"
+                        Width="142.6"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=Amount}"
+                        Header="Amount"
+                        Width="142.6"/>
+                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Path=TotalPrice}"
+                        Header="Total Price"
+                        Width="142.6"/>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style
+                            TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="FontSize" Value="16"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="Background" Value="MediumPurple"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button
+            x:Name="Back"
+            Content="Back"
+            Grid.Row="2" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Bottom"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="10, 0,0,10"
+            Padding="5"
+            Height="auto"
+            Width="auto"
+            FontWeight="Bold"
+            Click="BackButton_OnClick">
+        </Button>
+
+    </Grid>
+</Window>

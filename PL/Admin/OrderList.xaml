@@ -10,7 +10,7 @@
       d:DesignHeight="640" d:DesignWidth="850"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid>
+    <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -71,26 +71,40 @@
                 </Style>
             </ListView.ItemContainerStyle>
 
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem
+                        Header="Update Shipping"
+                        x:Name="UpdateShipping"
+                        Click="UpdateShipping_OnClick"
+                        Icon="{materialDesign:PackIcon Kind = AirplaneTakeoff}"/>
+                    <MenuItem
+                        Header="Update Delivery"
+                        x:Name="UpdateDelivery"
+                        Click="UpdateDelivery_OnClick"
+                        Icon="{materialDesign:PackIcon Kind=TruckFast}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Path=ID}"
+                        DisplayMemberBinding="{Binding ID}"
                         Header="Id"
                         Width="170"/>
                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Path=CustomerName}"
+                        DisplayMemberBinding="{Binding CustomerName}"
                         Header="Customer Name" 
                         Width="170"/>
                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Path=Status}"
+                        DisplayMemberBinding="{Binding Status}"
                         Header="Status" 
                         Width="170"/>
                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Path=AmountOfItems}"
+                        DisplayMemberBinding="{Binding AmountOfItems}"
                         Header="Amount Of Items"
                         Width="170"/>
                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Path=TotalPrice}"
+                        DisplayMemberBinding="{Binding TotalPrice}"
                         Header="Total Price"
                         Width="170"
                     />
@@ -125,7 +139,7 @@
                 Margin="0,0,10,10"
                 Padding="5"
                 Height="40"
-                Width="50" Click="Button_Click"
+                Width="50" Click="ButtonBase_OnClick"
                 />
         </Grid>
 

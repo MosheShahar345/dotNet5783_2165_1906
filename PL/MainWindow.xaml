@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow" Height="450" Width="850">
 
-    <Grid Background="Black">
+    <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,6 +26,16 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
+        <materialDesign:PackIcon 
+            Kind="AccountTie" 
+            Grid.Column="0"
+            Height="25"
+            Width="auto"
+            Margin="60,50,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"
+            />
         <Button 
             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -34,7 +44,7 @@
             Grid.Row="0"
             Grid.Column="1"
             Content="Admin" 
-            Name="AdminButton" 
+            x:Name="AdminButton" 
             Click="AdminButton_OnClick" 
             ToolTip="To admin section"
             HorizontalAlignment="Center"
@@ -43,10 +53,20 @@
             HorizontalContentAlignment="Center"
             Margin="80,50,0,20"
             Height="25"
-            Width="87"
+            Width="auto"
             FontWeight="Bold"
         />
 
+        <materialDesign:PackIcon 
+            Grid.Column="0"
+            Kind="AccountBoxOutline"
+            Height="25"
+            Width="auto"
+            Margin="60,150,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"
+            />
         <Button 
             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -54,17 +74,77 @@
             Style="{StaticResource MaterialDesignRaisedButton}"
             Grid.Row="0"
             Grid.Column="1"
-            Content="Cart" 
-            Name="CartButton" 
+            Content="Client" 
+            x:Name="ClientButton" 
             Click="CartButton_OnClick"
             ToolTip="To the cart"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Margin="80,140,0,20"
+            Margin="80,150,0,20"
             Height="25"
-            Width="87"
+            Width="auto"
+            FontWeight="Bold"
+        />
+
+        <materialDesign:PackIcon 
+            Grid.Column="0"
+            Kind="Truck" 
+            Height="25"
+            Width="auto"
+            Margin="60,250,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"/>
+        <Button 
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="Order Tracking" 
+            x:Name="OrderTrackingButton" 
+            Click="OrderTrackingButton_OnClick"
+            ToolTip="To the cart"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="80,250,0,20"
+            Height="25"
+            Width="auto"
+            FontWeight="Bold"
+        />
+
+        <materialDesign:PackIcon
+            Grid.Column="0"
+            Kind="LoginVariant"
+            Height="25"
+            Width="auto"
+            Margin="60,350,0,20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="White"/>
+        <Button 
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="Log In" 
+            x:Name="LogInButton" 
+            Click="LogInButton_OnClick"
+            ToolTip="To the cart"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Margin="80,350,0,20"
+            Height="25"
+            Width="auto"
             FontWeight="Bold"
         />
     </Grid>
