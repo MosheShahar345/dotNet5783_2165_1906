@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.Admin;
 using PL.PLProduct;
-
+using PL.Client;
 namespace PL
 {
     /// <summary>
@@ -34,9 +34,10 @@ namespace PL
         }
 
 
-        private void CartButton_OnClick(object sender, RoutedEventArgs e)
+        private void ClientButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            //IconTie.Visibility = Visibility.Hidden;
+            ProductItemFrame.Content = new ProductItemPage();
         }
 
         private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
@@ -48,5 +49,6 @@ namespace PL
         {
             
         }
+
     }
 }

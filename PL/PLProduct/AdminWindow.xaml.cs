@@ -1,10 +1,11 @@
-﻿using BO;
-using PL.Admin;
+﻿using PL.Admin;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace PL.PLProduct;
 
@@ -22,7 +23,7 @@ public partial class AdminWindow : Window
     public AdminWindow()
     {
         Orders = new ObservableCollection<BO.OrderForList?>(bl.Order.GetOrderForList());
-        Products = new ObservableCollection<ProductForList?>(bl.Product.GetProductForList());
+        Products = new ObservableCollection<BO.ProductForList?>(bl.Product.GetProductForList());
         InitializeComponent();
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
@@ -37,12 +38,12 @@ public partial class AdminWindow : Window
                  ?? throw new BO.NotExistsException();
 
             new AddAndUpdateWindow(Id).Show();
-            (Window.GetWindow(this)!).Close();
+            GetWindow(this)!.Close();
         }
         catch (BO.NotExistsException)
         {
             new AdminWindow().Show();
-            (Window.GetWindow(this)!).Close();
+            GetWindow(this)!.Close();
         }
     }
 
@@ -55,37 +56,35 @@ public partial class AdminWindow : Window
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AddAndUpdateWindow().Show();
-        (Window.GetWindow(this)!).Close();
+        GetWindow(this)!.Close();
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new MainWindow().Show();
-        (Window.GetWindow(this)!).Close();
+        GetWindow(this)!.Close();
     }
 
     private void UpdateShipping_OnClick(object sender, RoutedEventArgs e)
     {
-        var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
-        bl?.Order.UpdateOrderShipping(id);
-        Orders = new ObservableCollection<BO.OrderForList?>(bl!.Order.GetOrderForList());
-        
+        try
+        {
+            var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
+            bl?.Order.UpdateOrderShipping(id);
+        }
+        catch (BO.OrderIsAlreadyDeliveredException) { MessageBox.Show("Order is already delivered!"); }
+        catch (BO.OrderIsAlreadyShippedException) { MessageBox.Show("Order is already shipped!"); }
     }
 
     private void UpdateDelivery_OnClick(object sender, RoutedEventArgs e)
     {
-        var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
-        bl?.Order.UpdateOrderDelivery(id);
-        Orders = new ObservableCollection<BO.OrderForList?>(bl!.Order.GetOrderForList());
-        
-    }
-
-    private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        //if (Product.IsSelected)
-        //    AdminFrame.Content = new Admin.ProductList();
-        //if (Order.IsSelected)
-        //    AdminFrame.Content = new Admin.OrderList();
+        try
+        {
+            var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
+            bl?.Order.UpdateOrderDelivery(id);
+        }
+        catch (BO.OrderIsAlreadyDeliveredException) { MessageBox.Show("Order is already delivered!"); }
+        catch (BO.OrderHasNotShippedException) { MessageBox.Show("Order is not shipped yet!"); }
     }
 
     private void StatusSSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

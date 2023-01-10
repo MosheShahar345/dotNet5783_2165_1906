@@ -43,5 +43,5 @@ public interface IProduct
     /// <param name="product"></param>
     public void UpdateProductAdmin(BO.Product product);
 
-    public IEnumerable<BO.ProductItem?> GetCatalog();
+    public IEnumerable<BO.ProductItem?> GetCatalog(Func<BO.ProductItem?, bool>? func = null);
 }

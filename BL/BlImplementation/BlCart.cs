@@ -40,31 +40,11 @@ internal class BlCart : BlApi.ICart
             throw new BO.NotExistsException("", e);
         }
 
-        if (orderItem != null)
+        if (orderItem != null && product?.InStock > orderItem.Amount + 1)
         {
-            if (product?.InStock > orderItem.Amount + 1)
-            {
-                orderItem.Amount++;
-                orderItem.TotalPrice += orderItem.Price;
-                cart.TotalPrice += orderItem.Price;
-            }
-        }
-        else if (product?.InStock > 0)
-        {
-            cart.Items.Add(new BO.OrderItem
-            {
-                ID = 0,
-                Name = product?.Name,
-                ProductID = (int)(product?.ID)!,
-                Price = (int)(product?.Price)!,
-                Amount = 1,
-                TotalPrice = (int)(product?.Price)! 
-            });
-        }
-        else
-        {
-            throw new BO.NotEnoughInStockException(
-                $"product with name: {product?.Name} not enough in stock");
+            orderItem.Amount++;
+            orderItem.TotalPrice += orderItem.Price;
+            cart.TotalPrice += orderItem.Price;
         }
 
         return cart;

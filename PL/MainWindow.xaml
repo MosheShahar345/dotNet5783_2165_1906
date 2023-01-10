@@ -10,32 +10,35 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="{DynamicResource MaterialDesignDarkBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="850">
+        Title="MainWindow"
+        Height="640" Width="850">
 
     <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <materialDesign:PackIcon 
             Kind="AccountTie" 
             Grid.Column="0"
+            Grid.Row="0"
             Height="25"
             Width="auto"
-            Margin="60,50,0,20"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"
-            />
+        />
         <Button 
             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -51,7 +54,6 @@
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Margin="80,50,0,20"
             Height="25"
             Width="auto"
             FontWeight="Bold"
@@ -59,10 +61,11 @@
 
         <materialDesign:PackIcon 
             Grid.Column="0"
+            Grid.Row="1"
             Kind="AccountBoxOutline"
             Height="25"
             Width="auto"
-            Margin="60,150,0,20"
+            
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"
@@ -72,28 +75,27 @@
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
             materialDesign:ButtonProgressAssist.Value="-1"
             Style="{StaticResource MaterialDesignRaisedButton}"
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             Content="Client" 
-            x:Name="ClientButton" 
-            Click="CartButton_OnClick"
-            ToolTip="To the cart"
+            x:Name="ClientButton"
+            Click="ClientButton_OnClick"
+            ToolTip="To client section"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Margin="80,150,0,20"
             Height="25"
             Width="auto"
             FontWeight="Bold"
         />
 
-        <materialDesign:PackIcon 
+        <materialDesign:PackIcon
+            Grid.Row="2"
             Grid.Column="0"
             Kind="Truck" 
             Height="25"
             Width="auto"
-            Margin="60,250,0,20"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"/>
@@ -102,23 +104,23 @@
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
             materialDesign:ButtonProgressAssist.Value="-1"
             Style="{StaticResource MaterialDesignRaisedButton}"
-            Grid.Row="0"
+            Grid.Row="2"
             Grid.Column="1"
             Content="Order Tracking" 
             x:Name="OrderTrackingButton" 
             Click="OrderTrackingButton_OnClick"
-            ToolTip="To the cart"
+            ToolTip="To order tracking"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Margin="80,250,0,20"
             Height="25"
             Width="auto"
             FontWeight="Bold"
         />
 
-        <materialDesign:PackIcon
+        <!--<materialDesign:PackIcon
+            Grid.Row="0"
             Grid.Column="0"
             Kind="LoginVariant"
             Height="25"
@@ -137,7 +139,7 @@
             Content="Log In" 
             x:Name="LogInButton" 
             Click="LogInButton_OnClick"
-            ToolTip="To the cart"
+            ToolTip="Log-in for an existing user"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
@@ -146,6 +148,13 @@
             Height="25"
             Width="auto"
             FontWeight="Bold"
-        />
+        />-->
+
+        <Frame 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.RowSpan="3" 
+            x:Name="ProductItemFrame" 
+            Grid.ColumnSpan="3"/>
     </Grid>
 </Window>

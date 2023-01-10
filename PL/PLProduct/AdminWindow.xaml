@@ -4,21 +4,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:PL"
+    xmlns:local="clr-namespace:PL.Converter"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     mc:Ignorable="d"
     Title="AdminWindow"
     Height="640"
-    Width="850"
-    Background="Black">
+    Width="850">
+
+    <!--<Window.Resources>
+        <local:CategoryToProductConverter
+            x:Key="CategoryToProductConverter" />
+    </Window.Resources>-->
 
     <Grid
         x:Name="MainGrid"
         Background="{DynamicResource MaterialDesignDarkBackground}">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition
-                Height="Auto" />
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TabControl
@@ -66,10 +69,10 @@
                             FontWeight="Bold"
                             SelectedIndex="5"
                             Background="MediumPurple"
-                            SelectionChanged="CategorySelector_OnSelectionChanged"
-                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                            SelectionChanged="CategorySelector_OnSelectionChanged" />
                     </StackPanel>
-
+                   
                     <Label
                         Grid.Row="0"
                         Grid.Column="0"
@@ -90,6 +93,17 @@
                         Grid.Row="1"
                         MouseDoubleClick="ProductListView_OnMouseDoubleClick"
                         ItemsSource="{Binding Products}">
+                        
+                        <!--<ListView.ItemsSource>
+                            <Binding
+                                Path="SelectedItem.ToString!"
+                                Source="{x:Reference CategorySelector}">
+                                <Binding.Converter>
+                                    <local:CategoryToProductConverter
+                                        Products="{x:Reference Products}"/>
+                                </Binding.Converter>
+                            </Binding>
+                        </ListView.ItemsSource>-->
 
                         <ListView.ItemContainerStyle>
                             <Style
@@ -242,17 +256,19 @@
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem
-                                    Header="Update Shipping"
+                                    IsEnabled="{Binding Status, Mode=OneWay}"
+                                    Header="Order shipped"
                                     x:Name="UpdateShipping"
                                     Click="UpdateShipping_OnClick"
-                                    Icon="{materialDesign:PackIcon Kind = AirplaneTakeoff}" />
+                                    Icon="{materialDesign:PackIcon Kind=AirplaneTakeoff}" />
                                 <MenuItem
-                                    Header="Update Delivery"
+                                    Header="Order delivered"
                                     x:Name="UpdateDelivery"
                                     Click="UpdateDelivery_OnClick"
                                     Icon="{materialDesign:PackIcon Kind=TruckFast}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn

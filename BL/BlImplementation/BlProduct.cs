@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
@@ -32,7 +33,7 @@ internal class BlProduct : BlApi.IProduct
         if (func != null)
         {
             var list = from item in productForList where func(item) select item;
-            return (IEnumerable<BO.ProductForList>)list;
+            return (IEnumerable<BO.ProductForList?>)list;
         }
 
         return productForList!;
@@ -228,7 +229,7 @@ internal class BlProduct : BlApi.IProduct
         }
     }
 
-    public IEnumerable<BO.ProductItem?> GetCatalog()
+    public IEnumerable<BO.ProductItem?> GetCatalog(Func<BO.ProductItem?, bool>? func)
     {
         var listOfProductItems = from item in dal?.Product.GetAll()
             select new BO.ProductItem()
@@ -240,6 +241,12 @@ internal class BlProduct : BlApi.IProduct
                 InStock = item?.InStock > 0 ? true : false,
                 Amount = 0
             };
+
+        if (func != null)
+        {
+            var list = from item in listOfProductItems where func(item) select item;
+            return (IEnumerable<BO.ProductItem?>)list;
+        }
 
         return listOfProductItems;
     }

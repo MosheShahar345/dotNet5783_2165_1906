@@ -153,15 +153,14 @@ internal class BlOrder : BlApi.IOrder
         {
             dOrder = (DO.Order)dal?.Order.GetEntity(it => it?.ID == orderId)!;
             bOrder = GetOrder(orderId);
-
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
-        //if (dOrder.DeliveryDate != null)
-        //    throw new BO.OrderIsAlreadyDeliveredException();
+        if (dOrder.DeliveryDate != null)
+            throw new BO.OrderIsAlreadyDeliveredException();
 
-        //if (dOrder.ShipDate != null)
-        //    throw new BO.OrderIsAlreadyShippedException();
+        if (dOrder.ShipDate != null)
+            throw new BO.OrderIsAlreadyShippedException();
 
         if (dOrder.ShipDate == null)
 		{
@@ -207,10 +206,9 @@ internal class BlOrder : BlApi.IOrder
         {
 			dOrder.DeliveryDate = DateTime.Now;
 			bOrder.DeliveryDate = DateTime.Now;
-            dal?.Order.Update(dOrder);
             bOrder.Status = GetStatus(dOrder);
+            dal?.Order.Update(dOrder);
         }
-
 
         return bOrder;
     }
