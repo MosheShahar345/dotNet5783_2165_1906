@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using PL.Admin;
 using PL.PLProduct;
 using PL.Client;
+using BO;
+
 namespace PL
 {
     /// <summary>
@@ -37,18 +39,17 @@ namespace PL
         private void ClientButton_OnClick(object sender, RoutedEventArgs e)
         {
             //IconTie.Visibility = Visibility.Hidden;
-            ProductItemFrame.Content = new ProductItemPage();
+            Frame.Content = new ProductItemPage();
         }
 
         private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            Frame.Content = new OrderTracking();
         }
 
-        private void LogInButton_OnClick(object sender, RoutedEventArgs e)
-        {
+        //private void LogInButton_OnClick(object sender, RoutedEventArgs e)
+        //{
             
-        }
-
+        //}
     }
 }

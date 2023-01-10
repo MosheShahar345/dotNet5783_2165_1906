@@ -1,0 +1,78 @@
+﻿<Page x:Class="PL.Order_Tracking.OrderTrackingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL.Order_Tracking"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OrderTrackingPage">
+
+    <Grid
+        Background="{DynamicResource MaterialDesignDarkBackground}" RenderTransformOrigin="0.525,0.499">
+
+
+        <Button
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Content="Enter"
+            x:Name="OrderButton"
+            Click="EnterButton_OnClick"
+            ToolTip="To main window"
+            HorizontalAlignment="Right"
+            Margin="0, 130, 360, 10"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Height="25"
+            Width="auto"
+            FontWeight="Bold"
+            Grid.Row="2"
+            Grid.Column="0" />
+        <Label
+            Content="Enter Order Id:"
+            HorizontalAlignment="Center"
+            Margin="-160,200,160,0"
+            Width="auto"
+            Height="Auto"
+            VerticalAlignment="Top"
+            FontWeight="Bold"
+            FontSize="14"
+            Foreground="MediumPurple" />
+
+        <Button
+                Grid.Row="2"
+                Grid.Column="0"
+                x:Name="Back"
+                Content="Back"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Margin="10, 0,0,10"
+                Padding="5"
+                Height="auto"
+                Width="auto"
+                FontWeight="Bold"
+                Click="BackButton_OnClick"/>
+
+
+        <TextBox
+            x:Name="IdBox" 
+            HorizontalAlignment="Center" 
+            Margin="0,200,0,0" 
+            TextWrapping="Wrap" Text="" 
+            VerticalAlignment="Top" 
+            VerticalContentAlignment="Center"
+            Width="200" 
+            Height="32" 
+            FontSize="16"
+            Foreground="MediumPurple"
+            Style="{StaticResource MaterialDesignTextBox}" >
+        </TextBox>
+        
+    </Grid>
+
+</Page>
