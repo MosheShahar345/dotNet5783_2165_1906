@@ -231,15 +231,18 @@ internal class BlOrder : BlApi.IOrder
         }
         catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
       
-        BO.OrderTracking orderTracking = new BO.OrderTracking();
-        orderTracking.ID = orderId;
-		orderTracking.Status = GetStatus(dOrder);
+        BO.OrderTracking orderTracking = new BO.OrderTracking
+        {
+            ID = orderId,
+            Status = GetStatus(dOrder)
+        };
 
-        orderTracking.Log = new List<Tuple<DateTime, string>>();
+        orderTracking.Log = new List<Tuple<DateTime, string>>
+        {
+            new Tuple<DateTime, string>(
+                (DateTime)dOrder?.OrderDate!, orderTracking?.Status.ToString()!)
+        };
 
-        orderTracking.Log.Add(new Tuple<DateTime, string>(
-            (DateTime)dOrder?.OrderDate!, orderTracking?.Status.ToString()!));
-
-		return orderTracking!;
+        return orderTracking!;
     }
 }
