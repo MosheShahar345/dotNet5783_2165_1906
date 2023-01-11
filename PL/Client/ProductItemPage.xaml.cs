@@ -3,6 +3,7 @@ using PL.PLProduct;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,31 @@ namespace PL.Client;
 /// <summary>
 /// Interaction logic for ProductItemPage.xaml
 /// </summary>
-public partial class ProductItemPage : Page
+public partial class ProductItemPage : Page,INotifyPropertyChanged
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
 
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private ObservableCollection<BO.ProductItem?> productItems;
+
+    public ObservableCollection<BO.ProductItem?> ProductItems
+    {
+        get => productItems;
+        set
+        {
+            productItems = value;
+            OnPropertyChanged(nameof(ProductItems));
+        }
+    }
+
     public Cart cart = new Cart();
-    public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
+    //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
     public ProductItemPage()
     {
         ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog());
@@ -58,23 +78,25 @@ public partial class ProductItemPage : Page
 
     private void AddToCart_OnClick(object sender, RoutedEventArgs e)
     {
-        try
+        if (ProductItemListView.SelectedItem != null)
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
             bl?.Cart.AddPToCart(cart, id);
+            ProductItems = new ObservableCollection<ProductItem?>(bl?.Product.GetCatalog()!);
         }
-        catch (BO.NotExistsException) { MessageBox.Show("Not exists!"); }
-        catch (BO.NotEnoughInStockException) { MessageBox.Show("Not enough in stock!"); }
+        else 
+            MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private void DeleteFromCart_OnClick(object sender, RoutedEventArgs e)
     {
-        try
+        if (ProductItemListView.SelectedItem != null)
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
-            cart.Items?.Remove((BO.OrderItem)ProductItemListView.SelectedItem);
+            cart.Items?.Remove(cart.Items?.FirstOrDefault(it => it?.ProductID == id));
+            ProductItems = new ObservableCollection<ProductItem?>(bl?.Product.GetCatalog()!);
         }
-        catch (BO.NotExistsException) { MessageBox.Show("Not exists!"); }
-        catch (BO.NotEnoughInStockException) { MessageBox.Show("Not enough in stock!"); }
+        else
+            MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 }

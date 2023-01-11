@@ -60,7 +60,7 @@
 
         <Label
             Grid.Row="0"
-            Content="Product Item:"
+            Content="Product list:"
             FontSize="20"
             Width="420"
             FontStyle="Oblique"
@@ -95,12 +95,12 @@
                         Header="Add to cart"
                         x:Name="AddToCart"
                         Click="AddToCart_OnClick"
-                        Icon="{materialDesign:PackIcon Kind=AirplaneTakeoff}" />
+                        Icon="{materialDesign:PackIcon Kind=Plus}" />
                     <MenuItem
                         Header="Delete from cart"
                         x:Name="DeleteFromCart"
                         Click="DeleteFromCart_OnClick"
-                        Icon="{materialDesign:PackIcon Kind=TruckFast}" />
+                        Icon="{materialDesign:PackIcon Kind=Delete}" />
                 </ContextMenu>
             </ListView.ContextMenu>
 

@@ -1,6 +1,7 @@
 ﻿using PL.Admin;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,8 +13,14 @@ namespace PL.PLProduct;
 /// <summary>
 /// Interaction logic for ProductListWindow.xaml
 /// </summary>
-public partial class AdminWindow : Window
+public partial class AdminWindow : Window,INotifyPropertyChanged
 {
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChange(string propertyName)
+    {
+        PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(propertyName));
+    }
     BlApi.IBl? bl = BlApi.Factory.Get();
 
     public ObservableCollection<BO.ProductForList?> Products { get; set; }

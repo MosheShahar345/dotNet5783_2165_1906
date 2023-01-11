@@ -15,6 +15,7 @@ using PL.Admin;
 using PL.PLProduct;
 using PL.Client;
 using BO;
+using PL.Order_Tracking;
 
 namespace PL
 {
@@ -44,7 +45,7 @@ namespace PL
 
         private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Frame.Content = new OrderTracking();
+            Frame.Content = new OrderTrackingPage();
         }
 
         //private void LogInButton_OnClick(object sender, RoutedEventArgs e)

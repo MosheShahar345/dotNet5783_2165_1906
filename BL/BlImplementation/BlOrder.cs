@@ -1,5 +1,4 @@
-﻿using BO;
-using DalApi;
+﻿using DalApi;
 using System;
 
 namespace BlImplementation;
@@ -234,14 +233,16 @@ internal class BlOrder : BlApi.IOrder
         BO.OrderTracking orderTracking = new BO.OrderTracking
         {
             ID = orderId,
-            Status = GetStatus(dOrder)
+            Status = GetStatus(dOrder),
+            Log = new List<Tuple<DateTime?, string?>?> { new Tuple<DateTime?, string?>(dOrder?.OrderDate, "Ordered") }
         };
 
-        orderTracking.Log = new List<Tuple<DateTime, string>>
-        {
-            new Tuple<DateTime, string>(
-                (DateTime)dOrder?.OrderDate!, orderTracking?.Status.ToString()!)
-        };
+        if (dOrder?.ShipDate != null) orderTracking.Log.Add(new Tuple<DateTime?, string?>(dOrder?.ShipDate, "Order Shipped"));
+        if (dOrder?.DeliveryDate != null) orderTracking.Log.Add(new Tuple<DateTime?, string?>(dOrder?.DeliveryDate, "Order Delivered"));
+        //{
+        //    new Tuple<DateTime?, string?>(
+        //        (DateTime)dOrder?.OrderDate!, orderTracking?.Status.ToString()!)
+        //};
 
         return orderTracking!;
     }
