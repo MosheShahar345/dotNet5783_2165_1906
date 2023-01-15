@@ -15,67 +15,71 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL.Order_Tracking
+namespace PL.Order_Tracking;
+
+/// <summary>
+/// Interaction logic for OrderTrackingPage.xaml
+/// </summary>
+public partial class OrderTrackingPage : Page, INotifyPropertyChanged
 {
-    /// <summary>
-    /// Interaction logic for OrderTrackingPage.xaml
-    /// </summary>
-    public partial class OrderTrackingPage : Page, INotifyPropertyChanged
+    BlApi.IBl? bl = BlApi.Factory.Get();
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+    public BO.Order order = new BO.Order();
 
-        private void OnPropertyChanged(string propertyName)
+    public OrderTrackingPage()
+    {
+        TrackingResult = "";
+        InitializeComponent();
+    }
+
+    private string trackingResult;
+
+    public string TrackingResult
+    {
+        get => trackingResult;
+        set
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            trackingResult = value;
+            OnPropertyChanged(nameof(TrackingResult));
         }
-
-
-        public OrderTrackingPage()
+    }
+    private void EnterButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            TrackingResult = "";
-            InitializeComponent();
+            int Id;
+            int temp;
+            int.TryParse(IdBox.Text, out temp);
+            Id = temp;
+            if (IdBox.Text == "")
+                throw new BO.FieldIsEmptyException("Id field is empty");
+            var o = bl?.Order.GetOrder(Id);
+            TrackingResult = $"{o?.ID.ToString()}" +
+                                           $"\n{o?.OrderDate.ToString()}" +
+                                           $"\n{o?.Status.ToString()}";
+            OrderItemView.Visibility = Visibility.Visible;
+            order = bl?.Order.GetOrder(Id)!;
         }
+        catch (BO.FieldIsEmptyException) { TrackingResult = ""; }
+        catch (BO.NotExistsException) { TrackingResult = "Id was not found, try again"; }
+    }
 
-        private string trackingResult;
+    private void OrderItemViewButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        var id = order.ID;
+        Window.GetWindow(this)!.Content = new OrderItemPage(id);
+    }
 
-        public string TrackingResult
-        {
-            get => trackingResult;
-            set
-            {
-                trackingResult = value;
-                OnPropertyChanged(nameof(TrackingResult));
-            }
-        }
-        private void EnterButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int Id;
-                int temp;
-                int.TryParse(IdBox.Text, out temp);
-                Id = temp;
-                if (IdBox.Text == "")
-                    throw new BO.FieldIsEmptyException("Id field is empty");
-                var oroder = bl?.Order.GetOrder(Id);
-                TrackingResult = $"{oroder?.ID.ToString()}" +
-                                               $"\n{oroder?.OrderDate.ToString()}" +
-                                               $"\n{oroder?.Status.ToString()}";
-                TrackingResultTextBlock.Visibility= Visibility.Hidden;
-                //ViewOrderItemButton.Visibility= Visibility.Visible;
-                
-
-
-            }
-            catch (BO.NotExistsException) { TrackingResult = "Id was not found, try again"; }
-        }
-
-        private void BackButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            new MainWindow().Show();
-            (Window.GetWindow(this)!).Close(); 
-        }
+    private void BackButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        new MainWindow().Show();
+        (Window.GetWindow(this)!).Close();
     }
 }

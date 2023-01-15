@@ -35,16 +35,38 @@
             Click="EnterButton_OnClick"
             ToolTip="To main window"
             IsDefault="True"   
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             Height="25"
             Width="auto"
             FontWeight="Bold"
-            Margin="0,20,0,0"
-            Grid.Column="1"
-            Grid.Row="1" />
+            Margin="0,0,-182,10"
+            Grid.Column="2"
+            Grid.Row="2" />
+
+        <Button
+            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+            materialDesign:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}"
+            Content="Order item view"
+            x:Name="OrderItemView"
+            Click="OrderItemViewButton_OnClick"
+            ToolTip="To main window"
+            IsDefault="True" 
+            Visibility="Hidden"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Height="25"
+            Width="auto"
+            FontWeight="Bold"
+            Margin="0,0,-182,10"
+            Grid.Column="2"
+            Grid.Row="2" />
 
         <Label
             Content="Enter Order Id:"
