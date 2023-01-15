@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PL.Order_Tracking"
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OrderTrackingPage">
@@ -12,7 +13,18 @@
     <Grid
         Background="{DynamicResource MaterialDesignDarkBackground}" RenderTransformOrigin="0.525,0.499">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        
         <Button
             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -22,57 +34,92 @@
             x:Name="OrderButton"
             Click="EnterButton_OnClick"
             ToolTip="To main window"
-            HorizontalAlignment="Right"
-            Margin="0, 130, 360, 10"
+            IsDefault="True"   
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             Height="25"
             Width="auto"
             FontWeight="Bold"
-            Grid.Row="2"
-            Grid.Column="0" />
+            Margin="0,20,0,0"
+            Grid.Column="1"
+            Grid.Row="1" />
+
         <Label
             Content="Enter Order Id:"
-            HorizontalAlignment="Center"
-            Margin="-160,200,160,0"
+            Margin="100, 150, 0, 0"
             Width="auto"
-            Height="Auto"
-            VerticalAlignment="Top"
+            Height="auto"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
             FontWeight="Bold"
             FontSize="14"
-            Foreground="MediumPurple" />
-
-        <Button
-                Grid.Row="2"
-                Grid.Column="0"
-                x:Name="Back"
-                Content="Back"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                Margin="10, 0,0,10"
-                Padding="5"
-                Height="auto"
-                Width="auto"
-                FontWeight="Bold"
-                Click="BackButton_OnClick"/>
-
+            Foreground="MediumPurple" 
+            Grid.Column="0"
+            Grid.Row="0"/>
+        
 
         <TextBox
-            x:Name="IdBox" 
-            HorizontalAlignment="Center" 
-            Margin="0,200,0,0" 
+            x:Name="IdBox"
+            Grid.Column="1"
+            Grid.Row="0" 
+            Margin="0, 150, 0, 0" 
             TextWrapping="Wrap" Text="" 
-            VerticalAlignment="Top" 
+            VerticalAlignment="Center" 
             VerticalContentAlignment="Center"
+            HorizontalAlignment="Center"
+            HorizontalContentAlignment="Left"
             Width="200" 
             Height="32" 
             FontSize="16"
-            Foreground="MediumPurple"
+            Foreground="White"
             Style="{StaticResource MaterialDesignTextBox}" >
         </TextBox>
-        
+
+        <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            x:Name="Back"
+            Content="Back"
+            Margin="10, 0, 0, 10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Padding="5"
+            Height="auto"
+            Width="auto"
+            FontWeight="Bold"
+            Click="BackButton_OnClick"/>
+
+        <materialDesign:Card 
+            Width="200" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Padding="8" 
+            Grid.Column="2" 
+            Grid.Row="1" 
+            Height="100" 
+            Opacity="0.8"         
+            Background="{x:Null}"
+            Foreground="{x:Null}"
+            UniformCornerRadius="6"
+            Margin="50,0,-50,0"
+            Grid.RowSpan="2">
+            <TextBlock 
+                Margin="50,0,-50,0"
+                HorizontalAlignment="Center"
+                x:Name="TrackingResultTextBlock" 
+                Text="{Binding TrackingResult}" 
+                TextWrapping="Wrap" 
+                Height="84" 
+                FontWeight="Bold" 
+                FontSize="14" 
+                Foreground="White" 
+                VerticalAlignment="Center"/>
+        </materialDesign:Card>
+
     </Grid>
 
 </Page>
