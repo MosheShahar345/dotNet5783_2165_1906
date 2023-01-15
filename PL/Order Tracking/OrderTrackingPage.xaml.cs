@@ -69,7 +69,7 @@ namespace PL.Order_Tracking
 
 
             }
-            catch (BO.NotExistsException) { TrackingResult = "Id was not found \n try again"; }
+            catch (BO.NotExistsException) { TrackingResult = "Id was not found, try again"; }
         }
 
         private void BackButton_OnClick(object sender, RoutedEventArgs e)
