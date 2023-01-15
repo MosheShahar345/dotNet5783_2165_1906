@@ -1,6 +1,4 @@
-﻿using BO;
-using PL.PLProduct;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PL.Admin;
 
 namespace PL.Client;
 
@@ -24,7 +23,7 @@ namespace PL.Client;
 /// </summary>
 public partial class ProductItemPage : Page,INotifyPropertyChanged
 {
-    BlApi.IBl? bl = BlApi.Factory.Get();
+    private BlApi.IBl? bl = BlApi.Factory.Get();
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -32,7 +31,7 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
+    
     private ObservableCollection<BO.ProductItem?> productItems;
 
     public ObservableCollection<BO.ProductItem?> ProductItems
@@ -45,11 +44,12 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         }
     }
 
-    public Cart cart = new Cart();
-    //public ObservableCollection<BO.ProductItem?> ProductItems { get; set; }
+    public BO.Cart cart = new BO.Cart();
+
     public ProductItemPage()
     {
-        ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog());
+        ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog(cart));
+        cart.Items = new ObservableCollection<BO.OrderItem?>().ToList();
         InitializeComponent();
         ProductItemSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
@@ -61,19 +61,19 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
 
     private void ProductItemSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductItemListView.ItemsSource = ProductItemSelector.SelectedItem.ToString() == "All" ? ProductItems
-            : bl?.Product.GetCatalog(it => it?.Category.ToString() == ProductItemSelector.SelectedItem.ToString());
+        ProductItems = ProductItemSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!)
+            : new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart, it => it?.Category.ToString() == ProductItemSelector.SelectedItem.ToString())!);
     }
 
     private void CartButton_OnClick(object sender, RoutedEventArgs e)
     {
-        
+        Frame.Content = new CartPage(cart);
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new MainWindow().Show();
-        Window.GetWindow(this)!.Close();
+        (Window.GetWindow(this)!).Close();
     }
 
     private void AddToCart_OnClick(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
             bl?.Cart.AddPToCart(cart, id);
-            ProductItems = new ObservableCollection<ProductItem?>(bl?.Product.GetCatalog()!);
+            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!);
         }
         else 
             MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -94,7 +94,7 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
             cart.Items?.Remove(cart.Items?.FirstOrDefault(it => it?.ProductID == id));
-            ProductItems = new ObservableCollection<ProductItem?>(bl?.Product.GetCatalog()!);
+            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!);
         }
         else
             MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.Admin;
-using PL.PLProduct;
 using PL.Client;
 using BO;
 using PL.Order_Tracking;
@@ -36,10 +35,8 @@ namespace PL
             Close();
         }
 
-
         private void ClientButton_OnClick(object sender, RoutedEventArgs e)
         {
-            //IconTie.Visibility = Visibility.Hidden;
             Frame.Content = new ProductItemPage();
         }
 
@@ -47,10 +44,5 @@ namespace PL
         {
             Frame.Content = new OrderTrackingPage();
         }
-
-        //private void LogInButton_OnClick(object sender, RoutedEventArgs e)
-        //{
-            
-        //}
     }
 }

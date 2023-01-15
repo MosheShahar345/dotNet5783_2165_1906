@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Admin"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="OrderItemWindow" 
+        Title="OrderItemPage" 
         Height="640" Width="850"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
@@ -18,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <ListView 
-            Foreground="MediumPurple"
+            Foreground="White"
             FontWeight="Bold"
             FontSize="14"
             x:Name="OrderItemListView"
@@ -65,7 +64,9 @@
                             <Setter Property="Foreground" Value="Black"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="IsHitTestVisible" Value="False"/>
-                            <Setter Property="Background" Value="MediumPurple"/>
+                            <Setter
+                                Property="Background"
+                                Value="{DynamicResource PrimaryHueMidBrush}"/>
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
                 </GridView>
@@ -87,6 +88,13 @@
             FontWeight="Bold"
             Click="BackButton_OnClick">
         </Button>
+
+        <Frame
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            x:Name="Frame">
+        </Frame>
 
     </Grid>
 </Window>

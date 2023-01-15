@@ -1,31 +1,49 @@
-﻿using PL.Admin;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Globalization;
-using System.Windows.Data;
 
-namespace PL.PLProduct;
+namespace PL.Admin;
 
 /// <summary>
-/// Interaction logic for ProductListWindow.xaml
+/// Interaction logic for ProductListPage.xaml
 /// </summary>
-public partial class AdminWindow : Window,INotifyPropertyChanged
+public partial class AdminWindow : Window, INotifyPropertyChanged
 {
+    BlApi.IBl? bl = BlApi.Factory.Get();
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChange(string propertyName)
     {
         PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(propertyName));
     }
-    BlApi.IBl? bl = BlApi.Factory.Get();
 
-    public ObservableCollection<BO.ProductForList?> Products { get; set; }
+    private ObservableCollection<BO.ProductForList?> products;
 
-    public ObservableCollection<BO.OrderForList?> Orders { get; set; }
+    public ObservableCollection<BO.ProductForList?> Products
+    {
+        get => products;
+        set
+        {
+            products = value;
+            OnPropertyChange(nameof(Products));
+        }
+    }
+
+    private ObservableCollection<BO.OrderForList?> orders;
+
+    public ObservableCollection<BO.OrderForList?> Orders
+    {
+        get => orders;
+        set
+        {
+            orders = value;
+            OnPropertyChange(nameof(Orders));
+        }
+    }
 
     public AdminWindow()
     {
@@ -45,31 +63,30 @@ public partial class AdminWindow : Window,INotifyPropertyChanged
                  ?? throw new BO.NotExistsException();
 
             new AddAndUpdateWindow(Id).Show();
-            GetWindow(this)!.Close();
+            (Window.GetWindow(this)!).Close();
         }
         catch (BO.NotExistsException)
         {
             new AdminWindow().Show();
-            GetWindow(this)!.Close();
         }
     }
 
     private void CategorySelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductListView.ItemsSource = CategorySelector.SelectedItem.ToString() == "All" ? Products
-            : bl?.Product.GetProductForList(it => it?.Category.ToString() == CategorySelector.SelectedItem.ToString());
+        Products = CategorySelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductForList?>(bl?.Product.GetProductForList()!)
+            : new ObservableCollection<BO.ProductForList?>(bl?.Product.GetProductForList(it => it?.Category.ToString() == CategorySelector.SelectedItem.ToString())!);
     }
 
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AddAndUpdateWindow().Show();
-        GetWindow(this)!.Close();
+        (Window.GetWindow(this)!).Close();
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new MainWindow().Show();
-        GetWindow(this)!.Close();
+        (Window.GetWindow(this)!).Close();
     }
 
     private void UpdateShipping_OnClick(object sender, RoutedEventArgs e)
@@ -78,6 +95,7 @@ public partial class AdminWindow : Window,INotifyPropertyChanged
         {
             var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
             bl?.Order.UpdateOrderShipping(id);
+            Orders = new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList()!);
         }
         catch (BO.OrderIsAlreadyDeliveredException) { MessageBox.Show("Order is already delivered!"); }
         catch (BO.OrderIsAlreadyShippedException) { MessageBox.Show("Order is already shipped!"); }
@@ -89,6 +107,7 @@ public partial class AdminWindow : Window,INotifyPropertyChanged
         {
             var id = ((BO.OrderForList)OrderListView.SelectedItem).ID;
             bl?.Order.UpdateOrderDelivery(id);
+            Orders = new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList()!);
         }
         catch (BO.OrderIsAlreadyDeliveredException) { MessageBox.Show("Order is already delivered!"); }
         catch (BO.OrderHasNotShippedException) { MessageBox.Show("Order is not shipped yet!"); }
@@ -96,8 +115,8 @@ public partial class AdminWindow : Window,INotifyPropertyChanged
 
     private void StatusSSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        OrderListView.ItemsSource = StatusSelector.SelectedItem.ToString() == "All" ? Orders
-            : bl?.Order.GetOrderForList(it => it?.Status.ToString() == StatusSelector.SelectedItem.ToString());
+        Orders = StatusSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList()!) 
+            : new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList(it => it?.Status.ToString() == StatusSelector.SelectedItem.ToString())!);
     }
 
     private void OrderListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)

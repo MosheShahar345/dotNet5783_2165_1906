@@ -1,5 +1,4 @@
-﻿using PL.PLProduct;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,27 +12,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO;
 
-namespace PL.Admin
+namespace PL.Admin;
+
+/// <summary>
+/// Interaction logic for OrderItemWindow.xaml
+/// </summary>
+public partial class OrderItemWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for OrderItemWindow.xaml
-    /// </summary>
-    public partial class OrderItemWindow : Window
+    BlApi.IBl? bl = BlApi.Factory.Get();
+    public ObservableCollection<BO.OrderItem?> OrderItems { get; set; }
+    public OrderItemWindow(int id)
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
-        public ObservableCollection<BO.OrderItem?> OrderItems { get; set; }
-        public OrderItemWindow(int id)
-        {
-            OrderItems = new ObservableCollection<BO.OrderItem?>(bl.Order.GetOrder(id).Items!);
-            InitializeComponent();
-        }
+        OrderItems = new ObservableCollection<BO.OrderItem?>(bl.Order.GetOrder(id).Items!);
+        InitializeComponent();
+    }
 
-        private void BackButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            new AdminWindow().Show();
-            Close();
-        }
+    private void BackButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        new AdminWindow().Show();
+        (Window.GetWindow(this)!).Close();
     }
 }

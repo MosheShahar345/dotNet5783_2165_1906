@@ -90,7 +90,7 @@ internal class BlProduct : BlApi.IProduct
         BO.ProductItem bProductItem;
         BO.OrderItem bOrderItem;
 
-        bOrderItem = cart.Items?.Find(it => it!.ProductID == productId)??
+        bOrderItem = cart.Items?.Find(it => it!.ProductID == productId) ??
                      throw new BO.NotExistsException();
 
         try
@@ -100,7 +100,7 @@ internal class BlProduct : BlApi.IProduct
             {
                 ID = (int)dProduct?.ID!,
                 Name = dProduct?.Name,
-                Price = (int)dProduct?.Price!,
+                Price = (double)dProduct?.Price!,
                 Category = (BO.Category)dProduct?.Category!,
                 InStock = dProduct?.InStock > 0 ? true : false,
                 Amount = bOrderItem.Amount
@@ -229,7 +229,7 @@ internal class BlProduct : BlApi.IProduct
         }
     }
 
-    public IEnumerable<BO.ProductItem?> GetCatalog(Func<BO.ProductItem?, bool>? func)
+    public IEnumerable<ProductItem?> GetCatalog(BO.Cart cart, Func<ProductItem?, bool>? func)
     {
         var listOfProductItems = from item in dal?.Product.GetAll()
             select new BO.ProductItem()
@@ -239,7 +239,8 @@ internal class BlProduct : BlApi.IProduct
                 Price = (double)item?.Price!,
                 Category = (BO.Category)item?.Category!,
                 InStock = item?.InStock > 0 ? true : false,
-                Amount = 0
+                Amount = cart.Items != null && cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID) != null 
+                    ? cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID)!.Amount : 0
             };
 
         if (func != null)

@@ -14,9 +14,7 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="AlreadyExistsException"></exception>
     public int Add(OrderItem orderItem)
     {
-        if (DataSource.OrderItems.Any(x => x?.ID == orderItem.ID))
-            throw new AlreadyExistsException("order item already exists");
-
+        orderItem.ID = DataSource.Config.GetOrderItemId(); 
         DataSource.OrderItems.Add(orderItem);
         return orderItem.ID;
     }
