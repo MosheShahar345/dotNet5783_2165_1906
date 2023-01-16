@@ -99,15 +99,13 @@ internal class BlCart : BlApi.ICart
         var orderItem = cart.Items?.Find(it => productId == it?.ProductID) ??
                         throw new BO.NotExistsException();
 
-        if (nAmount == orderItem.Amount) { return cart; }
-
-        if (nAmount > orderItem.Amount)
+        if (nAmount >= orderItem.Amount)
         {
             if (product?.InStock >= orderItem.Amount + nAmount)
             {
-                orderItem.Amount = nAmount;
-                orderItem.TotalPrice = orderItem.Price * nAmount;
-                cart.TotalPrice += orderItem.TotalPrice;
+                orderItem.Amount += nAmount;
+                orderItem.TotalPrice += orderItem.Price * nAmount;
+                cart.TotalPrice += orderItem.Price * nAmount;
             }
             else
             {
@@ -118,15 +116,15 @@ internal class BlCart : BlApi.ICart
 
         else if (nAmount != 0 && nAmount < orderItem.Amount)
         {
-            orderItem.Amount = nAmount;
-            orderItem.TotalPrice = orderItem.Price * nAmount;
-            cart.TotalPrice -= orderItem.TotalPrice;
+            orderItem.Amount -= nAmount;
+            orderItem.TotalPrice -= orderItem.Price * nAmount;
+            cart.TotalPrice -= orderItem.Price * nAmount;
         }
 
         else
         {
             cart.TotalPrice -= orderItem.TotalPrice;
-            cart.Items.Remove(orderItem);
+            cart.Items?.Remove(orderItem);
         }
 
         return cart;

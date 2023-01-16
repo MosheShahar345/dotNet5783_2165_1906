@@ -16,33 +16,33 @@ using PL.Client;
 using BO;
 using PL.Order_Tracking;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    BlApi.IBl? bl = BlApi.Factory.Get();
+
+    public MainWindow()
     {
-        BlApi.IBl? bl = BlApi.Factory.Get();
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void AdminButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            new AdminWindow().Show();
-            Close();
-        }
+    private void AdminButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        new AdminWindow().Show();
+        Close();
+    }
 
-        private void ClientButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Frame.Content = new ProductItemPage();
-        }
+    private void ClientButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Frame.Content = new ProductItemPage();
+    }
 
-        private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Frame.Content = new OrderTrackingPage();
-        }
+    private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Frame.Content = new OrderTrackingPage();
     }
 }

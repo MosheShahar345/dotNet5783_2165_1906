@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignDarkBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow"
-        Height="640" Width="850">
+        Height="640" Width="865">
 
     <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         
