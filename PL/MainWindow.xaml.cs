@@ -38,11 +38,13 @@ public partial class MainWindow : Window
 
     private void ClientButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Frame.Content = new ProductItemPage();
+        Window.GetWindow(this)!.Content = new ProductItemPage();
+        //Frame.Content = new ProductItemPage();
     }
 
     private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Frame.Content = new OrderTrackingPage();
+        Window.GetWindow(this)!.Content = new OrderTrackingPage();
+        //Frame.Content = new OrderTrackingPage();
     }
 }

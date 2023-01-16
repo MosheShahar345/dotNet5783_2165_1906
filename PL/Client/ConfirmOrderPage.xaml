@@ -68,7 +68,7 @@
                 materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                 materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                 materialDesign:ButtonProgressAssist.Value="-1"
-                Style="{StaticResource MaterialDesignFlatButton}"
+                Style="{StaticResource MaterialDesignOutlinedButton}"
                 Content="Confirm order"
                 x:Name="ConfirmOrderButton"
                 Click="ConfirmOrderButton_OnClick"
@@ -117,6 +117,21 @@
             Width="auto"
             FontWeight="Bold"
             Click="BackToMainWindowButton_OnClick" />
+
+        <TextBlock
+            x:Name="OrderConfirmedTextBlock"
+            Grid.Column="1"
+            Grid.Row="2"
+            Height="28"
+            Width="auto"
+            Margin="0,0,0,10"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Text="Order Confirmed"
+            FontWeight="Bold"
+            FontSize="25"
+            Visibility="Hidden"
+            Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
     </Grid>
 </Page>

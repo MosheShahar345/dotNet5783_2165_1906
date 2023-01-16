@@ -65,11 +65,6 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         ProductItemSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
-    private void ProductItemListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        
-    }
-
     private void ProductItemSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ProductItems = ProductItemSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(Cart)!)
@@ -78,7 +73,8 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
 
     private void CartButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Frame.Content = new CartPage(Cart);
+        Window.GetWindow(this)!.Content = new CartPage(Cart);
+        //Frame.Content = new CartPage(Cart);
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
