@@ -86,7 +86,12 @@ public partial class CartPage : Page , INotifyPropertyChanged
 
     private void ConfirmOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Window.GetWindow(this)!.Content = new ConfirmOrderPage(Cart);
+        if (Cart.Items?.Count > 0)
+        {
+            Window.GetWindow(this)!.Content = new ConfirmOrderPage(Cart);
+        }
+        else
+            MessageBox.Show("Cart is empty", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
