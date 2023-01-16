@@ -15,8 +15,9 @@
         Background="{DynamicResource MaterialDesignDarkBackground}">
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
@@ -28,8 +29,8 @@
         <StackPanel
             VerticalAlignment="Center"
             Width="200"
-            Grid.Column="1"
-            HorizontalAlignment="Left">
+            Grid.Column="2"
+            HorizontalAlignment="Center">
 
             <TextBox
                 x:Name="TextBoxName"
@@ -119,12 +120,12 @@
             materialDesign:ButtonProgressAssist.Value="-1"
             Style="{StaticResource MaterialDesignRaisedButton}"
             Grid.Row="1"
-            Grid.Column="2"
+            Grid.Column="3"
             x:Name="BackToMainWindow"
             Content="Back to main window" 
-            Margin="0,0,10,0"
+            Margin="0,0,10,10"
             HorizontalAlignment="Right"
-            VerticalAlignment="Top"
+            VerticalAlignment="Bottom"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
             Padding="5"
@@ -149,7 +150,63 @@
             FontWeight="Bold"
             Click="BackButton_OnClick"/>
 
+        <materialDesign:PackIcon Kind="Account" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Center"
+                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+
+        <materialDesign:PackIcon Kind="Email" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
+        
+        <materialDesign:PackIcon Kind="MapMarker" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
+        
+        <materialDesign:PackIcon Kind="ListStatus" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
+
+        <materialDesign:PackIcon Kind="CalendarRange" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
 
 
+        <materialDesign:PackIcon Kind="AirplaneClock" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
+
+        <materialDesign:PackIcon Kind="TruckDelivery" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
+
+        <materialDesign:PackIcon Kind="CreditCard" 
+                                 Grid.Column="1"
+                                 Grid.Row="0"
+                                 Height="20"
+                                 Width="50"
+                                 HorizontalAlignment="Right"/>
     </Grid>
 </Page>
