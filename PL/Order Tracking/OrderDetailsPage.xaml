@@ -185,7 +185,7 @@
                                  Grid.Row="0"
                                  Height="20"
                                  Width="50"
-                                 Margin="10, 70, 0, 10"
+                                 Margin="10, 5, 0, 10"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -195,7 +195,7 @@
                                  Grid.Row="0"
                                  Height="20"
                                  Width="50"
-                                 Margin="10, 140, 0, 10"
+                                 Margin="10, 75, 0, 10"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -206,7 +206,7 @@
                                  Grid.Row="0"
                                  Height="20"
                                  Width="50"
-                                 Margin="10, 280, 0, 10"
+                                 Margin="10, 145, 0, 10"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -216,7 +216,7 @@
                                  Grid.Row="0"
                                  Height="20"
                                  Width="50"
-                                 Margin="10, 280, 0, 10"
+                                 Margin="10, 215, 0, 10"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
@@ -226,6 +226,7 @@
                                  Grid.Row="0"
                                  Height="20"
                                  Width="50"
+                                 Margin="10, 285, 0, 10"
                                  HorizontalAlignment="Right"
                                  VerticalAlignment="Center"
                                  Foreground="{DynamicResource PrimaryHueMidBrush}"/>
