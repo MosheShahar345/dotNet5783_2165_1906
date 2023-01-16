@@ -25,7 +25,7 @@ public partial class CartPage : Page , INotifyPropertyChanged
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
-    public BO.Cart Cart = new BO.Cart();
+    public BO.Cart Cart;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -80,17 +80,18 @@ public partial class CartPage : Page , INotifyPropertyChanged
         Cart.Items?.Remove(orderItem);
         Cart.TotalPrice -= orderItem.TotalPrice;
         TotalPrice = Cart.TotalPrice;
+        AmountToUpdate.Visibility = Visibility.Hidden;
         OrderItems = new ObservableCollection<BO.OrderItem?>(Cart.Items!);
     }
 
     private void ConfirmOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
-        
+        Window.GetWindow(this)!.Content = new ConfirmOrderPage(Cart);
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Window.GetWindow(this)!.Content = new ProductItemPage();
+        Window.GetWindow(this)!.Content = new ProductItemPage(Cart);
     }
 
     private void AmountToUpdate_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -103,7 +104,8 @@ public partial class CartPage : Page , INotifyPropertyChanged
         }
         catch (BO.NotEnoughInStockException) { MessageBox.Show("Not enough in stock", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
 
-        TotalPrice += Cart.TotalPrice;
+        AmountToUpdate.Visibility = newAmount == 0 ? Visibility.Hidden : Visibility.Visible;
+        TotalPrice = Cart.TotalPrice;
         OrderItems = new ObservableCollection<BO.OrderItem?>(Cart.Items!);
     }
 }

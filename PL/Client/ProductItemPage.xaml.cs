@@ -44,12 +44,23 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         }
     }
 
-    public BO.Cart cart = new BO.Cart();
+    public BO.Cart Cart;
+
+    public ProductItemPage(BO.Cart cart)
+    {
+        Cart = cart;
+        ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog(Cart));
+        InitializeComponent();
+        ProductItemSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+    }
 
     public ProductItemPage()
     {
-        ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog(cart));
-        cart.Items = new ObservableCollection<BO.OrderItem?>().ToList();
+        Cart = new BO.Cart
+        {
+            Items = new ObservableCollection<BO.OrderItem?>().ToList()
+        };
+        ProductItems = new ObservableCollection<BO.ProductItem?>(bl.Product.GetCatalog(Cart));
         InitializeComponent();
         ProductItemSelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
@@ -61,13 +72,13 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
 
     private void ProductItemSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductItems = ProductItemSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!)
-            : new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart, it => it?.Category.ToString() == ProductItemSelector.SelectedItem.ToString())!);
+        ProductItems = ProductItemSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(Cart)!)
+            : new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(Cart, it => it?.Category.ToString() == ProductItemSelector.SelectedItem.ToString())!);
     }
 
     private void CartButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Frame.Content = new CartPage(cart);
+        Frame.Content = new CartPage(Cart);
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
@@ -81,8 +92,8 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         if (ProductItemListView.SelectedItem != null)
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
-            bl?.Cart.AddPToCart(cart, id);
-            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!);
+            bl?.Cart.AddPToCart(Cart, id);
+            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(Cart)!);
         }
         else 
             MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -93,8 +104,8 @@ public partial class ProductItemPage : Page,INotifyPropertyChanged
         if (ProductItemListView.SelectedItem != null)
         {
             var id = ((BO.ProductItem)ProductItemListView.SelectedItem).ID;
-            cart.Items?.Remove(cart.Items?.FirstOrDefault(it => it?.ProductID == id));
-            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(cart)!);
+            Cart.Items?.Remove(Cart.Items?.FirstOrDefault(it => it?.ProductID == id));
+            ProductItems = new ObservableCollection<BO.ProductItem?>(bl?.Product.GetCatalog(Cart)!);
         }
         else
             MessageBox.Show("choose only from the list", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
