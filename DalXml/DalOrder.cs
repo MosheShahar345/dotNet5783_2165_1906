@@ -7,7 +7,7 @@ internal class DalOrder : IOrder
 {
     const string s_Order = $"Order";
 
-    #region Add Order
+  
     /// <summary>
     /// add a order to xml file
     /// </summary>
@@ -18,7 +18,7 @@ internal class DalOrder : IOrder
         List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
 
         if (orders.FirstOrDefault(it => it?.ID == order.ID) != null)
-            throw new Exception("order olready exist");
+            throw new Exception("order already exist");
 
         orders.Add(order);
 
@@ -27,8 +27,23 @@ internal class DalOrder : IOrder
         return order.ID;
     }
 
+    public void Update(Order item)
+    {
+        throw new NotImplementedException();
+    }
 
+    public void Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
 
+    public Order? GetEntity(Func<Order?, bool>? func)
+    {
+        throw new NotImplementedException();
+    }
 
-
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
+    {
+        throw new NotImplementedException();
+    }
 }

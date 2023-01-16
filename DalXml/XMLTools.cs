@@ -52,9 +52,4 @@ static class XMLTools
             throw new Exception($"fail to load xml file:{filePath}", e);
         }
     }
-
-
-    
-
-
 }

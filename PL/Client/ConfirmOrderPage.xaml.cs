@@ -34,12 +34,15 @@ public partial class ConfirmOrderPage : Page
     {
         try
         {
+            if (TextBoxName.Text == "" || TextBoxAddress.Text == "" || TextBoxEmail.Text == "")
+                throw new BO.FieldIsEmptyException();
             bl?.Cart.ConfirmationOrder(Cart);
             Cart = new BO.Cart();
             ConfirmOrderButton.Visibility = Visibility.Hidden;
             OrderConfirmedTextBlock.Visibility = Visibility.Visible;
         }
-        catch (FormatException) { MessageBox.Show("Invalid format"); }
+        catch (FormatException) { MessageBox.Show("Invalid format", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.FieldIsEmptyException) { MessageBox.Show("Field is empty", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
         catch (BO.InvalidAddressException) { MessageBox.Show("Invalid address", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
         catch (BO.InvalidNameException) { MessageBox.Show("Invalid name", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
         catch (BO.InvalidEmailException) { MessageBox.Show("Invalid email", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
