@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Xml.Linq;
 
 internal class DalOrder : IOrder
 {
@@ -26,6 +27,11 @@ internal class DalOrder : IOrder
         XMLTools.SaveListToXMLSerializer(orders, s_Order);
 
         return order.ID;
+    }
+
+    public void Delete(int id)
+    {
+        
     }
 
     #region Update Order
