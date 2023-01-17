@@ -5,52 +5,52 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Xml.Linq;
 
-internal class DalOrder : IOrder
-{
-    const string s_Order = $"Order";
+//internal class DalOrder : IOrder
+//{
+//    const string s_Order = $"Order";
 
-    #region Add Order
-    /// <summary>
-    /// add a order to xml file
-    /// </summary>
-    ///
+//    #region Add Order
+//    /// <summary>
+//    /// add a order to xml file
+//    /// </summary>
+//    ///
 
-    public int Add(Order order)
-    {
-        List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
+//    public int Add(Order order)
+//    {
+//        List<Order?> orders = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
 
-        if (orders.FirstOrDefault(it => it?.ID == order.ID) != null)
-            throw new Exception("order olready exist");
+//        if (orders.FirstOrDefault(it => it?.ID == order.ID) != null)
+//            throw new Exception("order olready exist");
 
-        orders.Add(order);
+//        orders.Add(order);
 
-        XMLTools.SaveListToXMLSerializer(orders, s_Order);
+//        XMLTools.SaveListToXMLSerializer(orders, s_Order);
 
-        return order.ID;
-    }
+//        return order.ID;
+//    }
 
-    public void Delete(int id)
-    {
+//    public void Delete(int id)
+//    {
         
-    }
+//    }
 
-    #region Update Order
-    /// <summary>
-    ///  a order to xml file
-    /// </summary>
-    ///
+//    #region Update Order
+//    /// <summary>
+//    ///  a order to xml file
+//    /// </summary>
+//    ///
 
-    public int Update(Order order)
-    {
-        List<Order?> list = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
-        var o = (from item in list
-                 where(item?.ID == order.ID)
-                 select item).ToList();
-        return order.ID;
-    }
-
-
+//    public int Update(Order order)
+//    {
+//        List<Order?> list = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
+//        var o = (from item in list
+//                 where(item?.ID == order.ID)
+//                 select item).ToList();
+//        return order.ID;
+//    }
 
 
 
-}
+
+
+//}

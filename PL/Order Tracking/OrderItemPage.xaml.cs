@@ -47,4 +47,9 @@ public partial class OrderItemPage : Page
     {
         Window.GetWindow(this)!.Content = new OrderTrackingPage();
     }
+
+    private void Frame_Navigated(object sender, NavigationEventArgs e)
+    {
+
+    }
 }

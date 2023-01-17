@@ -64,6 +64,8 @@ public partial class OrderTrackingPage : Page, INotifyPropertyChanged
             TrackingResult = $"{o?.ID.ToString()}" +
                                            $"\n{o?.OrderDate.ToString()}" +
                                            $"\n{o?.Status.ToString()}";
+
+            EnterButton.Visibility = Visibility.Hidden;
             OrderItemView.Visibility = Visibility.Visible;
             order = bl?.Order.GetOrder(Id)!;
         }

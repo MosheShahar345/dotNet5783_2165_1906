@@ -187,8 +187,6 @@
             </ListView.View>
         </ListView>
 
-       
-
         <Frame
             Grid.Row="0"
             Grid.Column="0"
