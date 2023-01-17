@@ -294,8 +294,7 @@
                                             Value="False" />
                                         <Setter
                                             Property="Background"
-                                            Value="{DynamicResource PrimaryHueMidBrush}"
-                                            />
+                                            Value="{DynamicResource PrimaryHueMidBrush}" />
                                     </Style>
                                 </GridView.ColumnHeaderContainerStyle>
                             </GridView>
@@ -320,4 +319,31 @@
             Click="BackButton_OnClick">
         </Button>
     </Grid>
+    <Window.Resources>
+        <Style
+            TargetType="ListViewItem">
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="{x:Type ListViewItem}">
+                        <Border
+                            Name="Border">
+                            <GridViewHeaderRowPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger
+                                Property="IsSelected"
+                                Value="True">
+                                <Setter
+                                    TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource MaterialDesignDarkBackground}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 </Window>

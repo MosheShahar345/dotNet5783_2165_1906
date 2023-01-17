@@ -40,13 +40,13 @@ public partial class AddAndUpdateWindow : Window
         {
             if (IdBox.Text == "")
                 throw new BO.FieldIsEmptyException("Id field is empty");
-            if (CategoryComboBox.Text == "" || CategoryComboBox.Text == "None")
+            if (CategoryComboBox.Text is "" or "None")
                 throw new BO.FieldIsEmptyException("Category field is empty");
             if (NameBox.Text == "")
                 throw new BO.FieldIsEmptyException("Name field is empty");
-            if (PriceBox.Text == "" || PriceBox.Text == 0.ToString())
+            if (PriceBox.Text == "")
                 throw new BO.FieldIsEmptyException("Price field is empty");
-            if (InStockBox.Text == "" || InStockBox.Text == 0.ToString())
+            if (InStockBox.Text == "")
                 throw new BO.FieldIsEmptyException("In Stock field is empty");
 
             BO.Product product = new BO.Product()
@@ -66,13 +66,13 @@ public partial class AddAndUpdateWindow : Window
             new AdminWindow().Show();
             Close();
         }
-        catch (FormatException) { MessageBox.Show("invalid format"); }
-        catch (BO.FieldIsEmptyException) { MessageBox.Show("Field is empty"); }
-        catch (BO.InvalidPriceException) { MessageBox.Show("Price is lass than 0"); }
-        catch (BO.IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0"); }
-        catch (BO.InvalidNameException) { MessageBox.Show("Invalid name"); }
-        catch (BO.InvalidInStockException) { MessageBox.Show("In Stock is lass than 0"); }
-        catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists"); }
+        catch (FormatException) { MessageBox.Show("invalid format", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.FieldIsEmptyException) { MessageBox.Show("Field is empty", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.InvalidPriceException) { MessageBox.Show("Price is lass than 0", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.IdIsLessThanZeroException) { MessageBox.Show("Id is lass than 0", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.InvalidNameException) { MessageBox.Show("Invalid name", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.InvalidInStockException) { MessageBox.Show("In Stock is lass than 0", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
+        catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
     }
 
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
