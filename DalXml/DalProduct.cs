@@ -5,5 +5,5 @@ using System.Security.Principal;
 
 internal class DalProduct : IProduct
 {
-
+      
 }

@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Security.Cryptography;
 using System.Security.Principal;
 
 internal class DalOrder : IOrder
@@ -24,6 +25,21 @@ internal class DalOrder : IOrder
 
         XMLTools.SaveListToXMLSerializer(orders, s_Order);
 
+        return order.ID;
+    }
+
+    #region Update Order
+    /// <summary>
+    ///  a order to xml file
+    /// </summary>
+    ///
+
+    public int Update(Order order)
+    {
+        List<Order?> list = XMLTools.LoadListFromXMLSerializer<Order>(s_Order);
+        var o = (from item in list
+                 where(item?.ID == order.ID)
+                 select item).ToList();
         return order.ID;
     }
 

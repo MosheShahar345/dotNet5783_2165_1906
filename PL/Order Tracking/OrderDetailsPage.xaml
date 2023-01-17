@@ -157,8 +157,7 @@
                                  Width="50"
                                  Margin="10, -205, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="Email" 
                                  Grid.Column="1"
@@ -167,8 +166,7 @@
                                  Width="50"
                                  Margin="10, -135, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="MapMarker" 
                                  Grid.Column="1"
@@ -177,9 +175,8 @@
                                  Width="50"
                                  Margin="10, -65, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-        
+                                 VerticalAlignment="Center"/>
+
         <materialDesign:PackIcon Kind="ListStatus" 
                                  Grid.Column="1"
                                  Grid.Row="0"
@@ -187,8 +184,7 @@
                                  Width="50"
                                  Margin="10, 5, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="CalendarRange" 
                                  Grid.Column="1"
@@ -197,9 +193,7 @@
                                  Width="50"
                                  Margin="10, 75, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="AirplaneClock" 
                                  Grid.Column="1"
@@ -208,8 +202,7 @@
                                  Width="50"
                                  Margin="10, 145, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="TruckDelivery" 
                                  Grid.Column="1"
@@ -218,8 +211,7 @@
                                  Width="50"
                                  Margin="10, 215, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
 
         <materialDesign:PackIcon Kind="CreditCard" 
                                  Grid.Column="1"
@@ -228,7 +220,6 @@
                                  Width="50"
                                  Margin="10, 285, 0, 10"
                                  HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"
-                                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                 VerticalAlignment="Center"/>
     </Grid>
 </Page>
