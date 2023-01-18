@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using Dal;
+using DO;
 
 namespace DalTest
 {
@@ -32,6 +33,14 @@ namespace DalTest
 
                     case StartChoose.OrderItem:
                         MenuOfOrderItem();
+                        break;
+
+                    case StartChoose.XML:
+                        XMLTools.SaveListToXNLserializer(test!.Product.GetAll().ToList(), "Product");
+                        XMLTools.SaveListToXNLserializer(test.Order.GetAll().ToList(), "Order");
+                        XMLTools.SaveListToXNLserializer(test.OrderItem.GetAll().ToList(), "OrderItem");
+                        XMLTools.SaveConfigXml("OrderID", test.Order.GetAll().Last()?.ID ?? 0);
+                        XMLTools.SaveConfigXml("OrderItemID", test.OrderItem.GetAll().Last()?.ID ?? 0);
                         break;
 
                     default:

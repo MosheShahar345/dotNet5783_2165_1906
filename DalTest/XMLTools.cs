@@ -20,7 +20,7 @@ static class XMLTools
 
         try
         {
-           root.Save(filePath);
+            root.Save(filePath);
         }
         catch (Exception ex)
         {
@@ -49,7 +49,7 @@ static class XMLTools
 
     public static XElement LoadConfig()
     {
-        string filePath = $"{s_dir}Config.xml";
+        string filePath = $"{s_dir}.Config.xml";
 
         try
         {
@@ -96,7 +96,7 @@ static class XMLTools
         }
     }
 
-    public static void SaveListToXNLserializer<T>(List<T?> list, string entity) where T: struct
+    public static void SaveListToXNLserializer<T>(List<T?> list, string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
         try
@@ -104,7 +104,7 @@ static class XMLTools
             using FileStream file = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
 
             XmlSerializer serializer = new(typeof(List<T?>));
-            
+
             serializer.Serialize(file, list);
         }
         catch (Exception ex)
@@ -114,7 +114,7 @@ static class XMLTools
         }
     }
 
-    public static T? ToEnumNullable<T>(this XElement element, string name) where T: struct, Enum =>
+    public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
 
     public static DateTime? ToDateTimeNullable(this XElement element, string name) =>
