@@ -22,12 +22,22 @@ public partial class OrderItemWindow : Window
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
     public ObservableCollection<BO.OrderItem?> OrderItems { get; set; }
+
+    /// <summary>
+    /// constructor 
+    /// </summary>
+    /// <param name="id"></param>
     public OrderItemWindow(int id)
     {
         OrderItems = new ObservableCollection<BO.OrderItem?>(bl.Order.GetOrder(id).Items!);
         InitializeComponent();
     }
 
+    /// <summary>
+    /// back to main window button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AdminWindow().Show();

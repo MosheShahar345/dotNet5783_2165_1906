@@ -24,12 +24,22 @@ public partial class ConfirmOrderPage : Page
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
     public BO.Cart Cart { get; set; }
+
+    /// <summary>
+    /// constructor with an existing cart
+    /// </summary>
+    /// <param name="cart"></param>
     public ConfirmOrderPage(BO.Cart cart)
     {
         Cart = cart;
         InitializeComponent();
     }
 
+    /// <summary>
+    /// confirm order event - confirmation
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ConfirmOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
@@ -49,11 +59,21 @@ public partial class ConfirmOrderPage : Page
         catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
     }
 
+    /// <summary>
+    ///  back to product item page button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Window.GetWindow(this)!.Content = new ProductItemPage();
+        Window.GetWindow(this)!.Content = new ProductItemPage(Cart);
     }
 
+    /// <summary>
+    ///  back main window button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackToMainWindowButton_OnClick(object sender, RoutedEventArgs e)
     {
         new MainWindow().Show();

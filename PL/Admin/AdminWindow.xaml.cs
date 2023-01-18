@@ -45,6 +45,9 @@ public partial class AdminWindow : Window, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// constructor
+    /// </summary>
     public AdminWindow()
     {
         Orders = new ObservableCollection<BO.OrderForList?>(bl.Order.GetOrderForList());
@@ -54,41 +57,59 @@ public partial class AdminWindow : Window, INotifyPropertyChanged
         StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
     }
 
+    /// <summary>
+    /// on double clicking item in the list of products event  
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProductListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        int Id;
-        try
+        if (ProductListView.SelectedItem != null)
         {
-            Id = ((BO.ProductForList)ProductListView.SelectedItem)?.ID
-                 ?? throw new BO.NotExistsException();
-
+            var Id = (int)((BO.ProductForList)ProductListView.SelectedItem)?.ID!;
             new AddAndUpdateWindow(Id).Show();
             (Window.GetWindow(this)!).Close();
         }
-        catch (BO.NotExistsException)
-        {
-            new AdminWindow().Show();
-        }
     }
 
+    /// <summary>
+    /// filter by category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CategorySelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         Products = CategorySelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.ProductForList?>(bl?.Product.GetProductForList()!)
             : new ObservableCollection<BO.ProductForList?>(bl?.Product.GetProductForList(it => it?.Category.ToString() == CategorySelector.SelectedItem.ToString())!);
     }
 
+    /// <summary>
+    /// event button for adding a new product
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AddAndUpdateWindow().Show();
         (Window.GetWindow(this)!).Close();
     }
 
+    /// <summary>
+    /// back to main window button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new MainWindow().Show();
         (Window.GetWindow(this)!).Close();
     }
 
+    /// <summary>
+    /// on right button click item one for updating order status : sent
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateShipping_OnClick(object sender, RoutedEventArgs e)
     {
         try
@@ -101,6 +122,11 @@ public partial class AdminWindow : Window, INotifyPropertyChanged
         catch (BO.OrderIsAlreadyShippedException) { MessageBox.Show("Order is already shipped!"); }
     }
 
+    /// <summary>
+    /// on right button click item two for updating order status : delivered
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateDelivery_OnClick(object sender, RoutedEventArgs e)
     {
         try
@@ -113,16 +139,29 @@ public partial class AdminWindow : Window, INotifyPropertyChanged
         catch (BO.OrderHasNotShippedException) { MessageBox.Show("Order is not shipped yet!"); }
     }
 
+    /// <summary>
+    /// filter by status
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void StatusSSelector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         Orders = StatusSelector.SelectedItem.ToString() == "All" ? new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList()!) 
             : new ObservableCollection<BO.OrderForList?>(bl?.Order.GetOrderForList(it => it?.Status.ToString() == StatusSelector.SelectedItem.ToString())!);
     }
 
+    /// <summary>
+    ///  on double clicking item in the list of orders event 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        var Id = (int)((BO.OrderForList)OrderListView.SelectedItem)?.ID!;
-        new OrderItemWindow(Id).Show();
-        (Window.GetWindow(this)!).Close();
+        if (OrderListView.SelectedItem != null)
+        {
+            var Id = (int)((BO.OrderForList)OrderListView.SelectedItem)?.ID!;
+            new OrderItemWindow(Id).Show();
+            (Window.GetWindow(this)!).Close();
+        }
     }
 }

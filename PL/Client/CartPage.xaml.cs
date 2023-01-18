@@ -60,6 +60,10 @@ public partial class CartPage : Page , INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// constructor with an existing cart
+    /// </summary>
+    /// <param name="cart"></param>
     public CartPage(BO.Cart cart)
     {
         TotalPrice = cart.TotalPrice;
@@ -68,11 +72,21 @@ public partial class CartPage : Page , INotifyPropertyChanged
         Cart = cart;
     }
 
+    /// <summary>
+    /// when an item is chosen to have its amount updated 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateAmount_OnClick(object sender, RoutedEventArgs e)
     {
         AmountToUpdate.Visibility = Visibility.Visible;
     }
 
+    /// <summary>
+    /// removing an item from the cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemoveFromCart_OnClick(object sender, RoutedEventArgs e)
     {
         var id = ((BO.OrderItem)OrderItemListView.SelectedItem).ProductID;
@@ -81,9 +95,14 @@ public partial class CartPage : Page , INotifyPropertyChanged
         Cart.TotalPrice -= orderItem.TotalPrice;
         TotalPrice = Cart.TotalPrice;
         AmountToUpdate.Visibility = Visibility.Hidden;
-        OrderItems = new ObservableCollection<BO.OrderItem?>(Cart.Items!);
+        OrderItems = new ObservableCollection<BO.OrderItem?>(Cart.Items!); // refreshing
     }
 
+    /// <summary>
+    /// confirm order button to confirm the order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ConfirmOrderButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (Cart.Items?.Count > 0)
@@ -94,11 +113,21 @@ public partial class CartPage : Page , INotifyPropertyChanged
             MessageBox.Show("Cart is empty", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 
+    /// <summary>
+    /// back to product item page button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)!.Content = new ProductItemPage(Cart);
     }
 
+    /// <summary>
+    /// updating the amount of a chosen item 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AmountToUpdate_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var id = ((BO.OrderItem)OrderItemListView.SelectedItem).ProductID;

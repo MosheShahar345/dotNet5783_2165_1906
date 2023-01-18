@@ -10,6 +10,9 @@ public partial class AddAndUpdateWindow : Window
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// constructor for add
+    /// </summary>
     public AddAndUpdateWindow()
     {
         InitializeComponent();
@@ -19,6 +22,10 @@ public partial class AddAndUpdateWindow : Window
         AddAndUpdateProductButton.Content = "Add";
     }
 
+    /// <summary>
+    /// constructor for update
+    /// </summary>
+    /// <param name="Id"></param>
     public AddAndUpdateWindow(int Id)
     {
         InitializeComponent();
@@ -34,6 +41,11 @@ public partial class AddAndUpdateWindow : Window
         AddAndUpdateProductButton.Content = "Update";
     }
 
+    /// <summary>
+    /// event for adding or updating button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddAndUpdateProductButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
@@ -75,6 +87,11 @@ public partial class AddAndUpdateWindow : Window
         catch (BO.AlreadyExistsException) { MessageBox.Show("Already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error); }
     }
 
+    /// <summary>
+    /// back to main window button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AdminWindow().Show();
