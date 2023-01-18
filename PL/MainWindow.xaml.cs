@@ -25,26 +25,42 @@ public partial class MainWindow : Window
 {
     BlApi.IBl? bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// constructor for the main window
+    /// </summary>
     public MainWindow()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// button for admin section
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AdminButton_OnClick(object sender, RoutedEventArgs e)
     {
         new AdminWindow().Show();
         Close();
     }
 
+    /// <summary>
+    /// button for client section
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ClientButton_OnClick(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)!.Content = new ProductItemPage();
-        //Frame.Content = new ProductItemPage();
     }
 
+    /// <summary>
+    /// button for order-tracking section
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderTrackingButton_OnClick(object sender, RoutedEventArgs e)
     {
         Window.GetWindow(this)!.Content = new OrderTrackingPage();
-        //Frame.Content = new OrderTrackingPage();
     }
 }
