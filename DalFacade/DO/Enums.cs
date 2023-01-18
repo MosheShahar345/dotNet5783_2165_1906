@@ -14,5 +14,6 @@ public enum StartChoose
     Exit,
     Product,
     Order,
-    OrderItem
+    OrderItem,
+    XML
 }

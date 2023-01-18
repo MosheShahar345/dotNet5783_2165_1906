@@ -68,7 +68,7 @@ internal class DalOrder : IOrder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="DO.NotExistsException"></exception>
-    public DO.Order GetEntity(Func<DO.Order?, bool>? func)
+    public DO.Order? GetEntity(Func<DO.Order?, bool>? func)
     {
         IEnumerable<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
         var order = orders.FirstOrDefault(func!);

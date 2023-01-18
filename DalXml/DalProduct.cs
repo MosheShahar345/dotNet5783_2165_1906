@@ -51,7 +51,7 @@ internal class DalProduct : IProduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="DO.NotExistsException"></exception>
-    public DO.Product GetEntity(Func<DO.Product?, bool>? func)
+    public DO.Product? GetEntity(Func<DO.Product?, bool>? func)
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
         return products.FirstOrDefault(func!) ?? throw new DO.NotExistsException("not exist");
