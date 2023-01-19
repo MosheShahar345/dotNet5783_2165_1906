@@ -6,7 +6,7 @@ namespace Dal;
 internal class DalProduct : IProduct
 {
     /// <summary>
-    /// adding a product to the product list and making sure id is uniq
+    /// adding a orderItem to the orderItem list and making sure id is uniq
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
@@ -25,7 +25,7 @@ internal class DalProduct : IProduct
                 return product.ID;
             }
             
-            throw new AlreadyExistsException($"product with ID: {product.ID} already exists");
+            throw new AlreadyExistsException($"orderItem with ID: {product.ID} already exists");
         }
 
         bool inStock = false;
@@ -51,38 +51,38 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    /// deletes an existing product
+    /// deletes an existing orderItem
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotExistsException"></exception>
     public void Delete(int id)
     {
         Product? productToDelete = DataSource.Products.FirstOrDefault(product => id == product?.ID) ??
-                                   throw new NotExistsException("product does not exist");
+                                   throw new NotExistsException("orderItem does not exist");
 
         DataSource.Products.Remove(productToDelete);
     }
 
     /// <summary>
-    /// updating an existing product
+    /// updating an existing orderItem
     /// </summary>
-    /// <param name="product"></param>
+    /// <param name="orderItem"></param>
     /// <exception cref="NotExistsException"></exception>
-    public void Update(Product product)
+    public void Update(Product orderItem)
     {
-        int index = DataSource.Products.IndexOf(DataSource.Products.FirstOrDefault(o => o?.ID == product.ID));
-        if (index != -1) // if was found update the product
+        int index = DataSource.Products.IndexOf(DataSource.Products.FirstOrDefault(o => o?.ID == orderItem.ID));
+        if (index != -1) // if was found update the orderItem
         {
-            DataSource.Products[index] = product;
+            DataSource.Products[index] = orderItem;
         }
         else
         {
-            throw new NotExistsException("product does not exist");
+            throw new NotExistsException("orderItem does not exist");
         }
     }
 
     /// <summary>
-    /// receives a filter and returns product that matches the condition
+    /// receives a filter and returns orderItem that matches the condition
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
@@ -90,7 +90,7 @@ internal class DalProduct : IProduct
     public Product? GetEntity(Func<Product?, bool>? func)
     {
         Product? result = DataSource.Products.FirstOrDefault(func!) ??
-                          throw new NotExistsException("product dose not exist");
+                          throw new NotExistsException("orderItem dose not exist");
 
         return result;
     }

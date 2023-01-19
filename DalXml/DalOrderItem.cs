@@ -1,4 +1,6 @@
-﻿namespace Dal;
+﻿using DO;
+
+namespace Dal;
 using DalApi;
 using System.Security.Cryptography;
 using System.Security.Principal;
@@ -8,6 +10,17 @@ internal class DalOrderItem : IOrderItem
 {
     const string s_orderitem = $"OrderItem";
 
+    public DO.OrderItem? CreateOrderItemFromXElement(XElement element)
+    {
+        return new OrderItem
+        {
+            ID = element.ToIntNullable("ID") ?? throw new FormatException("Id"),
+            ProductID = element.ToIntNullable("ProductID") ?? throw new FormatException("Product Id"),
+            OrderID = element.ToIntNullable("OrderID") ?? throw new FormatException("Order Id"),
+            Price = element.ToDoubleNullable("Price") ?? throw new FormatException("Price"),
+            Amount = element.ToIntNullable("Amount") ?? throw new FormatException("Amount"),
+        };
+    }
     /// <summary>
     /// add a Order item to xml file
     /// </summary>
@@ -40,20 +53,21 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// update a order item from xml file
     /// </summary>
-    /// <param name="order"></param>
-    public void Update(DO.OrderItem orderitem)
+    /// <param name="orderItem"></param>
+    /// <exception cref="DO.NotExistsException"></exception>
+    public void Update(DO.OrderItem orderItem)
     {
-        List<DO.OrderItem?> orderitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        var o = (from item in orderitems
-                 where (item?.ID == orderitem.ID)
+        List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
+        var o = (from item in orderItems
+                 where (item?.ID == orderItem.ID)
                  select item).FirstOrDefault();
 
         if (o != null)
         {
-            int i = orderitems.IndexOf(o);
-            orderitems.Remove(o);
-            orderitems.Insert(i, orderitem);
-            XMLTools.SaveListToXNLserializer<DO.OrderItem>(orderitems, s_orderitem);
+            int i = orderItems.IndexOf(o);
+            orderItems.Remove(o);
+            orderItems.Insert(i, orderItem);
+            XMLTools.SaveListToXNLserializer<DO.OrderItem>(orderItems, s_orderitem);
             return;
         }
         throw new DO.NotExistsException("not found order to update");
@@ -67,14 +81,12 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="DO.NotExistsException"></exception>
     public DO.OrderItem? GetEntity(Func<DO.OrderItem?, bool>? func)
     {
-        IEnumerable<DO.OrderItem?> orderitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        var orderitem = orderitems.FirstOrDefault(func!);
+        XElement? element = XMLTools.LoadListToXMLElement(s_orderitem);
 
-        if (orderitem != null)
-        {
-            return (DO.OrderItem)orderitem;
-        }
-        throw new DO.NotExistsException("not exist");
+        return (from item in element.Elements()
+            let dOrderItem = CreateOrderItemFromXElement(item)
+            where func!(dOrderItem)
+            select (DO.OrderItem?)dOrderItem).FirstOrDefault() ?? throw new DO.NotExistsException("Does not exist");
     }
 
     /// <summary>
@@ -84,19 +96,19 @@ internal class DalOrderItem : IOrderItem
     /// <returns></returns>
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? func)
     {
-        IEnumerable<DO.OrderItem?> orderitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
+        IEnumerable<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
         if (func == null)
         {
-            orderitems = from item in orderitems
+            orderItems = from item in orderItems
                      select item;
-            return orderitems;
+            return orderItems;
         }
         else
         {
-            orderitems = from item in orderitems
+            orderItems = from item in orderItems
                      where (func!(item))
                      select item;
-            return orderitems;
+            return orderItems;
         }
     }
 }

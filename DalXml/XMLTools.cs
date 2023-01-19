@@ -28,6 +28,25 @@ static class XMLTools
         }
     }
 
+    public static XElement LoadListToXMLElement(string entity)
+    {
+        string filePath = $"{s_dir + entity}.xml";
+
+        try
+        {
+            if (File.Exists(filePath))
+                return XElement.Load(filePath);
+
+            XElement root = new(entity);
+            root.Save(filePath);
+            return root;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"fail to load xml file: {filePath}", ex);
+        }
+    }
+
     public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -86,6 +105,7 @@ static class XMLTools
         {
             if (File.Exists(filePath))
                 return XElement.Load(filePath);
+
             XElement root = new(entity);
             root.Save(filePath);
             return root;

@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>78049189</ID>
-    <Name>Silk suit</Name>
-    <Price>800</Price>
-    <Category>Suit</Category>
-    <InStock>10</InStock>
-  </Product>
-  <Product>
-    <ID>24676216</ID>
-    <Name>kids suit</Name>
-    <Price>450</Price>
-    <Category>Suit</Category>
-    <InStock>15</InStock>
-  </Product>
-  <Product>
-    <ID>41181727</ID>
+    <ID>12216002</ID>
     <Name>Cotton pants</Name>
     <Price>220</Price>
     <Category>Pants</Category>
     <InStock>28</InStock>
   </Product>
   <Product>
-    <ID>8354051</ID>
+    <ID>50787873</ID>
     <Name>Leather pants</Name>
     <Price>300</Price>
     <Category>Pants</Category>
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>22105798</ID>
+    <ID>67179394</ID>
     <Name>shirts with cuffs</Name>
     <Price>120</Price>
     <Category>Shirts</Category>
     <InStock>13</InStock>
   </Product>
   <Product>
-    <ID>69512897</ID>
+    <ID>27479269</ID>
+    <Name>Long shirts</Name>
+    <Price>115</Price>
+    <Category>Shirts</Category>
+    <InStock>18</InStock>
+  </Product>
+  <Product>
+    <ID>87437395</ID>
     <Name>Silk tie</Name>
     <Price>80</Price>
     <Category>Ties</Category>
     <InStock>21</InStock>
   </Product>
   <Product>
-    <ID>3631994</ID>
+    <ID>18722986</ID>
     <Name>Floral tie</Name>
     <Price>60</Price>
     <Category>Ties</Category>
     <InStock>22</InStock>
   </Product>
   <Product>
-    <ID>27041863</ID>
+    <ID>91655483</ID>
     <Name>Silver cufflinks</Name>
     <Price>180</Price>
     <Category>Cufflinks</Category>
     <InStock>23</InStock>
   </Product>
   <Product>
-    <ID>59357365</ID>
+    <ID>74287099</ID>
     <Name>Diamond cufflinks</Name>
     <Price>350</Price>
     <Category>Cufflinks</Category>
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>71884276</ID>
-    <Name>Long shirts</Name>
-    <Price>115</Price>
-    <Category>Shirts</Category>
-    <InStock>17</InStock>
+    <ID>47843590</ID>
+    <Name>Silk suit</Name>
+    <Price>800</Price>
+    <Category>Suit</Category>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <ID>36366188</ID>
+    <Name>kids suit</Name>
+    <Price>450</Price>
+    <Category>Suit</Category>
+    <InStock>14</InStock>
   </Product>
 </ArrayOfProduct>
