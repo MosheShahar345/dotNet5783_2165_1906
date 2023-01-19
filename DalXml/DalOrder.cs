@@ -9,7 +9,7 @@ internal class DalOrder : IOrder
     const string s_Order = $"Order";
 
     /// <summary>
-    /// add a order to xml file
+    /// add a orderItem to xml file
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
@@ -26,7 +26,7 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// delete a order from xml file
+    /// delete a orderItem from xml file
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="DO.NotExistsException"></exception>
@@ -40,30 +40,30 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// update a order from xml file
+    /// update a orderItem from xml file
     /// </summary>
-    /// <param name="order"></param>
+    /// <param name="orderItem"></param>
 
-    public void Update(DO.Order order)
+    public void Update(DO.Order orderItem)
     {
         List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
         var o = (from item in orders
-                 where (item?.ID == order.ID)
+                 where (item?.ID == orderItem.ID)
                  select item).FirstOrDefault();
 
         if (o != null)
         {
             int i = orders.IndexOf(o);
             orders.Remove(o);
-            orders.Insert(i, order);
+            orders.Insert(i, orderItem);
             XMLTools.SaveListToXNLserializer<DO.Order>(orders, s_Order);
             return;
         }
-        throw new DO.NotExistsException("not found order to update");
+        throw new DO.NotExistsException("not found orderItem to update");
     }
 
     /// <summary>
-    /// receives a order by the id from the xml file
+    /// receives a orderItem by the id from the xml file
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>

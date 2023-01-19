@@ -9,7 +9,7 @@ internal class DalProduct : IProduct
     const string s_product = @"Product";
 
     /// <summary>
-    /// add a product to xml file
+    /// add a orderItem to xml file
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
@@ -19,14 +19,14 @@ internal class DalProduct : IProduct
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
         if (products.FirstOrDefault(x => x?.ID == product.ID) != null )
-            throw new DO.AlreadyExistsException("product alraedy exist");
+            throw new DO.AlreadyExistsException("orderItem alraedy exist");
         products.Add(product);
         XMLTools.SaveListToXNLserializer(products, s_product);
         return product.ID;
     }
 
     /// <summary>
-    /// delete a product from xml file
+    /// delete a orderItem from xml file
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="DO.NotExistsException"></exception>
@@ -34,19 +34,19 @@ internal class DalProduct : IProduct
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
         if (products.RemoveAll(x => x?.ID == id) == 0)
-            throw new DO.NotExistsException("product do not exist to remove");
+            throw new DO.NotExistsException("orderItem do not exist to remove");
 
         XMLTools.SaveListToXNLserializer(products, s_product);
     }
 
-    public void Update(DO.Product product)
+    public void Update(DO.Product orderItem)
     {
-       Delete(product.ID);
-       Add(product);
+       Delete(orderItem.ID);
+       Add(orderItem);
     }
 
     /// <summary>
-    /// receives a product by the id from the xml file
+    /// receives a orderItem by the id from the xml file
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
