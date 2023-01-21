@@ -10,13 +10,18 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignDarkBackground}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow"
         Height="640" Width="865">
 
-    <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
-        
+    <Window.Background>
+        <ImageBrush
+            ImageSource="/Images/89a1ad562ee60f57e5669741c6aed98a.jpg"
+            Stretch="Fill" />
+    </Window.Background>
+
+    <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="100*"/>
@@ -24,7 +29,7 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -33,8 +38,8 @@
             Kind="AccountTie" 
             Grid.Column="0"
             Grid.Row="0"
-            Height="25"
-            Width="auto"
+            Height="50"
+            Width="100"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"
@@ -54,8 +59,9 @@
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Height="25"
-            Width="auto"
+            Height="50"
+            Width="100"
+            FontSize="20"
             FontWeight="Bold"
         />
 
@@ -63,9 +69,8 @@
             Grid.Column="0"
             Grid.Row="1"
             Kind="AccountBoxOutline"
-            Height="25"
-            Width="auto"
-            
+            Height="50"
+            Width="100"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"
@@ -85,8 +90,9 @@
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Height="25"
-            Width="auto"
+            Height="50"
+            Width="100"
+            FontSize="20"
             FontWeight="Bold"
         />
 
@@ -94,8 +100,8 @@
             Grid.Row="2"
             Grid.Column="0"
             Kind="Truck" 
-            Height="25"
-            Width="auto"
+            Height="50"
+            Width="100"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Foreground="White"/>
@@ -114,41 +120,11 @@
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
-            Height="25"
+            Height="50"
             Width="auto"
             FontWeight="Bold"
+            FontSize="20"
         />
-
-        <!--<materialDesign:PackIcon
-            Grid.Row="0"
-            Grid.Column="0"
-            Kind="LoginVariant"
-            Height="25"
-            Width="auto"
-            Margin="60,350,0,20"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Foreground="White"/>
-        <Button 
-            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-            materialDesign:ButtonProgressAssist.Value="-1"
-            Style="{StaticResource MaterialDesignRaisedButton}"
-            Grid.Row="0"
-            Grid.Column="1"
-            Content="Log In" 
-            x:Name="LogInButton" 
-            Click="LogInButton_OnClick"
-            ToolTip="Log-in for an existing user"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            VerticalContentAlignment="Center"
-            HorizontalContentAlignment="Center"
-            Margin="80,350,0,20"
-            Height="25"
-            Width="auto"
-            FontWeight="Bold"
-        />-->
 
         <Frame 
             Grid.Column="0"

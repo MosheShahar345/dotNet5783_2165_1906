@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.Admin;
 using PL.Client;
-using BO;
 using PL.Order_Tracking;
 
 namespace PL;
@@ -23,7 +22,7 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
-    BlApi.IBl? bl = BlApi.Factory.Get();
+    private BlApi.IBl? bl = BlApi.Factory.Get();
 
     /// <summary>
     /// constructor for the main window
