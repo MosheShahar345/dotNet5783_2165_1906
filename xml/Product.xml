@@ -70,4 +70,11 @@
     <Category>Suit</Category>
     <InStock>14</InStock>
   </Product>
+  <Product>
+    <ID>123456</ID>
+    <Name>nice suit</Name>
+    <Price>500</Price>
+    <Category>Suit</Category>
+    <InStock>1</InStock>
+  </Product>
 </ArrayOfProduct>

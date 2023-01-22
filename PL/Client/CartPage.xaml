@@ -54,7 +54,7 @@
 
         <Label
             Grid.Row="0"
-            Content="Order orderItem list:"
+            Content="Order item list:"
             FontSize="20"
             Width="420"
             FontStyle="Oblique"
