@@ -12,6 +12,12 @@
     Width="850"
     Title="ProductItemPage">
 
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="SelectedItemBrush"
+            Color="Transparent" />
+    </Page.Resources>
+
     <Grid
         Background="{DynamicResource MaterialDesignDarkBackground}">
 
@@ -103,7 +109,7 @@
             Width="auto"
             FontWeight="Bold"
             Click="BackButton_OnClick" />
-        
+
         <ListView
             Grid.Column="0"
             Grid.Row="1"
@@ -119,6 +125,18 @@
                     <Setter
                         Property="HorizontalContentAlignment"
                         Value="Center" />
+                    <Setter
+                        Property="Background"
+                        Value="Transparent" />
+                    <Style.Triggers>
+                        <Trigger
+                            Property="IsSelected"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource SelectedItemBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
 
@@ -180,7 +198,7 @@
                                 Value="False" />
                             <Setter
                                 Property="Background"
-                                Value="{DynamicResource PrimaryHueMidBrush}" />
+                                Value="{DynamicResource PrimaryHueMidBrush}"/>
                         </Style>
                     </GridView.ColumnHeaderContainerStyle>
                 </GridView>

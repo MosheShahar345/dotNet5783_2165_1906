@@ -20,7 +20,7 @@
             Stretch="Fill" />
     </Window.Background>
 
-    <Grid >
+    <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="100*"/>

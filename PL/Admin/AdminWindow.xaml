@@ -11,6 +11,12 @@
     Height="640"
     Width="850">
 
+    <Window.Resources>
+        <SolidColorBrush
+            x:Key="SelectedItemBrush"
+            Color="Transparent" />
+    </Window.Resources>
+
     <Grid
         x:Name="MainGrid"
         Background="{DynamicResource MaterialDesignDarkBackground}">
@@ -97,6 +103,15 @@
                                 <Setter
                                     Property="HorizontalContentAlignment"
                                     Value="Center" />
+                                <Style.Triggers>
+                                    <Trigger
+                                        Property="IsSelected"
+                                        Value="True">
+                                        <Setter
+                                            Property="Background"
+                                            Value="{StaticResource SelectedItemBrush}" />
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </ListView.ItemContainerStyle>
 
@@ -237,6 +252,15 @@
                                 <Setter
                                     Property="HorizontalContentAlignment"
                                     Value="Center" />
+                                <Style.Triggers>
+                                    <Trigger
+                                        Property="IsSelected"
+                                        Value="True">
+                                        <Setter
+                                            Property="Background"
+                                            Value="{StaticResource SelectedItemBrush}" />
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </ListView.ItemContainerStyle>
 
