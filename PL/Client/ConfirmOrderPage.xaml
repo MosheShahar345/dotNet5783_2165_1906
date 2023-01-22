@@ -84,6 +84,7 @@
 
         <materialDesign:PackIcon
             Kind="Account"
+            Foreground="White"
             Grid.Row="0"
             Grid.Column="1"
             Margin="-110,-90,110,85"
@@ -92,6 +93,7 @@
 
         <materialDesign:PackIcon
             Kind="Email"
+            Foreground="White"
             Grid.Row="0"
             Grid.Column="1"
             Margin="-110,-35,110,30"
@@ -100,6 +102,7 @@
 
         <materialDesign:PackIcon
             Kind="MapMarker"
+            Foreground="White"
             Grid.Row="0"
             Grid.Column="1"
             Margin="-110,20,110,-25"
