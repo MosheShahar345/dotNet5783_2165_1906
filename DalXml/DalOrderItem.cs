@@ -10,7 +10,7 @@ internal class DalOrderItem : IOrderItem
 {
     const string s_orderitem = $"OrderItem";
 
-    public DO.OrderItem? CreateOrderItemFromXElement(XElement element)
+    static DO.OrderItem? CreateOrderItemFromXElement(XElement element)
     {
         return new OrderItem
         {
@@ -30,9 +30,17 @@ internal class DalOrderItem : IOrderItem
     {
         orderitem.ID = XMLTools.LoadConfig().ToIntNullable("OrderItemID")!.Value + 1;
         XMLTools.SaveConfigXml("OrderItemID", orderitem.ID);
-        List<DO.OrderItem?> orderitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        orderitems.Add(orderitem);
-        XMLTools.SaveListToXNLserializer(orderitems, s_orderitem);
+        XElement root = XMLTools.LoadListToXMLElement(s_orderitem);
+        XElement orderItem = new XElement("orderItem",
+                             new XElement("ID", orderitem.ID),
+                             new XElement("ProductID", orderitem.ProductID),
+                             new XElement("OrderID", orderitem.OrderID),
+                             new XElement("ProductID", orderitem.ProductID),
+                             new XElement("Price", orderitem.Price),
+                             new XElement("Amount", orderitem.Amount));
+
+        root.Add(orderItem);
+        XMLTools.SaveListToXMLElement(root, s_orderitem);
         return orderitem.ID;
     }
 
@@ -43,11 +51,12 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="DO.NotExistsException"></exception>
     public void Delete(int id)
     {
-        List<DO.OrderItem?> orderitems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        if (orderitems.RemoveAll(x => x?.ID == id) == 0)
-            throw new DO.NotExistsException("not exist");
-
-        XMLTools.SaveListToXNLserializer(orderitems, s_orderitem);
+        XElement root = XMLTools.LoadListToXMLElement(s_orderitem);
+        XElement? orderItem = (from item in root.Elements()
+                               where item.ToIntNullable("ID") == id
+                               select item).FirstOrDefault() ?? throw new DO.NotExistsException("Not found a order item to delete");
+        orderItem?.Remove();
+        XMLTools.SaveListToXMLElement(root, s_orderitem);
     }
 
     /// <summary>
@@ -57,20 +66,22 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="DO.NotExistsException"></exception>
     public void Update(DO.OrderItem orderItem)
     {
-        List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        var o = (from item in orderItems
-                 where (item?.ID == orderItem.ID)
-                 select item).FirstOrDefault();
+        //List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
+        //var o = (from item in orderItems
+        //         where (item?.ID == orderItem.ID)
+        //         select item).FirstOrDefault();
 
-        if (o != null)
-        {
-            int i = orderItems.IndexOf(o);
-            orderItems.Remove(o);
-            orderItems.Insert(i, orderItem);
-            XMLTools.SaveListToXNLserializer<DO.OrderItem>(orderItems, s_orderitem);
-            return;
-        }
-        throw new DO.NotExistsException("not found order to update");
+        //if (o != null)
+        //{
+        //    int i = orderItems.IndexOf(o);
+        //    orderItems.Remove(o);
+        //    orderItems.Insert(i, orderItem);
+        //    XMLTools.SaveListToXNLserializer<DO.OrderItem>(orderItems, s_orderitem);
+        //    return;
+        //}
+        //throw new DO.NotExistsException("not found order to update");
+       Delete(orderItem.ID);
+       Add(orderItem);
     }
 
     /// <summary>
@@ -96,19 +107,18 @@ internal class DalOrderItem : IOrderItem
     /// <returns></returns>
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? func)
     {
-        IEnumerable<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        if (func == null)
+        XElement? root = XMLTools.LoadListToXMLElement(s_orderitem);
+        if (func != null)
         {
-            orderItems = from item in orderItems
-                     select item;
-            return orderItems;
+            return from item in root.Elements()
+                   let tempItem = CreateOrderItemFromXElement(item)
+                   where func(tempItem)
+                   select (DO.OrderItem?)tempItem;
         }
         else
         {
-            orderItems = from item in orderItems
-                     where (func!(item))
-                     select item;
-            return orderItems;
+            return from item in root.Elements()
+                   select CreateOrderItemFromXElement(item);
         }
     }
 }

@@ -64,19 +64,19 @@ internal class DalProduct : IProduct
     /// <returns></returns>
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? func)
     {
-        IEnumerable<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
+        List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
         if (func == null)
         {
-            products = from item in products
+           var list = from item in products
                      select item;
-            return products;
+            return list;
         }
         else
         {
-            products = from item in products
-                     where (func!(item))
+            var list = from item in products
+                     where (func(item))
                      select item;
-            return products;
+            return list;
         }
     }
 
