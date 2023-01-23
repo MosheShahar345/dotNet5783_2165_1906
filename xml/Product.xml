@@ -29,25 +29,11 @@
     <InStock>18</InStock>
   </Product>
   <Product>
-    <ID>87437395</ID>
-    <Name>Silk tie</Name>
-    <Price>80</Price>
-    <Category>Ties</Category>
-    <InStock>21</InStock>
-  </Product>
-  <Product>
     <ID>18722986</ID>
     <Name>Floral tie</Name>
     <Price>60</Price>
     <Category>Ties</Category>
     <InStock>22</InStock>
-  </Product>
-  <Product>
-    <ID>91655483</ID>
-    <Name>Silver cufflinks</Name>
-    <Price>180</Price>
-    <Category>Cufflinks</Category>
-    <InStock>23</InStock>
   </Product>
   <Product>
     <ID>74287099</ID>
@@ -76,5 +62,19 @@
     <Price>500</Price>
     <Category>Suit</Category>
     <InStock>1</InStock>
+  </Product>
+  <Product>
+    <ID>87437395</ID>
+    <Name>Silk tie</Name>
+    <Price>80</Price>
+    <Category>Ties</Category>
+    <InStock>17</InStock>
+  </Product>
+  <Product>
+    <ID>91655483</ID>
+    <Name>Silver cufflinks</Name>
+    <Price>180</Price>
+    <Category>Cufflinks</Category>
+    <InStock>22</InStock>
   </Product>
 </ArrayOfProduct>
