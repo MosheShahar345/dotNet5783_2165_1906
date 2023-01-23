@@ -1,5 +1,5 @@
 ﻿namespace Simulator;
-public class Class1
+public static class Simulator
 {
 
 }
