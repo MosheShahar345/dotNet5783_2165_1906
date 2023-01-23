@@ -10,6 +10,12 @@
       d:DesignHeight="640" d:DesignWidth="850"
       Title="Cart">
 
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="SelectedItemBrush"
+            Color="Transparent" />
+    </Page.Resources>
+
     <Grid
         Background="{DynamicResource MaterialDesignDarkBackground}">
 
@@ -78,6 +84,15 @@
                     <Setter
                         Property="HorizontalContentAlignment"
                         Value="Center" />
+                    <Style.Triggers>
+                        <Trigger
+                            Property="IsSelected"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource SelectedItemBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
 

@@ -1,29 +1,36 @@
-﻿<Page x:Class="PL.Order_Tracking.OrderDetailsPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:PL.Order_Tracking"
-      mc:Ignorable="d" 
-      DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Height="640" Width="850"
-      Title="OrderDetailsPage">
+﻿<Page
+    x:Class="PL.Order_Tracking.OrderDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PL.Order_Tracking"
+    mc:Ignorable="d"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Height="640"
+    Width="850"
+    Title="OrderDetailsPage">
 
     <Grid
-        
         Background="{DynamicResource MaterialDesignDarkBackground}">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition
+                Width="250" />
+            <ColumnDefinition
+                Width="auto" />
+            <ColumnDefinition
+                Width="*" />
+            <ColumnDefinition
+                Width="auto" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="570"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition
+                Height="570" />
+            <RowDefinition
+                Height="40" />
         </Grid.RowDefinitions>
 
         <StackPanel
@@ -40,7 +47,8 @@
                 Foreground="White"
                 Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="name">
+                materialDesign:HintAssist.Hint="Name"
+                materialDesign:HintAssist.HelperText="Name">
             </TextBox>
 
             <TextBox
@@ -48,9 +56,10 @@
                 Text="{Binding order.CustomerEmail, Mode=TwoWay}"
                 IsReadOnly="True"
                 Foreground="White"
-                Margin="0, 10, 0, 0"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Email">
+                materialDesign:HintAssist.Hint="Email"
+                materialDesign:HintAssist.HelperText="Email">
             </TextBox>
 
             <TextBox
@@ -58,9 +67,10 @@
                 Text="{Binding order.CustomerAddress, Mode=TwoWay}"
                 IsReadOnly="True"
                 Foreground="White"
-                Margin="0, 10, 0, 0"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Address">
+                materialDesign:HintAssist.Hint="Address"
+                materialDesign:HintAssist.HelperText="Address">
             </TextBox>
 
             <TextBox
@@ -68,19 +78,21 @@
                 Text="{Binding order.Status, Mode=TwoWay}"
                 IsReadOnly="True"
                 Foreground="White"
-                Margin="0, 10, 0, 0"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Status">
+                materialDesign:HintAssist.Hint="Status"
+                materialDesign:HintAssist.HelperText="Status">
             </TextBox>
 
             <TextBox
                 x:Name="TextBoxOrderDate"
                 Text="{Binding order.OrderDate, Mode=TwoWay}"
                 IsReadOnly="True"
-                Foreground="White" 
-                Margin="0, 10, 0, 0"
+                Foreground="White"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Order date">
+                materialDesign:HintAssist.Hint="Order date"
+                materialDesign:HintAssist.HelperText="Order date">
             </TextBox>
 
             <TextBox
@@ -88,9 +100,10 @@
                 Text="{Binding order.ShipDate, Mode=TwoWay}"
                 IsReadOnly="True"
                 Foreground="White"
-                Margin="0, 10, 0, 0"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Ship date">
+                materialDesign:HintAssist.Hint="Shipping date"
+                materialDesign:HintAssist.HelperText="Shipping date">
             </TextBox>
 
             <TextBox
@@ -98,19 +111,21 @@
                 Text="{Binding order.DeliveryDate, Mode=TwoWay}"
                 IsReadOnly="True"
                 Foreground="White"
-                Margin="0, 10, 0, 0"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Delivery date">
+                materialDesign:HintAssist.Hint="Delivery date"
+                materialDesign:HintAssist.HelperText="Delivery date">
             </TextBox>
 
             <TextBox
                 x:Name="TextBoxTotalPrice"
                 Text="{Binding order.TotalPrice, Mode=TwoWay}"
                 IsReadOnly="True"
-                Foreground="White" 
-                Margin="0, 10, 0, 0"
+                Foreground="White"
+                Margin="0, 30, 0, 0"
                 materialDesign:HintAssist.HelperTextFontSize="8"
-                materialDesign:HintAssist.Hint="Total price">
+                materialDesign:HintAssist.Hint="Total price"
+                materialDesign:HintAssist.HelperText="Total price">
             </TextBox>
 
         </StackPanel>
@@ -123,7 +138,7 @@
             Grid.Row="1"
             Grid.Column="3"
             x:Name="BackToMainWindow"
-            Content="Back to main window" 
+            Content="Back to main window"
             Margin="0,0,10,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
@@ -133,13 +148,13 @@
             Height="28"
             Width="auto"
             FontWeight="Bold"
-            Click="BackToMainWindowButton_OnClick"/>
+            Click="BackToMainWindowButton_OnClick" />
 
         <Button
             Grid.Row="1"
             Grid.Column="0"
             x:Name="Back"
-            Content="Back" 
+            Content="Back"
             Margin="10, 0, 0, 10"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
@@ -149,78 +164,86 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick"/>
+            Click="BackButton_OnClick" />
 
-        <materialDesign:PackIcon Kind="Account" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, -205, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="Account"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,98,0,0"
+            HorizontalAlignment="Right" />
 
-        <materialDesign:PackIcon Kind="Email" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, -135, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="Email"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,153,0,0"
+            HorizontalAlignment="Center" />
 
-        <materialDesign:PackIcon Kind="MapMarker" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, -65, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="MapMarker"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,208,0,0"
+            HorizontalAlignment="Center" />
 
-        <materialDesign:PackIcon Kind="ListStatus" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, 5, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="ListStatus"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,262,0,0"
+            HorizontalAlignment="Right" />
 
-        <materialDesign:PackIcon Kind="CalendarRange" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, 75, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="CalendarRange"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,318,0,0"
+            HorizontalAlignment="Right" />
 
-        <materialDesign:PackIcon Kind="AirplaneClock" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, 145, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="AirplaneClock"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,372,0,0"
+            HorizontalAlignment="Right" />
 
-        <materialDesign:PackIcon Kind="TruckDelivery" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, 215, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="TruckDelivery"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,428,0,0"
+            HorizontalAlignment="Right" />
 
-        <materialDesign:PackIcon Kind="CreditCard" 
-                                 Grid.Column="1"
-                                 Grid.Row="0"
-                                 Height="20"
-                                 Width="50"
-                                 Margin="10, 285, 0, 10"
-                                 HorizontalAlignment="Right"
-                                 VerticalAlignment="Center"/>
+        <materialDesign:PackIcon
+            Kind="CreditCard"
+            Foreground="White"
+            Grid.Column="1"
+            Grid.Row="0"
+            Height="20"
+            Width="50"
+            Margin="0,482,0,0"
+            HorizontalAlignment="Right" />
     </Grid>
 </Page>

@@ -10,6 +10,12 @@
       Height="640" Width="850"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="SelectedItemBrush"
+            Color="Transparent" />
+    </Page.Resources>
+
     <Grid Background="{DynamicResource MaterialDesignDarkBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="570"/>
@@ -28,7 +34,18 @@
             <ListView.ItemContainerStyle>
                 <Style
                     TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter 
+                        Property="HorizontalContentAlignment" 
+                        Value="Center"/>
+                    <Style.Triggers>
+                        <Trigger
+                            Property="IsSelected"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource SelectedItemBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
             </ListView.ItemContainerStyle>
 

@@ -62,4 +62,9 @@ public partial class MainWindow : Window
     {
         Window.GetWindow(this)!.Content = new OrderTrackingPage();
     }
+
+    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+    {
+        
+    }
 }
