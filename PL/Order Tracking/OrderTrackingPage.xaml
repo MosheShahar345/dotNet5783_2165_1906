@@ -34,7 +34,7 @@
             Content="Enter"
             x:Name="EnterButton"
             Click="EnterButton_OnClick"
-            ToolTip="To main window"
+            ToolTip="Enter to insert the id"
             IsDefault="True"   
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
@@ -55,7 +55,7 @@
             Content="Order item view"
             x:Name="OrderItemView"
             Click="OrderItemViewButton_OnClick"
-            ToolTip="To main window"
+            ToolTip="Click to view the order items"
             IsDefault="True" 
             Visibility="Hidden"
             HorizontalAlignment="Right"
@@ -114,7 +114,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick"/>
+            Click="BackButton_OnClick"
+            ToolTip="Back to main window"/>
 
         <materialDesign:Card 
             Width="200" 

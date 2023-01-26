@@ -9,7 +9,9 @@
     mc:Ignorable="d"
     Title="AdminWindow"
     Height="640"
-    Width="850">
+    Width="850"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <SolidColorBrush
@@ -173,7 +175,8 @@
                         Height="30"
                         Width="auto"
                         FontWeight="Bold"
-                        Margin="0,0,10,-30">
+                        Margin="0,0,10,-30"
+                        ToolTip="Click to add a new product">
                     </Button>
 
                 </Grid>
@@ -341,7 +344,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick">
+            Click="BackButton_OnClick"
+            ToolTip="Back to main window">
         </Button>
     </Grid>
 </Window>

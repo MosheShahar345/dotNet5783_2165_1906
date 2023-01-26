@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+    <ProjectReference Include="..\Simulator\Simulator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,12 +26,12 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Images\89a1ad562ee60f57e5669741c6aed98a.jpg" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Images\89a1ad562ee60f57e5669741c6aed98a.jpg" />
+	</ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy $(SolutionDir)\Assemblies\ $(SolutionDir)\bin\ /Y" />
-  </Target>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="xcopy $(SolutionDir)\Assemblies\ $(SolutionDir)\bin\ /Y" />
+	</Target>
 	
 </Project>

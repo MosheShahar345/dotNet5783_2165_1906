@@ -71,7 +71,7 @@
                 Content="Confirm order"
                 x:Name="ConfirmOrderButton"
                 Click="ConfirmOrderButton_OnClick"
-                ToolTip="To confirm the order"
+                ToolTip="Order confirmation"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Margin="0,40,0,10"
@@ -124,7 +124,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick" />
+            Click="BackButton_OnClick"
+            ToolTip="Back to view product items"/>
 
         <Button
             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
@@ -135,6 +136,7 @@
             Grid.Column="2"
             x:Name="BackToMainWindow"
             Content="Back to main window"
+            ToolTip="Back to main window"
             Margin="0,0,10,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"

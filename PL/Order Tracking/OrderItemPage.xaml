@@ -104,7 +104,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick">
+            Click="BackButton_OnClick"
+            ToolTip="Back to order tracking">
         </Button>
 
         <Button
@@ -112,7 +113,7 @@
             Content="Order details"
             x:Name="OrderDetails"
             Click="OrderDetailsButton_OnClick"
-            ToolTip="To main window"
+            ToolTip="Click to get order details"
             IsDefault="True" 
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
@@ -128,9 +129,7 @@
             Grid.Column="0"
             Grid.Row="0"
             Grid.RowSpan="2"
-            x:Name="Frame"
-            Navigated="Frame_Navigated">
-        </Frame>
+            x:Name="Frame"/>
 
     </Grid>
 </Page>

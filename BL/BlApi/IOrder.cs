@@ -39,6 +39,12 @@ public interface IOrder
     /// <param name="orderId"></param>
     /// <returns></returns>
     public OrderTracking TrackOrder(int orderId);
+
+    /// <summary>
+    /// returns the oldest order's id
+    /// </summary>
+    /// <returns></returns>
+    public int? OldestOrder();
 }
 
 

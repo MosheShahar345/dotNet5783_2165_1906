@@ -191,7 +191,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick" />
+            Click="BackButton_OnClick" 
+            ToolTip="Back to view the product items"/>
 
         <Label
             Grid.Row="2"

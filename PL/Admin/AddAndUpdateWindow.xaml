@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="AddAndUpdateWindow" Height="400" Width="700">
+        Title="AddAndUpdateWindow" Height="400" Width="700"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Grid x:Name="AddGrid" Background="{DynamicResource MaterialDesignDarkBackground}">
         <Label

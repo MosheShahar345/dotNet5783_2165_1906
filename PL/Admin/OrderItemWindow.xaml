@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="OrderItemPage" 
         Height="640" Width="850"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Background="{DynamicResource MaterialDesignDarkBackground}">

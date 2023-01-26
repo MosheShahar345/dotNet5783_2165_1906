@@ -108,7 +108,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick" />
+            Click="BackButton_OnClick"
+            ToolTip="Back to main window"/>
 
         <ListView
             Grid.Column="0"

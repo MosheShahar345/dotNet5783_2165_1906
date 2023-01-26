@@ -12,7 +12,9 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="MainWindow"
-        Height="640" Width="865">
+        Height="640" Width="865"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Background>
         <ImageBrush

@@ -148,7 +148,8 @@
             Height="28"
             Width="auto"
             FontWeight="Bold"
-            Click="BackToMainWindowButton_OnClick" />
+            Click="BackToMainWindowButton_OnClick"
+            ToolTip="Click to go back to main window"/>
 
         <Button
             Grid.Row="1"
@@ -164,7 +165,8 @@
             Height="auto"
             Width="auto"
             FontWeight="Bold"
-            Click="BackButton_OnClick" />
+            Click="BackButton_OnClick" 
+            ToolTip="Back to view order items"/>
 
         <materialDesign:PackIcon
             Kind="Account"

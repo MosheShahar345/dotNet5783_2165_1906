@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using PL.Admin;
 using PL.Client;
 using PL.Order_Tracking;
+using PL.simulator;
 
 namespace PL;
 
@@ -64,7 +65,7 @@ public partial class MainWindow : Window
     }
 
     private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-    {
-        
+    { 
+        new SimulatorWindow().Show();
     }
 }
