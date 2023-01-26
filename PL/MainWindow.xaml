@@ -138,7 +138,7 @@
             Background="{DynamicResource MaterialDesignDarkBackground}"
             IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
             Style="{StaticResource MaterialDesignIconButton}"
-            ToolTip="MaterialDesignIconButton">
+            ToolTip="Start simulation">
             <materialDesign:PackIcon
                 Kind="Play" />
         </Button>

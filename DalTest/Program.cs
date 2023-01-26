@@ -363,7 +363,8 @@ namespace DalTest
                               "\n 0. Exit. " +
                               "\n 1. Product. " +
                               "\n 2. Order. " +
-                              "\n 3. Order Item");
+                              "\n 3. Order Item" +
+                              "\n 4. XML");
         }
     }
 }

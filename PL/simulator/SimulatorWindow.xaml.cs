@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO.Packaging;
+using MaterialDesignThemes.Wpf;
 using PL.simulator;
 
 namespace PL.simulator;
