@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>53900813</ID>
+    <ID>93148079</ID>
     <Name>Silk suit</Name>
     <Price>800</Price>
     <Category>Suit</Category>
     <InStock>10</InStock>
   </Product>
   <Product>
-    <ID>69879185</ID>
+    <ID>54994252</ID>
     <Name>kids suit</Name>
     <Price>450</Price>
     <Category>Suit</Category>
     <InStock>15</InStock>
   </Product>
   <Product>
-    <ID>59638508</ID>
+    <ID>76566640</ID>
     <Name>Cotton pants</Name>
     <Price>220</Price>
     <Category>Pants</Category>
     <InStock>28</InStock>
   </Product>
   <Product>
-    <ID>84361592</ID>
+    <ID>37821983</ID>
     <Name>Leather pants</Name>
     <Price>300</Price>
     <Category>Pants</Category>
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>95865029</ID>
+    <ID>20106907</ID>
     <Name>shirts with cuffs</Name>
     <Price>120</Price>
     <Category>Shirts</Category>
     <InStock>13</InStock>
   </Product>
   <Product>
-    <ID>12239041</ID>
+    <ID>85447465</ID>
     <Name>Long shirts</Name>
     <Price>115</Price>
     <Category>Shirts</Category>
     <InStock>18</InStock>
   </Product>
   <Product>
-    <ID>7658998</ID>
+    <ID>87510465</ID>
     <Name>Silk tie</Name>
     <Price>80</Price>
     <Category>Ties</Category>
     <InStock>21</InStock>
   </Product>
   <Product>
-    <ID>72879781</ID>
+    <ID>44636849</ID>
     <Name>Floral tie</Name>
     <Price>60</Price>
     <Category>Ties</Category>
     <InStock>22</InStock>
   </Product>
   <Product>
-    <ID>1037943</ID>
+    <ID>96887432</ID>
     <Name>Silver cufflinks</Name>
     <Price>180</Price>
     <Category>Cufflinks</Category>
     <InStock>23</InStock>
   </Product>
   <Product>
-    <ID>96142965</ID>
+    <ID>53075236</ID>
     <Name>Diamond cufflinks</Name>
     <Price>350</Price>
     <Category>Cufflinks</Category>
