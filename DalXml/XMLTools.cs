@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Runtime.CompilerServices;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -14,6 +15,7 @@ static class XMLTools
             Directory.CreateDirectory(s_dir);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveListToXMLElement(XElement root, string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -28,6 +30,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static XElement LoadListToXMLElement(string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -47,6 +50,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -66,6 +70,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static XElement LoadConfig()
     {
         string filePath = $"{s_dir}Config.xml";
@@ -81,6 +86,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveConfigXml(string entity, int serial)
     {
         string filePath = $"{s_dir}Config.xml";
@@ -97,6 +103,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static XElement LoadListFromXMLSerializer(string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -116,6 +123,7 @@ static class XMLTools
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public static void SaveListToXNLserializer<T>(List<T?> list, string entity) where T: struct
     {
         string filePath = $"{s_dir + entity}.xml";

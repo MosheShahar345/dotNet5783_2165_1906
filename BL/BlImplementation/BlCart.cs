@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using DalApi;
 
 namespace BlImplementation;
@@ -16,6 +17,7 @@ internal class BlCart : BlApi.ICart
     /// <exception cref="BO.IdIsLessThanZeroException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
     /// <exception cref="BO.NotEnoughInStockException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddPToCart(BO.Cart cart, int productId)
     {
         if (productId < 0)
@@ -77,6 +79,7 @@ internal class BlCart : BlApi.ICart
     /// <exception cref="BO.InvalidAmountException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
     /// <exception cref="BO.NotEnoughInStockException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart UpdateAmount(BO.Cart cart, int productId, int nAmount)
     {
         if (productId < 0)
@@ -87,15 +90,18 @@ internal class BlCart : BlApi.ICart
 
         DO.Product? product;
 
-        try
+        lock (dal!)
         {
-            product = dal?.Product.GetEntity(it => it?.ID == productId);
+            try
+            {
+                product = dal?.Product.GetEntity(it => it?.ID == productId);
+            }
+            catch (DO.NotExistsException e)
+            {
+                throw new BO.NotExistsException("", e);
+            }
         }
-        catch (DO.NotExistsException e)
-        {
-            throw new BO.NotExistsException("", e);
-        }
-
+        
         var orderItem = cart.Items?.Find(it => productId == it?.ProductID) ??
                         throw new BO.NotExistsException();
 
@@ -139,6 +145,7 @@ internal class BlCart : BlApi.ICart
     /// <exception cref="BO.InvalidNameException"></exception>
     /// <exception cref="BO.InvalidEmailException"></exception>
     /// <exception cref="BO.AlreadyExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void ConfirmationOrder(BO.Cart cart)
     {
         _ = cart?.Items ?? throw new BO.NotExistsException();
@@ -164,43 +171,46 @@ internal class BlCart : BlApi.ICart
 
         int OrderId;
 
-        try
+        lock (dal!)
         {
-            OrderId = dal!.Order.Add(dOrder);
-        }
-        catch (DO.AlreadyExistsException e)
-        {
-            throw new BO.AlreadyExistsException("", e);
-        }
-
-        cart.Items.ForEach(item =>
-        {
-            DO.OrderItem dOrderItem = new DO.OrderItem()
-            {
-                ID = item!.ID,
-                ProductID = item.ProductID,
-                OrderID = OrderId,
-                Price = item.Price,
-                Amount = item.Amount
-            };
-
             try
             {
-                dal?.OrderItem.Add(dOrderItem);
+                OrderId = dal!.Order.Add(dOrder);
             }
             catch (DO.AlreadyExistsException e)
             {
                 throw new BO.AlreadyExistsException("", e);
             }
-        });
 
-        DO.Product product = new DO.Product();
+            cart.Items.ForEach(item =>
+            {
+                DO.OrderItem dOrderItem = new DO.OrderItem()
+                {
+                    ID = item!.ID,
+                    ProductID = item.ProductID,
+                    OrderID = OrderId,
+                    Price = item.Price,
+                    Amount = item.Amount
+                };
 
-        cart.Items.ForEach(item =>
-        {
-            product = (DO.Product)dal?.Product.GetEntity(it => it?.ID == item!.ProductID)!;
-            product.InStock -= item!.Amount;
-            dal?.Product.Update(product);
-        });
+                try
+                {
+                    dal?.OrderItem.Add(dOrderItem);
+                }
+                catch (DO.AlreadyExistsException e)
+                {
+                    throw new BO.AlreadyExistsException("", e);
+                }
+            });
+
+            DO.Product product = new DO.Product();
+
+            cart.Items.ForEach(item =>
+            {
+                product = (DO.Product)dal?.Product.GetEntity(it => it?.ID == item!.ProductID)!;
+                product.InStock -= item!.Amount;
+                dal?.Product.Update(product);
+            });
+        }
     }
 }

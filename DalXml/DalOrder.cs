@@ -1,5 +1,6 @@
 ﻿namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Xml.Linq;
@@ -13,8 +14,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
         order.ID = XMLTools.LoadConfig().ToIntNullable("OrderID")!.Value + 1;
@@ -30,6 +30,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -43,7 +44,7 @@ internal class DalOrder : IOrder
     /// update a orderItem from xml file
     /// </summary>
     /// <param name="orderItem"></param>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order orderItem)
     {
         List<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -68,6 +69,7 @@ internal class DalOrder : IOrder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? GetEntity(Func<DO.Order?, bool>? func)
     {
         IEnumerable<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);
@@ -85,6 +87,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? func)
     {
         IEnumerable<DO.Order?> orders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_Order);

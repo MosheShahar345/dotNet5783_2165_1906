@@ -1,5 +1,9 @@
-﻿using BO;
+﻿using System.Runtime.CompilerServices;
+using BO;
 using DalApi;
+using AlreadyExistsException = DO.AlreadyExistsException;
+using NotExistsException = DO.NotExistsException;
+
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
@@ -12,15 +16,19 @@ internal class BlProduct : BlApi.IProduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="BO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList?> GetProductForList(Func<BO.ProductForList?, bool>? func)
     {
         List<DO.Product?>? products = new List<DO.Product?>();
 
-        try
+        lock (dal!)
         {
-            products = dal?.Product.GetAll().ToList();
+            try
+            {
+                products = dal?.Product.GetAll().ToList();
+            }
+            catch (NotExistsException e) { throw new BO.NotExistsException("", e); }
         }
-        catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
 
         List<BO.ProductForList?> productForList = products!.Select(item => new BO.ProductForList
         {
@@ -46,6 +54,7 @@ internal class BlProduct : BlApi.IProduct
     /// <returns></returns>
     /// <exception cref="BO.IdIsLessThanZeroException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetProductForAdmin(int productId)
     {
         if (productId < 0)
@@ -53,13 +62,16 @@ internal class BlProduct : BlApi.IProduct
 
         DO.Product? dProduct = new DO.Product();
 
-        try
+        lock (dal!)
         {
-            dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
-        }
-        catch (DO.NotExistsException e)
-        {
-            throw new BO.NotExistsException("", e);
+            try
+            {
+                dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
+            }
+            catch (NotExistsException e)
+            {
+                throw new BO.NotExistsException("", e);
+            }
         }
 
         BO.Product bProduct = new BO.Product()
@@ -81,6 +93,7 @@ internal class BlProduct : BlApi.IProduct
     /// <returns></returns>
     /// <exception cref="BO.IdIsLessThanZeroException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetProductForCustomer(int productId, BO.Cart cart)
     {
         if (productId < 0)
@@ -93,22 +106,25 @@ internal class BlProduct : BlApi.IProduct
         bOrderItem = cart.Items?.Find(it => it!.ProductID == productId) ??
                      throw new BO.NotExistsException();
 
-        try
+        lock (dal!)
         {
-            dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
-            bProductItem = new BO.ProductItem()
+            try
             {
-                ID = (int)dProduct?.ID!,
-                Name = dProduct?.Name,
-                Price = (double)dProduct?.Price!,
-                Category = (BO.Category)dProduct?.Category!,
-                InStock = dProduct?.InStock > 0 ? true : false,
-                Amount = bOrderItem.Amount
-            };
-        }
-        catch (DO.NotExistsException e)
-        {
-            throw new BO.NotExistsException("",e);
+                dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
+                bProductItem = new ProductItem()
+                {
+                    ID = (int)dProduct?.ID!,
+                    Name = dProduct?.Name,
+                    Price = (double)dProduct?.Price!,
+                    Category = (Category)dProduct?.Category!,
+                    InStock = dProduct?.InStock > 0 ? true : false,
+                    Amount = bOrderItem.Amount
+                };
+            }
+            catch (NotExistsException e)
+            {
+                throw new BO.NotExistsException("",e);
+            }
         }
         
         return bProductItem;
@@ -123,6 +139,7 @@ internal class BlProduct : BlApi.IProduct
     /// <exception cref="BO.InvalidPriceException"></exception>
     /// <exception cref="BO.InvalidInStockException"></exception>
     /// <exception cref="BO.AlreadyExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void AddProductAdmin(BO.Product product)
     {
         if(product.ID < 0)
@@ -145,14 +162,17 @@ internal class BlProduct : BlApi.IProduct
             InStock = product.InStock,
             Category = (DO.Category)product.Category!
         };
-     
-        try
+
+        lock (dal!)
         {
-            dal?.Product.Add(dProduct);
-        }
-        catch (DO.AlreadyExistsException e)
-        {
-            throw new BO.AlreadyExistsException("", e);
+            try
+            {
+                dal?.Product.Add(dProduct);
+            }
+            catch (AlreadyExistsException e)
+            {
+                throw new BO.AlreadyExistsException("", e);
+            }
         }
     }
 
@@ -163,28 +183,32 @@ internal class BlProduct : BlApi.IProduct
     /// <exception cref="BO.IdIsLessThanZeroException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
     /// <exception cref="BO.CanNotDeleteProductException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteProductAdmin(int productId)
     {
         if (productId < 0)
             throw new BO.IdIsLessThanZeroException();
 
-        IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetAll()!; 
+        IEnumerable<DO.OrderItem?> orderItems = dal?.OrderItem.GetAll()!;
 
-        try
+        lock (dal!)
         {
-            dal?.Product.GetEntity(it => it?.ID == productId);
-        }
-        catch (DO.NotExistsException e)
-        {
-            throw new BO.NotExistsException("", e);
-        }
+            try
+            {
+                dal?.Product.GetEntity(it => it?.ID == productId);
+            }
+            catch (NotExistsException e)
+            {
+                throw new BO.NotExistsException("", e);
+            }
 
-        if (orderItems.Any(item => item?.ProductID == productId))
-        {
-            throw new BO.CanNotDeleteProductException();
-        }
+            if (orderItems.Any(item => item?.ProductID == productId))
+            {
+                throw new CanNotDeleteProductException();
+            }
 
-        dal?.Product.Delete(productId);
+            dal?.Product.Delete(productId);
+        }
     }
 
     /// <summary>
@@ -196,6 +220,7 @@ internal class BlProduct : BlApi.IProduct
     /// <exception cref="BO.InvalidPriceException"></exception>
     /// <exception cref="BO.InvalidInStockException"></exception>
     /// <exception cref="BO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateProductAdmin(BO.Product product)
     {
         if (product.ID < 0)
@@ -219,36 +244,49 @@ internal class BlProduct : BlApi.IProduct
             Category = (DO.Category)product.Category!
         };
 
-        try
+        lock (dal!)
         {
-            dal?.Product.Update(dProduct);
-        }
-        catch (DO.NotExistsException e)
-        {
-            throw new BO.NotExistsException("", e);
+            try
+            {
+                dal?.Product.Update(dProduct);
+            }
+            catch (NotExistsException e)
+            {
+                throw new BO.NotExistsException("", e);
+            }
         }
     }
 
+    /// <summary>
+    /// get the catalog in the shop
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<ProductItem?> GetCatalog(BO.Cart cart, Func<ProductItem?, bool>? func)
     {
-        var listOfProductItems = from item in dal?.Product.GetAll()
-            select new BO.ProductItem()
-            {
-                ID = (int)item?.ID!,
-                Name = item?.Name,
-                Price = (double)item?.Price!,
-                Category = (BO.Category)item?.Category!,
-                InStock = item?.InStock > 0 ? true : false,
-                Amount = cart.Items != null && cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID) != null 
-                    ? cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID)!.Amount : 0
-            };
-
-        if (func != null)
+        lock (dal!)
         {
-            var list = from item in listOfProductItems where func(item) select item;
-            return (IEnumerable<BO.ProductItem?>)list;
-        }
+            var listOfProductItems = from item in dal?.Product.GetAll()
+                select new ProductItem()
+                {
+                    ID = (int)item?.ID!,
+                    Name = item?.Name,
+                    Price = (double)item?.Price!,
+                    Category = (Category)item?.Category!,
+                    InStock = item?.InStock > 0 ? true : false,
+                    Amount = cart.Items != null && cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID) != null 
+                        ? cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID)!.Amount : 0
+                };
 
-        return listOfProductItems;
+            if (func != null)
+            {
+                var list = from item in listOfProductItems where func(item) select item;
+                return (IEnumerable<BO.ProductItem?>)list;
+            }
+
+            return listOfProductItems;
+        }
     }
 }

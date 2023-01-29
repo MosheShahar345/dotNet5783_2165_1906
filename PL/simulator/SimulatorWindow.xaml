@@ -42,7 +42,7 @@
             Grid.Row="3"
             HorizontalAlignment="Center"
             FontSize="16"
-            Foreground="White" />
+            Foreground="OrangeRed" />
         <Button
             Grid.Row="4"
             FontWeight="Bold"

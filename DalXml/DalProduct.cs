@@ -1,5 +1,6 @@
 ﻿namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Xml.Linq;
@@ -13,8 +14,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="product"></param>
     /// <returns></returns>
-
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product product)
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
@@ -30,6 +30,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);
@@ -39,6 +40,7 @@ internal class DalProduct : IProduct
         XMLTools.SaveListToXNLserializer(products, s_product);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product orderItem)
     {
        Delete(orderItem.ID);
@@ -51,6 +53,7 @@ internal class DalProduct : IProduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? GetEntity(Func<DO.Product?, bool>? func)
     {
         List<DO.Product?> products = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_product);

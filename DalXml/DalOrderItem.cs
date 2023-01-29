@@ -2,6 +2,7 @@
 
 namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Xml.Linq;
@@ -10,6 +11,7 @@ internal class DalOrderItem : IOrderItem
 {
     const string s_orderitem = $"OrderItem";
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     static DO.OrderItem? CreateOrderItemFromXElement(XElement element)
     {
         return new OrderItem
@@ -21,11 +23,13 @@ internal class DalOrderItem : IOrderItem
             Amount = element.ToIntNullable("Amount") ?? throw new FormatException("Amount"),
         };
     }
+
     /// <summary>
     /// add a Order item to xml file
     /// </summary>
     /// <param name="orderitem"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem orderitem)
     {
         orderitem.ID = XMLTools.LoadConfig().ToIntNullable("OrderItemID")!.Value + 1;
@@ -49,6 +53,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement root = XMLTools.LoadListToXMLElement(s_orderitem);
@@ -64,24 +69,11 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem orderItem)
-    {
-        //List<DO.OrderItem?> orderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_orderitem);
-        //var o = (from item in orderItems
-        //         where (item?.ID == orderItem.ID)
-        //         select item).FirstOrDefault();
-
-        //if (o != null)
-        //{
-        //    int i = orderItems.IndexOf(o);
-        //    orderItems.Remove(o);
-        //    orderItems.Insert(i, orderItem);
-        //    XMLTools.SaveListToXNLserializer<DO.OrderItem>(orderItems, s_orderitem);
-        //    return;
-        //}
-        //throw new DO.NotExistsException("not found order to update");
-       Delete(orderItem.ID);
-       Add(orderItem);
+    { 
+        Delete(orderItem.ID);
+        Add(orderItem);
     }
 
     /// <summary>
@@ -90,6 +82,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="DO.NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? GetEntity(Func<DO.OrderItem?, bool>? func)
     {
         XElement? element = XMLTools.LoadListToXMLElement(s_orderitem);
@@ -105,21 +98,17 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="func"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? func)
     {
         XElement? root = XMLTools.LoadListToXMLElement(s_orderitem);
-        if (func != null)
-        {
-            return from item in root.Elements()
-                   let tempItem = CreateOrderItemFromXElement(item)
-                   where func(tempItem)
-                   select (DO.OrderItem?)tempItem;
-        }
-        else
-        {
-            return from item in root.Elements()
-                   select CreateOrderItemFromXElement(item);
-        }
+        return func != null
+            ? from item in root.Elements()
+            let tempItem = CreateOrderItemFromXElement(item)
+            where func(tempItem)
+            select (DO.OrderItem?)tempItem
+            : from item in root.Elements()
+            select CreateOrderItemFromXElement(item);
     }
 }
 

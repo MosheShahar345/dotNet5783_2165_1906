@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Security.Principal;
 
 namespace Dal;
@@ -12,6 +13,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="orderItem"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem orderItem)
     {
         orderItem.ID = DataSource.Config.GetOrderItemId(); 
@@ -24,6 +26,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         OrderItem? orderItem = DataSource.OrderItems.FirstOrDefault(x => x?.ID == id)
@@ -38,6 +41,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem orderItem)
     {
         int index = DataSource.OrderItems.IndexOf(DataSource.OrderItems.FirstOrDefault(o => o?.ID == orderItem.ID));
@@ -57,6 +61,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? GetEntity(Func<OrderItem?, bool>? func)
     {
         OrderItem? result = DataSource.OrderItems.FirstOrDefault(func!) ?? 
@@ -69,6 +74,7 @@ internal class DalOrderItem : IOrderItem
     /// returns list of all order items
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func)
     {
         if (func == null)

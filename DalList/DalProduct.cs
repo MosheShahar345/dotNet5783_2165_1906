@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -11,6 +12,7 @@ internal class DalProduct : IProduct
     /// <param name="product"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product product)
     {
         if (product.ID != 0)
@@ -55,6 +57,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Product? productToDelete = DataSource.Products.FirstOrDefault(product => id == product?.ID) ??
@@ -68,6 +71,7 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product orderItem)
     {
         int index = DataSource.Products.IndexOf(DataSource.Products.FirstOrDefault(o => o?.ID == orderItem.ID));
@@ -87,6 +91,7 @@ internal class DalProduct : IProduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? GetEntity(Func<Product?, bool>? func)
     {
         Product? result = DataSource.Products.FirstOrDefault(func!) ??
@@ -99,6 +104,7 @@ internal class DalProduct : IProduct
     /// returns list of all products
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? func)
     {
         if (func == null)

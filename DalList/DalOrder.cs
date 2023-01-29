@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -12,6 +13,7 @@ internal class DalOrder : IOrder
     /// <param name="order"></param>
     /// <returns></returns>
     /// <exception cref="AlreadyExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order order)
     {
         order.ID = DataSource.Config.GetOrderId();
@@ -24,6 +26,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Order? orderToDelete = DataSource.Orders.FirstOrDefault(order => id == order?.ID) 
@@ -38,6 +41,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="orderItem"></param>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order orderItem)
     {
         int index = DataSource.Orders.IndexOf(DataSource.Orders.FirstOrDefault(o => o?.ID == orderItem.ID));
@@ -57,6 +61,7 @@ internal class DalOrder : IOrder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="NotExistsException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order? GetEntity(Func<Order?, bool>? func)
     {
         Order? result = DataSource.Orders.FirstOrDefault(func!)
@@ -65,11 +70,11 @@ internal class DalOrder : IOrder
         return result;
     }
 
-
     /// <summary>
     /// returns list of all orders
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? func)
     {
         if (func == null)
