@@ -10,10 +10,16 @@
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	  <ApplicationIcon>Images\89a1ad562ee60f57e5669741c6aed98a.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\89a1ad562ee60f57e5669741c6aed98a.ico" />
     <None Remove="Images\89a1ad562ee60f57e5669741c6aed98a.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\89a1ad562ee60f57e5669741c6aed98a.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +33,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Images\89a1ad562ee60f57e5669741c6aed98a.ico" />
 		<Resource Include="Images\89a1ad562ee60f57e5669741c6aed98a.jpg" />
 	</ItemGroup>
 
