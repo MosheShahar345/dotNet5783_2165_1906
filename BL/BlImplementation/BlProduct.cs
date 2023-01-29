@@ -1,8 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using BO;
 using DalApi;
-using AlreadyExistsException = DO.AlreadyExistsException;
-using NotExistsException = DO.NotExistsException;
 
 namespace BlImplementation;
 
@@ -27,7 +24,7 @@ internal class BlProduct : BlApi.IProduct
             {
                 products = dal?.Product.GetAll().ToList();
             }
-            catch (NotExistsException e) { throw new BO.NotExistsException("", e); }
+            catch (DO.NotExistsException e) { throw new BO.NotExistsException("", e); }
         }
 
         List<BO.ProductForList?> productForList = products!.Select(item => new BO.ProductForList
@@ -68,7 +65,7 @@ internal class BlProduct : BlApi.IProduct
             {
                 dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
             }
-            catch (NotExistsException e)
+            catch (DO.NotExistsException e)
             {
                 throw new BO.NotExistsException("", e);
             }
@@ -111,17 +108,17 @@ internal class BlProduct : BlApi.IProduct
             try
             {
                 dProduct = dal?.Product.GetEntity(it => it?.ID == productId);
-                bProductItem = new ProductItem()
+                bProductItem = new BO.ProductItem()
                 {
                     ID = (int)dProduct?.ID!,
                     Name = dProduct?.Name,
                     Price = (double)dProduct?.Price!,
-                    Category = (Category)dProduct?.Category!,
+                    Category = (BO.Category)dProduct?.Category!,
                     InStock = dProduct?.InStock > 0 ? true : false,
                     Amount = bOrderItem.Amount
                 };
             }
-            catch (NotExistsException e)
+            catch (DO.NotExistsException e)
             {
                 throw new BO.NotExistsException("",e);
             }
@@ -169,7 +166,7 @@ internal class BlProduct : BlApi.IProduct
             {
                 dal?.Product.Add(dProduct);
             }
-            catch (AlreadyExistsException e)
+            catch (DO.AlreadyExistsException e)
             {
                 throw new BO.AlreadyExistsException("", e);
             }
@@ -197,14 +194,14 @@ internal class BlProduct : BlApi.IProduct
             {
                 dal?.Product.GetEntity(it => it?.ID == productId);
             }
-            catch (NotExistsException e)
+            catch (DO.NotExistsException e)
             {
                 throw new BO.NotExistsException("", e);
             }
 
             if (orderItems.Any(item => item?.ProductID == productId))
             {
-                throw new CanNotDeleteProductException();
+                throw new BO.CanNotDeleteProductException();
             }
 
             dal?.Product.Delete(productId);
@@ -250,7 +247,7 @@ internal class BlProduct : BlApi.IProduct
             {
                 dal?.Product.Update(dProduct);
             }
-            catch (NotExistsException e)
+            catch (DO.NotExistsException e)
             {
                 throw new BO.NotExistsException("", e);
             }
@@ -264,17 +261,17 @@ internal class BlProduct : BlApi.IProduct
     /// <param name="func"></param>
     /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
-    public IEnumerable<ProductItem?> GetCatalog(BO.Cart cart, Func<ProductItem?, bool>? func)
+    public IEnumerable<BO.ProductItem?> GetCatalog(BO.Cart cart, Func<BO.ProductItem?, bool>? func)
     {
         lock (dal!)
         {
             var listOfProductItems = from item in dal?.Product.GetAll()
-                select new ProductItem()
+                select new BO.ProductItem()
                 {
                     ID = (int)item?.ID!,
                     Name = item?.Name,
                     Price = (double)item?.Price!,
-                    Category = (Category)item?.Category!,
+                    Category = (BO.Category)item?.Category!,
                     InStock = item?.InStock > 0 ? true : false,
                     Amount = cart.Items != null && cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID) != null 
                         ? cart.Items.FirstOrDefault(x => x?.ProductID == item?.ID)!.Amount : 0

@@ -1,8 +1,6 @@
 ﻿using DalApi;
 using System;
 using System.Runtime.CompilerServices;
-using BO;
-using NotExistsException = DO.NotExistsException;
 
 namespace BlImplementation;
 
@@ -257,7 +255,7 @@ internal class BlOrder : BlApi.IOrder
             {
                 dOrder = dal?.Order.GetEntity(it => it?.ID == orderId);
             }
-            catch (NotExistsException e)
+            catch (DO.NotExistsException e)
             {
                 throw new BO.NotExistsException("", e);
             }
@@ -287,7 +285,7 @@ internal class BlOrder : BlApi.IOrder
     {
         lock (dal!)
         {
-            var orders = dal?.Order.GetAll(x => GetStatus(x) != OrderStatus.Delivered);
+            var orders = dal?.Order.GetAll(x => GetStatus(x) != BO.OrderStatus.Delivered);
             if (orders == null) return null;
             orders!.OrderByDescending(x => x?.ShipDate ?? x?.OrderDate);
             try
