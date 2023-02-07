@@ -31,11 +31,30 @@
             Foreground="GreenYellow" />
 
         <ProgressBar
+            Value="{Binding Path=progress, Mode=OneWay}"
+            Minimum="0"
+            Maximum="100"
+            Grid.Row="2"
+            Height="15"
+            Width="450" />
+        <TextBlock
+            Grid.Row="2"
+            Height="15"
+            Foreground="White"
+            Text="{Binding Path=progress , StringFormat={}{0}%}"
+            HorizontalAlignment="Center"/>
+        <!--<ProgressBar
             x:Name="ResultProgressBar"
             Value="{Binding progress, Mode=OneWay}"
             Grid.Row="2"
-            Height="8"
-            Width="400"/>
+            Height="15"
+            Width="450"/>
+        <TextBlock
+            Grid.Row="2"
+            Height="15"
+            HorizontalAlignment="Center"
+            Foreground="White"
+            Text="{Binding progress, Mode=OneWay}"/>-->
         <Label
             x:Name="ResultLabel"
             Content="{Binding ResultLabelMsg}"

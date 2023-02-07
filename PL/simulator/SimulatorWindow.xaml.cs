@@ -177,10 +177,10 @@ public partial class SimulatorWindow : Window , INotifyPropertyChanged
         Simulator.RegisterToUpdateEvent(updateOrder);
         Simulator.StartSim();
         stopWatch.Start();
-
+        
         while (!worker.CancellationPending)
         {
-            for (int i = 0; i <= estimatedTimeInSec; i++)
+            for (int i = 1; i <= estimatedTimeInSec; i++)
             {
                 Thread.Sleep(1000);
                 worker.ReportProgress((int)(i * 100 / estimatedTimeInSec)!);
@@ -195,7 +195,7 @@ public partial class SimulatorWindow : Window , INotifyPropertyChanged
             stopWatch.Stop();
             worker.CancelAsync();
             Simulator.StopSim();
-            ResultLabelMsg = "Canceled!";
+            ResultLabelMsg = "Stopped!";
         }
     }
 

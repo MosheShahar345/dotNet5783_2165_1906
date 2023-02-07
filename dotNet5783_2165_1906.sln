@@ -20,9 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{D9B5EC87-BBE5-432A-9450-BC845E9139C4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{90D8CB35-224D-4FA1-A846-06048DF5C528}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B2035DA4-9E6A-47F2-8968-AEF05FC8C456} = {B2035DA4-9E6A-47F2-8968-AEF05FC8C456}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{70F02ED4-5AB0-4453-A31A-DD5BFDD6B9BE}"
 EndProject
@@ -42,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{4361BBC7-79D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{B2035DA4-9E6A-47F2-8968-AEF05FC8C456}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{DF8F31C2-B346-4CDF-BCE9-E9DA3C372246}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simulator.csproj", "{DF8F31C2-B346-4CDF-BCE9-E9DA3C372246}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
