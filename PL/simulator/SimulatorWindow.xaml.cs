@@ -195,6 +195,7 @@ public partial class SimulatorWindow : Window , INotifyPropertyChanged
             stopWatch.Stop();
             worker.CancelAsync();
             Simulator.StopSim();
+            
             ResultLabelMsg = "Stopped!";
         }
     }

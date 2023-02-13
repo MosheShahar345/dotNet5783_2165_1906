@@ -37,12 +37,12 @@
             Grid.Row="2"
             Height="15"
             Width="450" />
-        <TextBlock
+        <!--<TextBlock
             Grid.Row="2"
             Height="15"
             Foreground="White"
             Text="{Binding Path=progress , StringFormat={}{0}%}"
-            HorizontalAlignment="Center"/>
+            HorizontalAlignment="Center"/>-->
         <!--<ProgressBar
             x:Name="ResultProgressBar"
             Value="{Binding progress, Mode=OneWay}"
